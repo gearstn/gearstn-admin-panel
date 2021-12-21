@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['scheme' => 'https'], function () {
+Route::group(['scheme' => 'http'], function () {
 
 //Admin routes
 Route::prefix('admin')->group(function () {
