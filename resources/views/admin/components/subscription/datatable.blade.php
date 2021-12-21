@@ -4,13 +4,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Auctions</h1>
+                    <h1>Subscriptions</h1>
                 </div>
                 <div class="col-sm-4">
                 </div>
                 <div class="col-sm-2">
-                    <a href="{{ route('auctions.create') }}" type="button" class="btn btn-block btn-primary btn-md">Create
-                        Auction</a>
+                    <a href="{{ route('subscriptions.create') }}" type="button" class="btn btn-block btn-primary btn-md">Create
+                        Subscription</a>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
@@ -22,7 +22,7 @@
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Auctions</h3>
+                <h3 class="card-title">Subscriptions</h3>
 
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">

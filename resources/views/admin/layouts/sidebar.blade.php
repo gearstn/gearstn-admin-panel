@@ -107,6 +107,13 @@
                             <p>Employees</p>
                         </a>
                     </li>
+                     <li class="nav-item">
+                        <a href="{{route('subscriptions.index')}}"
+                           class="nav-link" {{areActiveRoutes(['subscriptions.*'])}}>
+                            <i class="fas fa-users nav-icon"></i>
+                            <p>Subscriptions</p>
+                        </a>
+                    </li>
             </ul>
         </nav>
     </div>

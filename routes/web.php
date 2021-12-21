@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\ManufacturesController;
 use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\SubCategoriesController;
+use App\Http\Controllers\Admin\SubscriptionsController;
 use App\Http\Controllers\Admin\UsersControllers;
 use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\UploadsController;
@@ -65,6 +66,7 @@ Route::get('/', function () {
         Route::resource('settings', SettingsController::class)->except(['update', 'destroy', 'edit', 'store', 'create']);
         Route::post("settings", [SettingsController::class,'update'])->name("settings.update");
 
+        Route::resource('subscriptions', SubscriptionsController::class);
     });
 
 
