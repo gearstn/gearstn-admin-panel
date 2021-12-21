@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role;
 
 class SubscriptionsController extends Controller
 {
@@ -29,7 +30,9 @@ class SubscriptionsController extends Controller
     public function create()
     {
         $subscription = new Subscription();
-        return view('admin.components.subscription.create', compact('subscription'));
+        $subscription->details = [];
+        $roles = Role::all()->pluck('name','id');
+        return view('admin.components.subscription.create', compact('subscription','roles'));
     }
 
     /**
@@ -41,6 +44,12 @@ class SubscriptionsController extends Controller
     public function store(Request $request)
     {
         $inputs = $request->all();
+
+        $details_result = [];
+        foreach ($inputs['details'] as $details) {
+            $details_result[$details['key']] = $details['value'] ;
+        }
+        $inputs['details'] = json_encode($details_result);
         $validator = Validator::make($inputs, Subscription::$cast);
         if ($validator->fails()) {
             return redirect()->route('subscriptions.create')->withErrors($validator)->withInput();
@@ -73,7 +82,9 @@ class SubscriptionsController extends Controller
     public function edit($id)
     {
         $subscription = Subscription::findOrFail($id);
-        return view('admin.components.subscription.edit', compact('subscription'));
+        $subscription->details = json_decode($subscription->details, true);
+        $roles = Role::all()->pluck('name','id');
+        return view('admin.components.subscription.edit', compact('subscription','roles'));
     }
 
 
@@ -87,6 +98,11 @@ class SubscriptionsController extends Controller
     public function update(Request $request, $id)
     {
         $inputs = $request->all();
+        foreach ($inputs['details'] as $details) {
+            $details_result[$details['key']] = $details['value'] ;
+        }
+        $inputs['details'] = json_encode($details_result);
+        
         $subscription = Subscription::find($id);
         $subscription->update($inputs);
         return redirect()->route('subscriptions.index')->with(['success' => 'Subscription ' . __("messages.update")]);
