@@ -29,9 +29,13 @@ class AppServiceProvider extends ServiceProvider
         Blade::if("dev", function () {
             return app()->env == "local" || app()->env == "dev" || app()->env == "development";
         });
-        //if($this->app->environment('production')) {
-            \Illuminate\Support\Facades\URL::forceScheme('https');
-        //}
+        if (App::environment('production', 'local'))
+        { 
+           
+       
+            URL::forceScheme('https');
+          
+        }   
 
     }
 }
