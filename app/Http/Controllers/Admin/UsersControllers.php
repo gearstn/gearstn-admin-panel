@@ -65,7 +65,7 @@ class UsersControllers extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        $user = new FullUserResource($user);
+        // $user = new FullUserResource($user);
         return view('admin.components.user.show', compact('user'));
     }
 
