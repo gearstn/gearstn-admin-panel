@@ -17,8 +17,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        Role::create(['name' => 'seller','guard_name' => 'api']);
-        Role::create(['name' => 'buyer','guard_name' => 'api']);
+        Role::create(['name' => 'seller','guard_name' => 'web']);
+        Role::create(['name' => 'buyer','guard_name' => 'web']);
 
         if (User::all()->count() == 0) $this->call(UserSeeder::class);
         $this->call(UploadSeeder::class);
