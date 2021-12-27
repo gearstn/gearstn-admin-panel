@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -29,9 +31,11 @@ class AppServiceProvider extends ServiceProvider
         Blade::if("dev", function () {
             return app()->env == "local" || app()->env == "dev" || app()->env == "development";
         });
-        if($this->app->environment('production')) {
-            \Illuminate\Support\Facades\URL::forceScheme('https');
-        }
+        if (App::environment('production'))
+        { 
+            // URL::forceScheme('https');
+            $this->app['request']->server->set('HTTPS', true);
+        }   
 
     }
 }

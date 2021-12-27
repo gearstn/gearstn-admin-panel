@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// Route::group(['before' => 'force.ssl'], function () {
 
 //Admin routes
 Route::prefix('admin')->group(function () {
@@ -41,7 +42,7 @@ Route::get('/', function () {
     // Route::get('/auth/login',[AuthController::class, 'login_admin'])->name('login_admin');
 
     //Auth for admin routes
-    Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
+    Route::group(['prefix' => 'admin','middleware' => ['auth','cors']], function () {
 
         Route::get('/',[DashboardController::class, 'index'])->name("dashboard");
         Route::resource('categories',CategoriesController::class);
@@ -71,3 +72,4 @@ Route::get('/', function () {
 
 
 
+// });
