@@ -28,17 +28,14 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
-        URL::forceScheme('https');
-
         Blade::if("dev", function () {
             return app()->env == "local" || app()->env == "dev" || app()->env == "development";
         });
-        // if (App::environment('production', 'local'))
-        // { 
-           
-       
-          
-        // }   
+        if (App::environment('production'))
+        { 
+            URL::forceScheme('https');
+            // $this->app['request']->server->set('HTTPS', true);
+        }   
 
     }
 }
