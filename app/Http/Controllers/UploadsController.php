@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Upload;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -118,6 +119,18 @@ class UploadsController extends Controller
             Storage::disk('s3')->delete($image->file_path);
             $image->delete();
         // }
+        return redirect()->back();
+    }
+    public function user_destroy(Request $request)
+    {
+        $inputs = $request->all();
+
+        $image = Upload::find($inputs['id']);
+        $user = User::find($image->user_id);
+        $user->{$inputs['key']} = null;
+        $user->save();
+        Storage::disk('s3')->delete($image->file_path);
+        $image->delete();
         return redirect()->back();
     }
 }

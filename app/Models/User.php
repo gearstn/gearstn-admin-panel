@@ -33,7 +33,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'commercial_license_image',
         'country',
         'is_admin',
-        'panned'
+        'panned',
+        'phone',
+        'national_id',
+        'national_id_image'
     ];
 
     /**
@@ -64,6 +67,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'tax_license' => 'required|unique:users',
         'commercial_license' => 'required|unique:users',
         'role_id' => 'required',
+        'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
     ];
 
     public function machines()
