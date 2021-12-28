@@ -33,9 +33,8 @@ class AppServiceProvider extends ServiceProvider
         });
         if (App::environment('production'))
         { 
-            // URL::forceScheme('https');
-            $this->app['request']->server->set('HTTPS', true);
-        }   
+            resolve(\Illuminate\Routing\UrlGenerator::class)->forceScheme('https');
+        } 
 
     }
 }
