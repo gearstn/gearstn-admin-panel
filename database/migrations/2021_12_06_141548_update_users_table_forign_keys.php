@@ -26,8 +26,8 @@ class UpdateUsersTableForignKeys extends Migration
      */
     public function down()
     {
-        // Schema::table('users', function (Blueprint $table) {
-        //     $table->dropColumn('position');
-        // });
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign(['tax_license_image', 'commercial_license_image']);
+        });
     }
 }
