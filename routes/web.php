@@ -45,29 +45,29 @@ Route::get('/', function () {
     Route::group(['prefix' => 'admin','middleware' => ['auth','cors']], function () {
 
         Route::get('/',[DashboardController::class, 'index'])->name("dashboard");
-        Route::resource('categories',CategoriesController::class);
-        Route::resource('sub-categories',SubCategoriesController::class);
-        Route::resource('manufactures',ManufacturesController::class);
-        Route::resource('machine-models', MachineModelsController::class);
-        Route::resource('machines', MachinesController::class);
-        Route::get('fetchSubCategories', [ MachinesController::class,'fetchSubCategories' ])->name('fetchSubCategories');
-        Route::get('fetchMachineModels', [ MachinesController::class,'fetchMachineModels' ])->name('fetchMachineModels');
-        Route::post('machines/approve',  [ MachinesController::class,'approveMachine' ])->name('machines.approve');
-        Route::post('machines/feature',  [ MachinesController::class,'featureMachine' ])->name('machines.feature');
-        Route::post('machines/verify',  [ MachinesController::class,'verifyMachine' ])->name('machines.verify');
+        Route::resource('/categories',CategoriesController::class);
+        Route::resource('/sub-categories',SubCategoriesController::class);
+        Route::resource('/manufactures',ManufacturesController::class);
+        Route::resource('/machine-models', MachineModelsController::class);
+        Route::resource('/machines', MachinesController::class);
+        Route::get('/fetchSubCategories', [ MachinesController::class,'fetchSubCategories' ])->name('fetchSubCategories');
+        Route::get('/fetchMachineModels', [ MachinesController::class,'fetchMachineModels' ])->name('fetchMachineModels');
+        Route::post('/machines/approve',  [ MachinesController::class,'approveMachine' ])->name('machines.approve');
+        Route::post('/machines/feature',  [ MachinesController::class,'featureMachine' ])->name('machines.feature');
+        Route::post('/machines/verify',  [ MachinesController::class,'verifyMachine' ])->name('machines.verify');
 
-        Route::resource('news', NewsController::class);
-        Route::resource('auctions', AuctionsController::class);
-        Route::resource('cities', CitiesController::class);
+        Route::resource('/news', NewsController::class);
+        Route::resource('/auctions', AuctionsController::class);
+        Route::resource('/cities', CitiesController::class);
         Route::resource('/users', UsersControllers::class);
-        Route::resource('employees', EmployeesController::class);
-        Route::post('uploads', [UploadsController::class,'store'] )->name('uploads.store');
-        Route::post('uploads', [UploadsController::class , 'destroy'])->name('uploads.destroy');
+        Route::resource('/employees', EmployeesController::class);
+        Route::post('/uploads', [UploadsController::class,'store'] )->name('uploads.store');
+        Route::post('/uploads', [UploadsController::class , 'destroy'])->name('uploads.destroy');
 
-        Route::resource('settings', SettingsController::class)->except(['update', 'destroy', 'edit', 'store', 'create']);
-        Route::post("settings", [SettingsController::class,'update'])->name("settings.update");
+        Route::resource('/settings', SettingsController::class)->except(['update', 'destroy', 'edit', 'store', 'create']);
+        Route::post('/settings', [SettingsController::class,'update'])->name("settings.update");
 
-        Route::resource('subscriptions', SubscriptionsController::class);
+        Route::resource('/subscriptions', SubscriptionsController::class);
     });
 
 
