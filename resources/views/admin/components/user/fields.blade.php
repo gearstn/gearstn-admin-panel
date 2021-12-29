@@ -46,7 +46,8 @@
     <div class="col-sm-3">
         <div class="form-group">
             {{ form::label('user_type','User Type')}}
-            {{ form::select('role_id', $roles, $user->roles->first()->id,['class'=>'select2 form-control', 'id' =>'user_type_select']) }}
+            {{ form::select('role_id', $roles, $user->roles ,['class'=>'select2 form-control', 'id' =>'user_type_select']) }}
+
         </div>
     </div>
 </div>
