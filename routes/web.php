@@ -49,7 +49,7 @@ Route::get('/', function () {
         Route::resource('/sub-categories',SubCategoriesController::class);
         Route::resource('/manufactures',ManufacturesController::class);
         Route::resource('/machine-models', MachineModelsController::class);
-        Route::resource('/machines', MachinesController::class);
+        Route::resource('/machines', MachinesController::class)->except('show');
         Route::get('/fetchSubCategories', [ MachinesController::class,'fetchSubCategories' ])->name('fetchSubCategories');
         Route::get('/fetchMachineModels', [ MachinesController::class,'fetchMachineModels' ])->name('fetchMachineModels');
         Route::post('/machines/approve',  [ MachinesController::class,'approveMachine' ])->name('machines.approve');
@@ -60,7 +60,7 @@ Route::get('/', function () {
         Route::resource('/auctions', AuctionsController::class);
         Route::resource('/cities', CitiesController::class);
         Route::resource('/users', UsersControllers::class);
-        Route::resource('/employees', EmployeesController::class);
+        Route::resource('/employees', EmployeesController::class)->except('show');
         Route::post('/uploads', [UploadsController::class,'store'] )->name('uploads.store');
         Route::post('/uploads', [UploadsController::class , 'destroy'])->name('uploads.destroy');
 

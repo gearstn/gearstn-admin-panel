@@ -104,8 +104,8 @@ class MachinesController extends Controller
      */
     public function show($id)
     {
-        $machine = Machine::findOrFail($id);
-        return view('admin.components.machine.show', compact('machine'));
+        // $machine = Machine::findOrFail($id);
+        // return view('admin.components.machine.show', compact('machine'));
     }
 
     /**
