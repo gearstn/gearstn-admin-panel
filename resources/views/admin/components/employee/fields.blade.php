@@ -29,10 +29,16 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-6">
         <div class="form-group">
             {{ form::label('image','Image URL')}}
             {{form::text('image_url', $employee->image_url ,['class'=>'form-control','placeholder'=>'Image URL'])}}
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            {{ form::label('linkedin','Linkedin URL')}}
+            {{form::text('linkedin_url', $employee->linkedin_url ,['class'=>'form-control','placeholder'=>'Linkedin URL'])}}
         </div>
     </div>
 </div>
