@@ -12,18 +12,24 @@ class Manufacture extends Model
     protected $fillable = [
         'title_en',
         'title_ar',
-        'sub_category_id',
+        'category_id',
     ];
 
     public static $cast = [
         'title_en' => 'required|unique:manufactures',
         'title_ar' => 'required',
-        'sub_category_id' => 'required',
+        'category_id' => 'required',
     ];
 
-    public function sub_category()
+    public function sub_categories()
     {
-        return $this->belongsTo(SubCategory::class);
+        return $this->belongsToMany(SubCategory::class, 'subcategory_manufacture');
+
+    }
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+
     }
     public function machine_models()
     {
