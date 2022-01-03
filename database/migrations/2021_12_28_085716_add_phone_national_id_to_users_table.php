@@ -14,7 +14,7 @@ class AddPhoneNationalIdToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('phone');
+            $table->string('phone')->nullable();
             $table->string('national_id')->nullable()->unique();
             $table->unsignedBigInteger('national_id_image')->nullable();
             $table->foreign("national_id_image")->references("id")->on("uploads")->onDelete("cascade");
