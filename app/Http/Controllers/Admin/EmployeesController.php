@@ -60,9 +60,9 @@ class EmployeesController extends Controller
      */
     public function show($id)
     {
-        $employee = Employee::findOrFail($id);
-        $employee = new EmployeeResource($employee);
-        return view('admin.components.employee.show', compact('employee'));
+        // $employee = Employee::findOrFail($id);
+        // $employee = new EmployeeResource($employee);
+        // return view('admin.components.employee.show', compact('employee'));
     }
 
     /**

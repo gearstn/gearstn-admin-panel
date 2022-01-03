@@ -17,7 +17,7 @@ class Employee extends Model
         'name_en',
         'name_ar',
         'image_url',
-        'linkedin_url'
+        'linkedin_url',
     ];
     public static $cast = [
         'title_en' => 'required',
