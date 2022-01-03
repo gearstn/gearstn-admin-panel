@@ -21,6 +21,15 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-sm-12">
+        <div class="form-group">
+            {{ form::label('manufactures','SubCategories')}}
+            {{Form::select('manufactures',$manufactures,$sub_category->manufactures()->pluck('id')->toArray(),['multiple'=>'multiple','name'=>'manufactures[]' ,'class'=>'select2 form-control templatingSelect2', "style"=>"height: 100px"])}}
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function() {
         $('.templatingSelect2').select2({

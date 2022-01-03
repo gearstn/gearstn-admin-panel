@@ -15,8 +15,16 @@
     <div class="col-sm-4">
         <!-- textarea -->
         <div class="form-group">
+            {{ form::label('categories','Categories')}}
+            {{ form::select('category_id', $categories, $manufacture->category_id,['class'=>'select2 form-control templatingSelect2', "style"=>"height: 100px"]) }}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="form-group">
             {{ form::label('sub_categories','SubCategories')}}
-            {{ form::select('sub_category_id', $sub_categories, $manufacture->sub_category_id,['class'=>'select2 form-control templatingSelect2', "style"=>"height: 100px"]) }}
+            {{Form::select('sub_categories',$sub_categories,$manufacture->sub_categories()->pluck('id')->toArray(),['multiple'=>'multiple','name'=>'sub_categories[]' ,'class'=>'select2 form-control templatingSelect2', "style"=>"height: 100px"])}}
         </div>
     </div>
 </div>

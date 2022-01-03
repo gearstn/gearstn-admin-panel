@@ -6,6 +6,7 @@ use App\DataTables\SubCategoriesDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SubCategoryResource;
 use App\Models\Category;
+use App\Models\Manufacture;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -33,7 +34,8 @@ class SubCategoriesController extends Controller
     {
         $sub_category = new SubCategory();
         $categories = Category::all()->pluck("title_en", "id");
-        return view('admin.components.sub_category.create', compact('sub_category','categories'));
+        $manufactures = Manufacture::all()->pluck("title_en", "id");
+        return view('admin.components.sub_category.create', compact('sub_category','categories','manufactures'));
     }
 
     /**
@@ -50,6 +52,15 @@ class SubCategoriesController extends Controller
             return redirect()->route('sub-categories.create')->withErrors($validator)->withInput();
         }
         $sub_category = SubCategory::create($inputs);
+
+        //Attaching MAnufactures to SubCategory if Selected
+        if (isset($inputs['manufactures'])) {
+            foreach ($inputs['manufactures'] as $manufacture_id) {
+                $sub_category->manufactures()->attach($manufacture_id);
+                $sub_category->save();
+            }
+        }
+
         return redirect()->route('sub-categories.index')->with(['success' => 'SubCategory ' . __("messages.add")]);
     }
 
@@ -75,7 +86,8 @@ class SubCategoriesController extends Controller
     {
         $sub_category = SubCategory::findOrFail($id);
         $categories = Category::all()->pluck("title_en", "id");
-        return view('admin.components.sub_category.edit', compact('sub_category','categories'));
+        $manufactures = Manufacture::all()->pluck("title_en", "id");
+        return view('admin.components.sub_category.edit', compact('sub_category','categories','manufactures'));
     }
 
     /**
@@ -90,6 +102,16 @@ class SubCategoriesController extends Controller
         $inputs = $request->all();
         $sub_category = SubCategory::find($id);
         $sub_category->update($inputs);
+
+        //Attaching MAnufactures to SubCategory if Selected
+        if (isset($inputs['manufactures'])) {
+            $sub_category->manufactures()->detach();
+            foreach ($inputs['manufactures'] as $manufacture_id) {
+                $sub_category->manufactures()->attach($manufacture_id);
+                $sub_category->save();
+            }
+        }
+
         return redirect()->route('sub-categories.index')->with(['success' => 'SubCategory ' . __("messages.update")]);
     }
 
