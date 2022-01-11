@@ -22,6 +22,12 @@ class SettingsController extends Controller
         'services_distributor_ar' => 'Distributor Services Arabic',
         'services_acquires_en' => 'Acquires Services English',
         'services_acquires_ar' => 'Acquires Services Arabic',
+        'terms_and_conditions_en' => 'Terms and Conditions English',
+        'terms_and_conditions_ar' => 'Terms and Conditions Arabic',
+        'privacy_policy_en' => 'Privacy Policy English',
+        'privacy_policy_ar' => 'Privacy Policy Arabic',
+        'faq_en' => 'FAQ English',
+        'faq_ar' => 'FAQ Arabic',
     ];
 
    /**
@@ -33,7 +39,7 @@ class SettingsController extends Controller
     {
         $settings = collect();
         foreach ($this::$settings as $s => $x) {
-            $setting = Setting::firstOrCreate(['type' => $s], ['value' => $s]);
+            $setting = Setting::firstOrCreate(['type' => $s], ['value' => '']);
             $setting['message'] = $x;
             $settings->add($setting);
         }
