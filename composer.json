@@ -23,7 +23,8 @@
         "yajra/laravel-datatables": "^1.5",
         "yajra/laravel-datatables-buttons": "^4.13",
         "yajra/laravel-datatables-oracle": "^9.18",
-        "zircote/swagger-php": "^3.3"
+        "zircote/swagger-php": "^3.3",
+        "cyrildewit/eloquent-viewable": "^6.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

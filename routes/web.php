@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AccountManagerController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Admin\AuctionsController;
 use App\Http\Controllers\Admin\CategoriesController;
@@ -68,6 +69,8 @@ Route::get('/', function () {
         Route::post('/settings', [SettingsController::class,'update'])->name("settings.update");
 
         Route::resource('/subscriptions', SubscriptionsController::class);
+
+        Route::resource('/account-managers', AccountManagerController::class);
     });
 
 
