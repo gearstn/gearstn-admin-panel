@@ -82,7 +82,7 @@ class NewsDataTable extends DataTable
             Column::make('title_en'),
             Column::make('title_ar'),
             Column::make('post_date'),
-            Column::make('image_url')->title('Image Link'),
+            // Column::make('image_url')->title('Image Link'),
             Column::make('bodytext_en')->title('Body Text EN'),
             Column::make('bodytext_ar')->title('Body Text AR'),
             Column::make('slug'),

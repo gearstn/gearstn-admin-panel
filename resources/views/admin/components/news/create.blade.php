@@ -22,7 +22,9 @@
                             @method('POST')
                             {{csrf_field()}}
                             @include('admin.components.news.fields')
+                            <input type="hidden" id="photos" name="photos" value="{{ $news->image_id}}">
                             {!!form::close()!!}
+                            @include('admin.widgets.uploader.dragdrop' , $attr = ['route' => 'create'] )
                             <button type="submit" class="btn btn-block btn-success" onclick="$('#form-data').submit()">Submit</button>
                         </div>
                     </div>
