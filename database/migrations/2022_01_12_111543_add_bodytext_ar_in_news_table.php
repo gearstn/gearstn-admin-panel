@@ -16,6 +16,7 @@ class AddBodytextArInNewsTable extends Migration
         Schema::table('news', function (Blueprint $table) {
             $table->renameColumn('bodytext', 'bodytext_en');
             $table->longText('bodytext_ar');
+            $table->string('slug')->nullable()->change();
         });
     }
 

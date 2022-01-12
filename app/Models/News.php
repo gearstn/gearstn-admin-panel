@@ -16,7 +16,7 @@ class News extends Model
         'post_date',
         'image_url',
         'bodytext_en',
-        'bodytext_Ar',
+        'bodytext_ar',
         'slug',
     ];
     public static $cast = [
