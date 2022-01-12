@@ -14,7 +14,7 @@ class News extends Model
         'title_en',
         'title_ar',
         'post_date',
-        'image_url',
+        'image_id',
         'bodytext_en',
         'bodytext_ar',
         'slug',
@@ -23,7 +23,7 @@ class News extends Model
         'title_en' => 'required',
         'title_ar' => 'required',
         'post_date' => 'required',
-        'image_url' => 'required',
+        'image_id' => 'required',
         'bodytext_en' => 'required',
         'bodytext_ar' => 'required',
     ];

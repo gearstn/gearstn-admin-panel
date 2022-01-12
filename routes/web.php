@@ -63,7 +63,7 @@ Route::get('/', function () {
         Route::resource('/users', UsersControllers::class);
         Route::resource('/employees', EmployeesController::class)->except('show');
         Route::post('/uploads', [UploadsController::class,'store'] )->name('uploads.store');
-        Route::post('/uploads', [UploadsController::class , 'destroy'])->name('uploads.destroy');
+        // Route::post('/uploads', [UploadsController::class , 'destroy'])->name('uploads.destroy');
 
         Route::resource('/settings', SettingsController::class)->except(['update', 'destroy', 'edit', 'store', 'create']);
         Route::post('/settings', [SettingsController::class,'update'])->name("settings.update");

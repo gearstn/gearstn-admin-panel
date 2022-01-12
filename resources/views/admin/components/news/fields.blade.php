@@ -1,25 +1,17 @@
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-4">
         <div class="form-group">
             {{ form::label('title','English Title')}}
             {{form::text('title_en', $news->title_en ,['class'=>'form-control','placeholder'=>'English Title'])}}
         </div>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-4">
         <div class="form-group">
             {{ form::label('title','English Title')}}
             {{form::text('title_ar', $news->title_ar ,['class'=>'form-control','placeholder'=>'Arabic Title'])}}
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-sm-6">
-        <div class="form-group">
-            {{ form::label('image_url','Image Link')}}
-            {{form::text('image_url', $news->image_url ,['class'=>'form-control','placeholder'=>'Image Link'])}}
-        </div>
-    </div>
-    <div class="col-sm-6">
+    <div class="col-sm-4">
         <div class="form-group">
             {{ form::label('post_date','Post Date')}}
             <div class="input-group date" id="reservationdate" data-target-input="nearest">
@@ -31,6 +23,7 @@
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class="col-sm-6">
         <div class="form-group">
