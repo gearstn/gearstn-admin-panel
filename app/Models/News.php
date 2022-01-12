@@ -15,7 +15,8 @@ class News extends Model
         'title_ar',
         'post_date',
         'image_url',
-        'bodytext',
+        'bodytext_en',
+        'bodytext_ar',
         'slug',
     ];
     public static $cast = [
@@ -23,6 +24,7 @@ class News extends Model
         'title_ar' => 'required',
         'post_date' => 'required',
         'image_url' => 'required',
-        'bodytext' => 'required',
+        'bodytext_en' => 'required',
+        'bodytext_ar' => 'required',
     ];
 }
