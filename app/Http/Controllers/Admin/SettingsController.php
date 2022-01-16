@@ -26,6 +26,8 @@ class SettingsController extends Controller
         'terms_and_conditions_ar' => 'Terms and Conditions Arabic',
         'privacy_policy_en' => 'Privacy Policy English',
         'privacy_policy_ar' => 'Privacy Policy Arabic',
+        'safety_instructions_en' => 'Safety Instructions English',
+        'safety_instructions_ar' => 'Safety Instructions Arabic',
         'faq_en' => 'FAQ English',
         'faq_ar' => 'FAQ Arabic',
     ];
