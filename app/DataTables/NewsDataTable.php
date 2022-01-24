@@ -9,7 +9,7 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
-
+use Illuminate\Support\Str ;
 class NewsDataTable extends DataTable
 {
     /**
@@ -31,6 +31,12 @@ class NewsDataTable extends DataTable
             })
             ->editColumn("created_at", function ($data) {
                 return Carbon::parse($data->created_at)->diffForHumans();
+            })
+            ->editColumn("bodytext_en", function ($data) {
+                return Str::limit($data->bodytext_en, 30, '.......');
+            })
+            ->editColumn("bodytext_ar", function ($data) {
+                return Str::limit($data->bodytext_en, 30, '.......');
             })
             ->editColumn("title", function ($data) {
                 return ucfirst($data->title);
