@@ -18,6 +18,10 @@ class News extends Model
         'bodytext_en',
         'bodytext_ar',
         'slug',
+        'mins_read',
+        'author',
+        'seo_title',
+        'seo_description',
     ];
     public static $cast = [
         'title_en' => 'required',
@@ -26,5 +30,9 @@ class News extends Model
         'image_id' => 'required',
         'bodytext_en' => 'required',
         'bodytext_ar' => 'required',
+        'author' => 'string',
+        'mins_read' => 'integer',
+        'seo_title' => 'string',
+        'seo_description' => 'string',
     ];
 }

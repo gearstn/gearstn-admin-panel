@@ -29,9 +29,8 @@ class UsersDataTable extends DataTable
             ->editColumn("created_at", function ($data) {
                 return Carbon::parse($data->created_at)->diffForHumans();
             })
-            ->editColumn("panned", function ($data) {
-                if($data->panned) return 'Yes';
-                else return 'No';
+            ->editColumn("role", function ($data) {
+                return $data->roles->first()->name;
             });
     }
 
@@ -81,10 +80,8 @@ class UsersDataTable extends DataTable
             Column::make('first_name'),
             Column::make('last_name'),
             Column::make('company_name'),
-            Column::make('country'),
-            Column::make('tax_license'),
-            Column::make('commercial_license'),
-            Column::make('panned'),
+            Column::make('phone'),
+            Column::make('role'),
             Column::make('created_at'),
             Column::computed('action')
                 ->exportable(false)
