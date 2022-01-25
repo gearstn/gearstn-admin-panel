@@ -27,26 +27,44 @@
 <div class="row">
     <div class="col-sm-3">
         <div class="form-group">
-            {{ form::label('author','Author')}}
-            {{form::text('author', $news->author ,['class'=>'form-control','placeholder'=>'Author'])}}
-        </div>
-    </div>
-    <div class="col-sm-3">
-        <div class="form-group">
             {{ form::label('mins_read','Mins Read')}}
             {{form::text('mins_read', $news->mins_read ,['class'=>'form-control','placeholder'=>'Mins Read'])}}
         </div>
     </div>
     <div class="col-sm-3">
         <div class="form-group">
-            {{ form::label('seo_title','SEO Title')}}
-            {{form::text('seo_title', $news->seo_title ,['class'=>'form-control','placeholder'=>'SEO Title'])}}
+            {{ form::label('author_en','Author EN')}}
+            {{form::text('author_en', $news->author_en ,['class'=>'form-control','placeholder'=>'Author EN'])}}
         </div>
     </div>
     <div class="col-sm-3">
         <div class="form-group">
-            {{ form::label('seo_description','SEO Description')}}
-            {{form::text('seo_description', $news->seo_description ,['class'=>'form-control','placeholder'=>'SEO Description'])}}
+            {{ form::label('author_ar','Author AR')}}
+            {{form::text('author_ar', $news->author_ar ,['class'=>'form-control','placeholder'=>'Author AR'])}}
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group">
+            {{ form::label('seo_title_en','SEO Title EN')}}
+            {{form::text('seo_title_en', $news->seo_title_en ,['class'=>'form-control','placeholder'=>'SEO Title EN'])}}
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group">
+            {{ form::label('seo_title_ar','SEO Title AR')}}
+            {{form::text('seo_title_ar', $news->seo_title_ar ,['class'=>'form-control','placeholder'=>'SEO Title AR'])}}
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group">
+            {{ form::label('seo_description_en','SEO Description EN')}}
+            {{form::text('seo_description_en', $news->seo_description_en ,['class'=>'form-control','placeholder'=>'SEO Description EN'])}}
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group">
+            {{ form::label('seo_description_ar','SEO Description AR')}}
+            {{form::text('seo_description_ar', $news->seo_description_ar ,['class'=>'form-control','placeholder'=>'SEO Description AR'])}}
         </div>
     </div>
 </div>
