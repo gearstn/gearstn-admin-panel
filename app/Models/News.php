@@ -19,9 +19,12 @@ class News extends Model
         'bodytext_ar',
         'slug',
         'mins_read',
-        'author',
-        'seo_title',
-        'seo_description',
+        'author_en',
+        'author_ar',
+        'seo_title_en',
+        'seo_title_ar',
+        'seo_description_en',
+        'seo_description_ar',
     ];
     public static $cast = [
         'title_en' => 'required',
@@ -30,9 +33,12 @@ class News extends Model
         'image_id' => 'required',
         'bodytext_en' => 'required',
         'bodytext_ar' => 'required',
-        'author' => 'string',
         'mins_read' => 'integer',
-        'seo_title' => 'string',
-        'seo_description' => 'string',
+        'author_en' => 'string',
+        'author_ar' => 'string',
+        'seo_title_en' => 'string',
+        'seo_title_ar' => 'string',
+        'seo_description_en' => 'string',
+        'seo_description_ar' => 'string',
     ];
 }

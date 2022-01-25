@@ -15,9 +15,12 @@ class AddAuthAndSeoNewsTable extends Migration
     {
         Schema::table('news', function (Blueprint $table) {
             $table->integer('mins_read')->nullable();
-            $table->string('author', 255)->nullable();
-            $table->string('seo_title', 255)->nullable();
-            $table->string('seo_description', 255)->nullable();
+            $table->string('author_en', 255)->nullable();
+            $table->string('author_ar', 255)->nullable();
+            $table->string('seo_title_en', 255)->nullable();
+            $table->string('seo_title_ar', 255)->nullable();
+            $table->string('seo_description_en', 255)->nullable();
+            $table->string('seo_description_ar', 255)->nullable();
         });
     }
 
@@ -29,7 +32,7 @@ class AddAuthAndSeoNewsTable extends Migration
     public function down()
     {
         Schema::table('news', function (Blueprint $table) {
-            $table->dropColumn(['mins_read','author','seo_title', 'seo_description']);
+            $table->dropColumn(['mins_read','author_en','author_ar','seo_title_en','seo_title_ar' , 'seo_description_en','seo_description_ar']);
         });
     }
 }
