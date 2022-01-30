@@ -47,7 +47,7 @@ class NewsController extends Controller
     public function store(Request $request)
     {
         $inputs = $request->all();
-        $inputs['image_id'] = json_decode($inputs['photos'],true)[0];
+        $inputs['image_id'] = isset($inputs['photos']) ? json_decode($inputs['photos'],true)[0] : $inputs['image_id'] = null ;
         $inputs['post_date'] = Carbon::parse($inputs['post_date']);
         $validator = Validator::make($inputs, News::$cast);
         if ($validator->fails()) {
