@@ -83,3 +83,13 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
+ 
+<script>
+    // 'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    CKEDITOR.replace( 'bodytext_en', {
+        filebrowserUploadUrl: "{{route('uploads.local_storage')}}",
+        filebrowserUploadMethod: 'form'
+    });
+</script>
