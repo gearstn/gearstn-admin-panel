@@ -89,7 +89,7 @@
 <script>
     // 'X-CSRF-TOKEN': "{{ csrf_token() }}"
     CKEDITOR.replace( 'bodytext_en', {
-        filebrowserUploadUrl: "{{route('uploads.local_storage')}}",
+        filebrowserUploadUrl: "{{route('uploads.local_storage', ['X-CSRF-TOKEN' => csrf_token() ])}}",
         filebrowserUploadMethod: 'form'
     });
 </script>

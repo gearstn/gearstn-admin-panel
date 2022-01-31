@@ -122,7 +122,6 @@ class UploadsController extends Controller
     }
 
 public function local_upload(Request $request){
-    dd($request->all());
     if($request->hasFile('upload')) {
         //get filename with extension
         $filenamewithextension = $request->file('upload')->getClientOriginalName();
