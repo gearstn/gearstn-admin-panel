@@ -121,16 +121,34 @@ class UploadsController extends Controller
         // }
         return redirect()->back();
     }
-    public function user_destroy(Request $request)
-    {
-        $inputs = $request->all();
 
-        $image = Upload::find($inputs['id']);
-        $user = User::find($image->user_id);
-        $user->{$inputs['key']} = null;
-        $user->save();
-        Storage::disk('s3')->delete($image->file_path);
-        $image->delete();
-        return redirect()->back();
+public function local_upload(Request $request){
+    if($request->hasFile('upload')) {
+        //get filename with extension
+        $filenamewithextension = $request->file('upload')->getClientOriginalName();
+   
+        //get filename without extension
+        $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+   
+        //get file extension
+        $extension = $request->file('upload')->getClientOriginalExtension();
+   
+        //filename to store
+        $filenametostore = $filename.'_'.time().'.'.$extension;
+   
+        //Upload File
+        $request->file('upload')->storeAs('public/uploads', $filenametostore);
+ 
+        $CKEditorFuncNum = $request->input('CKEditorFuncNum');
+        $url = asset('storage/uploads/'.$filenametostore); 
+        $msg = 'Image successfully uploaded'; 
+        $re = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, '$url', '$msg')</script>";
+          
+        // Render HTML output 
+        @header('Content-type: text/html; charset=utf-8'); 
+        echo $re;
     }
+}
+
+
 }
