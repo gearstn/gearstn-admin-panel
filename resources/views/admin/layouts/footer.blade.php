@@ -50,7 +50,8 @@
 <script src="//cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" defer></script>
 {{-- <script src="//cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script> --}}
-<script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
+{{-- <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script> --}}
+
 
 @stack("scripts")
 </body>

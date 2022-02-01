@@ -39,7 +39,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group p-2">
                                     {{ form::label('title',$setting->message)}}
-                                    {{form::textarea($setting->type, $setting->value, ['class'=>'form-control ckeditor'])}}
+                                    {{form::textarea($setting->type, $setting->value, ['class'=>'form-control'])}}
                                 </div>
                             </div>
                         @endforeach
@@ -59,8 +59,16 @@
                 theme: "bootstrap4",
             });
         });
-        $('.ckeditor').ckeditor();
-
     </script>
 
+ 
+<script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
+@foreach($settings as $setting)
+    <script>
+        CKEDITOR.replace( '{{$setting->type}}', {
+            filebrowserUploadUrl: "{{route('uploads.local_storage', ['_token' => csrf_token() ])}}",
+            filebrowserUploadMethod: 'form'
+        });
+    </script>
+@endforeach
 @endsection
