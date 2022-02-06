@@ -47,7 +47,7 @@ class UploadsController extends Controller
 
         $validator = Validator::make($inputs, [
             "photos" => ["required","array","min:1","max:5"],
-            "photos.*" => ["required","mimes:jpeg,jpg,png,gif","max:500"],
+            "photos.*" => ["required","mimes:jpeg,jpg,png,gif","max:1000"],
         ] );
         if ($validator->fails()) {
             return response()->json($validator->messages(), 400);
