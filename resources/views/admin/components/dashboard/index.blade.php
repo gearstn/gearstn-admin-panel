@@ -21,103 +21,113 @@
             <div class="row">
                 <div class="col-lg-3 col-6">
                     <div class="info-box bg-info">
-                        <span class="info-box-icon"><i class="nav-icon fas fa-at"></i></span>
+                        <span class="info-box-icon"><i class="fas fa-mouse"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Total</span>
-                            <span class="info-box-number">1000</span>
+                            @if($clicks['allClick'])
+                                <span class="info-box-text">Top Email and Phone Click({{$clicks['allClick']}}) with {{$clicks['allClick']}} clicks</span>
+                            @else
+                                <span class="info-box-text">Top Email and Phone Click</span>
+                            @endif
+                            <span class="info-box-number">{{number_format($clicks['allCount'])}}</span>
 
-{{--                            <div class="progress">--}}
-{{--                                @if($clicks['allClick'])--}}
-{{--                                    <div class="progress-bar"--}}
-{{--                                         style="width: {{$clicks['allCount']/($clicks['last30daysCount'])*100}}%"></div>--}}
-{{--                                @else--}}
-{{--                                    <div class="progress-bar"--}}
-{{--                                         style="width: {{100}}%"></div>--}}
-{{--                                @endif--}}
-{{--                            </div>--}}
-{{--                            <span class="progress-description">--}}
-{{--                  {{number_format($clicks['allCount'])}} Clicks opened in 30 Days--}}
-{{--                </span>--}}
+                            <div class="progress">
+                                @if($clicks['allClick'])
+                                    <div class="progress-bar"
+                                         style="width: {{$clicks['last30daysCount'] ? $clicks['allCount']/($clicks['last30daysCount'])*100 : 0}}%"></div>
+                                @else
+                                    <div class="progress-bar"
+                                         style="width: {{100}}%"></div>
+                                @endif
+                            </div>
+                            <span class="progress-description">
+                  {{number_format($clicks['last30daysCount'])}} Clicks opened in 30 Days
+                </span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
                 </div>
+
                 <div class="col-lg-3 col-6">
                     <div class="info-box bg-success">
-                        <span class="info-box-icon"><i class="nav-icon fas fa-box"></i></span>
+                        <span class="info-box-icon"><i class="fas fa-mouse"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Total</span>
-                            <span class="info-box-number">10000</span>
-{{--                            @if($social['allSocial'])--}}
-{{--                                <span class="info-box-text">Top social({{$social['allSocial']->social_type}}) with {{$social['allSocial']->total}} clicks</span>--}}
-{{--                            @else--}}
-{{--                                <span class="info-box-text">Top social</span>--}}
-{{--                            @endif--}}
-{{--                            <span class="info-box-number">{{number_format($social['allCount'])}}</span>--}}
+                            @if($clicks['allClick'])
+                                <span class="info-box-text">Top Email and Phone Click({{$clicks['allClick']}}) with {{$clicks['allClick']}} clicks</span>
+                            @else
+                                <span class="info-box-text">Top Email and Phone Click</span>
+                            @endif
+                            <span class="info-box-number">{{number_format($clicks['allCount'])}}</span>
 
-{{--                            <div class="progress">--}}
-{{--                                @if($social['allSocial'])--}}
-{{--                                    <div class="progress-bar"--}}
-{{--                                         style="width: {{$social['allCount']/($social['last30daysCount'])*100}}%"></div>--}}
-{{--                                @else--}}
-{{--                                    <div class="progress-bar"--}}
-{{--                                         style="width: {{100}}%"></div>--}}
-{{--                                @endif--}}
-{{--                            </div>--}}
-{{--                            <span class="progress-description">--}}
-{{--                  {{number_format($social['allCount'])}} Socials opened in 30 Days--}}
-{{--                </span>--}}
+                            <div class="progress">
+                                @if($clicks['allClick'])
+                                    <div class="progress-bar"
+                                         style="width: {{$clicks['last30daysCount'] ? $clicks['allCount']/($clicks['last30daysCount'])*100 : 0}}%"></div>
+                                @else
+                                    <div class="progress-bar"
+                                         style="width: {{100}}%"></div>
+                                @endif
+                            </div>
+                            <span class="progress-description">
+                  {{number_format($clicks['last30daysCount'])}} Clicks opened in 30 Days
+                </span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
                 </div>
                 <div class="col-lg-3 col-6">
                     <div class="info-box bg-warning">
-                        <span class="info-box-icon"><i class="nav-icon fas fa-mail-bulk"></i></span>
+                        <span class="info-box-icon"><i class="fas fa-mouse"></i></span>
+
                         <div class="info-box-content">
-                            <span class="info-box-text">Total </span>
-                            <span class="info-box-number">100000</span>
-{{--                            @if($stores['allStore'])--}}
-{{--                                <span class="info-box-text">Top stores({{\App\Models\Place::find($stores['allStore']->place_id)->title}}) with {{$stores['allStore']->total}} clicks</span>--}}
-{{--                            @else--}}
-{{--                                <span class="info-box-text">Top stores with 0}} clicks</span>--}}
-{{--                            @endif--}}
-{{--                            <span class="info-box-number">{{number_format($stores['allCount'])}}</span>--}}
-{{--                            <div class="progress">--}}
-{{--                                @if($stores['allStore'])--}}
-{{--                                    <div class="progress-bar"--}}
-{{--                                         style="width: {{$stores['allCount']/($stores['last30daysCount'])*100}}%"></div>--}}
-{{--                                @else--}}
-{{--                                    <div class="progress-bar"--}}
-{{--                                         style="width: {{100}}%"></div>--}}
-{{--                                @endif--}}
-{{--                            </div>--}}
-{{--                            <span class="progress-description">--}}
-{{--                  {{number_format($stores['allCount'])}} Increase in 30 Days--}}
-{{--                </span>--}}
+                            @if($clicks['allClick'])
+                                <span class="info-box-text">Top Email and Phone Click({{$clicks['allClick']}}) with {{$clicks['allClick']}} clicks</span>
+                            @else
+                                <span class="info-box-text">Top Email and Phone Click</span>
+                            @endif
+                            <span class="info-box-number">{{number_format($clicks['allCount'])}}</span>
+
+                            <div class="progress">
+                                @if($clicks['allClick'])
+                                    <div class="progress-bar"
+                                         style="width: {{$clicks['last30daysCount'] ? $clicks['allCount']/($clicks['last30daysCount'])*100 : 0}}%"></div>
+                                @else
+                                    <div class="progress-bar"
+                                         style="width: {{100}}%"></div>
+                                @endif
+                            </div>
+                            <span class="progress-description">
+                  {{number_format($clicks['last30daysCount'])}} Clicks opened in 30 Days
+                </span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
                 </div>
                 <div class="col-lg-3 col-6">
                     <div class="info-box bg-danger">
-                        <span class="info-box-icon"><i class="fa fa-calendar"></i></span>
+                        <span class="info-box-icon"><i class="fas fa-mouse"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Total </span>
-                            <span class="info-box-number">1000</span>
-{{--                            <span class="info-box-text">Visitors</span>--}}
-{{--                            <span class="info-box-number">{{number_format($visitors['all'])}}</span>--}}
+                            @if($clicks['allClick'])
+                                <span class="info-box-text">Top Email and Phone Click({{$clicks['allClick']}}) with {{$clicks['allClick']}} clicks</span>
+                            @else
+                                <span class="info-box-text">Top Email and Phone Click</span>
+                            @endif
+                            <span class="info-box-number">{{number_format($clicks['allCount'])}}</span>
 
-{{--                            <div class="progress">--}}
-{{--                                <div class="progress-bar"--}}
-{{--                                     style="width: {{$visitors['all']/($visitors['last30days'])*100}}%"></div>--}}
-{{--                            </div>--}}
-{{--                            <span class="progress-description">--}}
-{{--                  {{number_format($visitors['last30days'])}} Visitors in 30 Days--}}
-{{--                </span>--}}
+                            <div class="progress">
+                                @if($clicks['allClick'])
+                                    <div class="progress-bar"
+                                         style="width: {{$clicks['last30daysCount'] ? $clicks['allCount']/($clicks['last30daysCount'])*100 : 0}}%"></div>
+                                @else
+                                    <div class="progress-bar"
+                                         style="width: {{100}}%"></div>
+                                @endif
+                            </div>
+                            <span class="progress-description">
+                  {{number_format($clicks['last30daysCount'])}} Clicks opened in 30 Days
+                </span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
