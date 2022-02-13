@@ -30,6 +30,7 @@
                             <label> Upload New Imgaes </label>
                             @include('admin.widgets.uploader.dragdrop' , $attr=['route' => 'edit'] )
 
+                            <br>
                             <label> Stored Images </label>
                             <div class="row mt-3">
                                 @foreach( $images as $image )
@@ -37,16 +38,17 @@
                                         <img src="{{ $image->url }}"  width="100%" height="100%" style="object-fit: cover">
 
                                         <form action="{{route("uploads.destroy")}}" method="POST" onsubmit="return confirm('Are you sure?')"
-                                            style="display: inline-block;">
+                                            >
                                           @csrf
                                           <input type="hidden" name="_method" value="POST">
                                           <input type="hidden" name="ids" value=" {{ $image->id }} ">
-                                          <input type="submit" class="btn btn-xs btn-danger" value="Delete">
+                                          <input type="submit" class="btn btn-block btn-danger" value="Delete">
                                         </form>
                                     </div>
                                 @endforeach
                             </div>
 
+                            <br> <br>
                             <button type="submit" class="btn btn-block btn-success" onclick="$('#form-data').submit()">
                                 Submit Changes
                             </button>

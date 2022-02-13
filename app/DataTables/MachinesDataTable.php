@@ -48,13 +48,8 @@ class MachinesDataTable extends DataTable
             ->editColumn("title_en", function ($data) {
                 return ucfirst($data->title_en);
             })
-            ->editColumn("approved", function ($data) {
-                if($data->approved) return 'Yes';
-                else return 'No';
-            })
-            ->editColumn("featured", function ($data) {
-                if($data->featured) return 'Yes';
-                else return 'No';
+            ->editColumn("views", function ($data) {
+                return views($data)->count();
             })
             ->editColumn("verified", function ($data) {
                 if($data->verified) return 'Yes';
@@ -112,8 +107,7 @@ class MachinesDataTable extends DataTable
             Column::make('sell_type'),
             Column::make('price'),
             Column::make('approved'),
-            Column::make('featured'),
-            Column::make('verified'),
+            Column::make('views'),
             Column::make('created_at'),
             Column::computed('action')
                 ->exportable(false)
