@@ -129,9 +129,23 @@ return [
     |
     */
 
+
     'meilisearch' => [
         'host' => env('MEILISEARCH_HOST', 'http://localhost:7700'),
         'key' => env('MEILISEARCH_KEY', null),
+    ],
+
+    'tntsearch' => [
+        'storage'  => storage_path(), //place where the index files will be stored
+        'fuzziness' => env('TNTSEARCH_FUZZINESS', true),
+        'fuzzy' => [
+            'prefix_length' => 2, //The number of initial characters which will not be “fuzzified”. This helps to reduce the number of terms which must be examined. Defaults to 0.
+            'max_expansions' => 50, //The maximum number of terms that the fuzzy query will expand to. Defaults to 50.
+            'distance' => 20, // I don't fully get this one, but appears to be the length of characters it extends to, a previous explanation says its the Levenshtein Distance, but it doesn't seem to do that in my case. The fuzziness setting seems to describe the Levenshtein Distance.
+        ],
+        'asYouType' => false,
+        'searchBoolean' => env('TNTSEARCH_BOOLEAN', false),
+        'maxDocs' => env('TNTSEARCH_MAX_DOCS', 500),
     ],
 
 ];
