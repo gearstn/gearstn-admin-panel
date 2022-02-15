@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AccountManagerController;
+use App\Http\Controllers\Admin\MailController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Admin\AuctionsController;
 use App\Http\Controllers\Admin\CategoriesController;
@@ -73,8 +74,7 @@ Route::get('/', function () {
         Route::resource('/subscriptions', SubscriptionsController::class);
 
         Route::resource('/account-managers', AccountManagerController::class);
+
+        Route::resource('mails', MailController::class);
+//        Route::get('/fetch-emails', 'EmailsController@fetchEmails')->name('fetch-emails');
     });
-
-
-
-// });
