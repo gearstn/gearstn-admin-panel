@@ -25,6 +25,7 @@
                             <input type="hidden" id="photos" name="photos" value="{{ $machine->images }}">
                             {!!form::close()!!}
                             @include('admin.widgets.uploader.dragdrop' , $attr = ['route' => 'create'] )
+                            <br>
                             <button type="submit" class="btn btn-block btn-success" onclick="$('#form-data').submit()">Submit</button>
                         </div>
                     </div>

@@ -21,103 +21,69 @@
             <div class="row">
                 <div class="col-lg-3 col-6">
                     <div class="info-box bg-info">
-                        <span class="info-box-icon"><i class="nav-icon fas fa-at"></i></span>
+                        <span class="info-box-icon"><i class="fas fa-mouse"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Total</span>
-                            <span class="info-box-number">1000</span>
+                            <span class="info-box-text">All Users</span>
+                            <span class="info-box-number">{{number_format($all_users)}}</span>
 
-{{--                            <div class="progress">--}}
-{{--                                @if($clicks['allClick'])--}}
-{{--                                    <div class="progress-bar"--}}
-{{--                                         style="width: {{$clicks['allCount']/($clicks['last30daysCount'])*100}}%"></div>--}}
-{{--                                @else--}}
-{{--                                    <div class="progress-bar"--}}
-{{--                                         style="width: {{100}}%"></div>--}}
-{{--                                @endif--}}
-{{--                            </div>--}}
-{{--                            <span class="progress-description">--}}
-{{--                  {{number_format($clicks['allCount'])}} Clicks opened in 30 Days--}}
-{{--                </span>--}}
+                            <div class="progress">
+                                <div class="progress-bar"
+                                        style="width: {{$today_users ? $all_users/($today_users)*100 : 0}}%"></div>
+                            </div>
+                            <span class="progress-description">{{number_format($today_users)}} Registered Today </span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
                 </div>
+
                 <div class="col-lg-3 col-6">
                     <div class="info-box bg-success">
-                        <span class="info-box-icon"><i class="nav-icon fas fa-box"></i></span>
+                        <span class="info-box-icon"><i class="fas fa-mouse"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Total</span>
-                            <span class="info-box-number">10000</span>
-{{--                            @if($social['allSocial'])--}}
-{{--                                <span class="info-box-text">Top social({{$social['allSocial']->social_type}}) with {{$social['allSocial']->total}} clicks</span>--}}
-{{--                            @else--}}
-{{--                                <span class="info-box-text">Top social</span>--}}
-{{--                            @endif--}}
-{{--                            <span class="info-box-number">{{number_format($social['allCount'])}}</span>--}}
+                            <span class="info-box-text">All Machines</span>
+                            <span class="info-box-number">{{number_format($all_machines)}}</span>
 
-{{--                            <div class="progress">--}}
-{{--                                @if($social['allSocial'])--}}
-{{--                                    <div class="progress-bar"--}}
-{{--                                         style="width: {{$social['allCount']/($social['last30daysCount'])*100}}%"></div>--}}
-{{--                                @else--}}
-{{--                                    <div class="progress-bar"--}}
-{{--                                         style="width: {{100}}%"></div>--}}
-{{--                                @endif--}}
-{{--                            </div>--}}
-{{--                            <span class="progress-description">--}}
-{{--                  {{number_format($social['allCount'])}} Socials opened in 30 Days--}}
-{{--                </span>--}}
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <div class="info-box bg-warning">
-                        <span class="info-box-icon"><i class="nav-icon fas fa-mail-bulk"></i></span>
-                        <div class="info-box-content">
-                            <span class="info-box-text">Total </span>
-                            <span class="info-box-number">100000</span>
-{{--                            @if($stores['allStore'])--}}
-{{--                                <span class="info-box-text">Top stores({{\App\Models\Place::find($stores['allStore']->place_id)->title}}) with {{$stores['allStore']->total}} clicks</span>--}}
-{{--                            @else--}}
-{{--                                <span class="info-box-text">Top stores with 0}} clicks</span>--}}
-{{--                            @endif--}}
-{{--                            <span class="info-box-number">{{number_format($stores['allCount'])}}</span>--}}
-{{--                            <div class="progress">--}}
-{{--                                @if($stores['allStore'])--}}
-{{--                                    <div class="progress-bar"--}}
-{{--                                         style="width: {{$stores['allCount']/($stores['last30daysCount'])*100}}%"></div>--}}
-{{--                                @else--}}
-{{--                                    <div class="progress-bar"--}}
-{{--                                         style="width: {{100}}%"></div>--}}
-{{--                                @endif--}}
-{{--                            </div>--}}
-{{--                            <span class="progress-description">--}}
-{{--                  {{number_format($stores['allCount'])}} Increase in 30 Days--}}
-{{--                </span>--}}
+                            <div class="progress">
+                                <div class="progress-bar"
+                                        style="width: {{$today_machines ? $all_machines/($today_machines)*100 : 0}}%"></div>
+                            </div>
+                            <span class="progress-description">{{number_format($today_machines)}} Listed Today </span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
                 </div>
                 <div class="col-lg-3 col-6">
                     <div class="info-box bg-danger">
-                        <span class="info-box-icon"><i class="fa fa-calendar"></i></span>
+                        <span class="info-box-icon"><i class="fas fa-mouse"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Total </span>
-                            <span class="info-box-number">1000</span>
-{{--                            <span class="info-box-text">Visitors</span>--}}
-{{--                            <span class="info-box-number">{{number_format($visitors['all'])}}</span>--}}
+                            <span class="info-box-text">All Distributors</span>
+                            <span class="info-box-number">{{number_format($total_distributor)}}</span>
 
-{{--                            <div class="progress">--}}
-{{--                                <div class="progress-bar"--}}
-{{--                                     style="width: {{$visitors['all']/($visitors['last30days'])*100}}%"></div>--}}
-{{--                            </div>--}}
-{{--                            <span class="progress-description">--}}
-{{--                  {{number_format($visitors['last30days'])}} Visitors in 30 Days--}}
-{{--                </span>--}}
+                            <div class="progress">
+                                <div class="progress-bar"
+                                        style="width: {{$today_distributor ? $total_distributor/($today_distributor)*100 : 0}}%"></div>
+                            </div>
+                            <span class="progress-description">{{number_format($today_distributor)}} Registered Today </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <div class="info-box bg-warning">
+                        <span class="info-box-icon"><i class="fas fa-mouse"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">All Contractors</span>
+                            <span class="info-box-number">{{number_format($total_contractor)}}</span>
+
+                            <div class="progress">
+                                <div class="progress-bar"
+                                        style="width: {{$today_contractor ? $total_contractor/($today_contractor)*100 : 0}}%"></div>
+                            </div>
+                            <span class="progress-description">{{number_format($today_contractor)}} Registered Today </span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>

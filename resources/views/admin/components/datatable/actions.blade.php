@@ -11,12 +11,12 @@
     <button type="button" class="waves-effect btn btn-xs btn-light approve-{{$data->id}} "  value="{{$data->id}}">
         Approve
     </button>
-    <button type="button" class="waves-effect btn btn-xs btn-light feature-{{$data->id}} "  value="{{$data->id}}">
+    {{-- <button type="button" class="waves-effect btn btn-xs btn-light feature-{{$data->id}} "  value="{{$data->id}}">
         Feature
     </button>
     <button type="button" class="waves-effect btn btn-xs btn-light verify-{{$data->id}} "  value="{{$data->id}}">
         Verify
-    </button>
+    </button> --}}
 @endif
 
 

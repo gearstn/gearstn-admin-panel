@@ -11,6 +11,7 @@ use App\Models\Machine;
 use App\Models\MachineModel;
 use App\Models\Manufacture;
 use App\Models\SubCategory;
+use App\Models\Upload;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -73,12 +74,6 @@ class MachinesController extends Controller
         //Create the slug
         $inputs = $request->all();
         $inputs['images'] = $inputs['photos'];
-        // Uploads route to upload images and get arroy of ids
-        // $uploads_requests = Request::create( route('uploads-store'), 'POST', ['data' => $inputs['photos']]);
-        // $response = Route::dispatch($uploads_requests);
-        // $inputs['images'] = $response->getContent();
-        // dd($response);
-        // unset($inputs['photos']);
 
         $inputs['sku'] = random_int(10000000, 99999999);
 
@@ -91,7 +86,6 @@ class MachinesController extends Controller
         $inputs['slug'] = $inputs['year'].'-'.$inputs['manufacture_id'].'-'.$model_title.'-'.$inputs['sku'];
 
         $machine = Machine::create($inputs);
-        // $machine->save();
         return redirect()->route('machines.index')->with(['success' => 'Machine ' . __("messages.add")]);
 
     }
@@ -117,8 +111,7 @@ class MachinesController extends Controller
     public function edit($id)
     {
         $machine = Machine::findOrFail($id);
-        $machine_resource  = (new MachineResource($machine))->resolve();
-        $images = $machine_resource['images'];
+        $images = Upload::findMany(json_decode($machine->images),['id', 'url']);
         $categories = Category::all()->pluck("title_en", "id")->toArray();
         $categories[0] = 'Choose Category';
         ksort($categories);
