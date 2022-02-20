@@ -6,6 +6,7 @@ use App\DataTables\MailsDataTable;
 use App\Http\Controllers\Controller;
 use App\Jobs\MarketingMailJob;
 use App\Models\Mail;
+use App\Models\User;
 use Carbon\Carbon;
 use Faker\Factory;
 use Illuminate\Http\Request;
@@ -32,7 +33,22 @@ class MailController extends Controller
     public function create()
     {
         $mail = new Mail();
-        return view('admin.components.mail.create', compact('mail'));
+//        $Allcategories = Category::all();
+        $categories = [
+            null,
+            1 => 'distributor',
+            2 => 'contractor'
+        ];
+//        $categories[0] = null;
+//        foreach ($Allcategories as $cat)
+//            $categories[$cat->id] = $cat->name;
+
+        $users = User::all();
+        $emails = [];
+        $emails[0] = null;
+        foreach ($users as $user)
+            $emails[$user->id] = $user->email;
+        return view('admin.components.mail.create', compact('mail', 'categories', 'emails'));
     }
 
     /**
@@ -56,23 +72,23 @@ class MailController extends Controller
             return redirect()->route('mails.create')->withErrors($validator)->withInput();
         }
 
-        $input['emails'] = json_encode($input['emails']);
+        $input['receivers'] = json_encode($input['emails']);
         Mail::create($input);
 
         $details = [
             'body_en' => $input['body_en'],
             'body_ar' => $input['body_ar'],
             'subject' => $input['subject'],
-            'receiver' => json_decode($input['emails'], true)
+            'receiver' => $input['emails']
         ];
 
-        if ($input['scheduled'] == 0) {
-            $job = (new MarketingMailJob($details))->delay(0);
-        } else {
-            $date = strtotime($input['datetime']);
-            $job = (new MarketingMailJob($details))->delay(Carbon::parse($date));
-        }
-        dispatch($job);
+//        if ($input['scheduled'] == 0) {
+//            $job = (new MarketingMailJob($details))->delay(0);
+//        } else {
+//            $date = strtotime($input['datetime']);
+//            $job = (new MarketingMailJob($details))->delay(Carbon::parse($date));
+//        }
+//        dispatch($job);
         return redirect()->route('mails.index')->with(['success' => 'Mail ' . __("messages.add")]);    }
 
     /**
@@ -117,5 +133,11 @@ class MailController extends Controller
     public function destroy(Mail $mail)
     {
         //
+    }
+    public function fetch_emails(Request $request)
+    {
+        $inputs = $request->all();
+        unset($inputs['token']);
+        return User::query()->whereHas("roles", function($q) use ($inputs) { $q->where("name", $inputs['name'] ); })->pluck('email')->toArray() ;
     }
 }

@@ -76,5 +76,5 @@ Route::get('/', function () {
         Route::resource('/account-managers', AccountManagerController::class);
 
         Route::resource('mails', MailController::class);
-//        Route::get('/fetch-emails', 'EmailsController@fetchEmails')->name('fetch-emails');
+        Route::get('/fetch-emails',[MailController::class , 'fetch_emails'])->name('fetch-emails');
     });
