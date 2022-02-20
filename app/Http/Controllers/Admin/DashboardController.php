@@ -19,17 +19,17 @@ class DashboardController extends Controller
 
         $all_users = User::all()->count();
         $today_users = User::whereDate('created_at', Carbon::today())->count();
-        
+
         $all_machines = Machine::all()->count() ;
         $today_machines = Machine::whereDate('created_at', Carbon::today())->count();
 
-        $total_distributor = User::query()->whereHas("roles", function($q){ $q->whereNotIn("name", ["distributor"]); })->count();
-        $today_distributor = User::query()->whereHas("roles", function($q){ $q->whereNotIn("name", ["distributor"]); })->whereDate('created_at', Carbon::today())->count();
+        $total_distributor = User::query()->whereHas("roles", function($q){ $q->where("name", ["distributor"]); })->count();
+        $today_distributor = User::query()->whereHas("roles", function($q){ $q->where("name", ["distributor"]); })->whereDate('created_at', Carbon::today())->count();
 
-        $total_contractor = User::query()->whereHas("roles", function($q){ $q->whereNotIn("name", ["contractor"]); })->count();
-        $today_contractor = User::query()->whereHas("roles", function($q){ $q->whereNotIn("name", ["contractor"]); })->whereDate('created_at', Carbon::today())->count();
+        $total_contractor = User::query()->whereHas("roles", function($q){ $q->where("name", ["contractor"]); })->count();
+        $today_contractor = User::query()->whereHas("roles", function($q){ $q->where("name", ["contractor"]); })->whereDate('created_at', Carbon::today())->count();
 
-        return view("admin.components.dashboard.index" , 
+        return view("admin.components.dashboard.index" ,
                 compact('all_users', 'today_users' , 'all_machines' , 'today_machines' , 'total_distributor', 'today_distributor', 'total_contractor', 'today_contractor'));
     }
 }
