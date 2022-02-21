@@ -2,8 +2,8 @@
     <div class="col-sm-6">
         <div class="form-group">
             <label>Emails</label>
-            <select class="select2 justify-content-xl-center" id="emailSelect" name="emails[]" multiple="multiple"
-                    data-placeholder="Select category" style="width: 100%;">
+            <select class="select2 justify-content-xl-center  js-example-basic-multiple js-states form-control" id="receiversSelect" name="receivers[]" multiple="multiple"
+                    data-placeholder="Select Email" style="width: 100%;">
                 @foreach($emails as $email)
                     <option data-select2-id="{{$email}}">{{ $email }}</option>
                 @endforeach
@@ -40,7 +40,9 @@
             {{form::textarea('body_en',$mail->body_en,['class'=>'ckeditor form-control','style'=>'width: 100%'])}}
         </div>
     </div>
-</div><div class="row">
+</div>
+
+<div class="row">
     <div class="col-sm-12">
         <div class="form-group">
             {{ form::label('body_are','Body AR')}}
@@ -67,6 +69,7 @@
 
 
 <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
+
 <script>
     CKEDITOR.replace( 'body_en', {
         filebrowserUploadUrl: "{{route('uploads.local_storage', ['_token' => csrf_token() ])}}",
@@ -88,11 +91,11 @@
                 url: '{{route("fetch-emails")}}',
                 success: function (data) {
                     if (data !== []) {
-                        var emails = $('#emailSelect').val();
+                        var emails = $('#receiversSelect').val();
                         for (var i = 0; i < data.length; i++) {
                             emails.push(data[i])
                         }
-                        $('#emailSelect').val(emails).trigger('change')
+                        $('#receiversSelect').val(emails).trigger('change')
                     }
                 }
             });
@@ -107,4 +110,11 @@
             tags: true,
         })
     })
+
 </script>
+<style>
+    .select2-container .select2-selection {
+        height: 100%;
+        overflow: scroll;
+    }
+</style>
