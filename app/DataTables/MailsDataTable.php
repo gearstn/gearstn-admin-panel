@@ -25,8 +25,8 @@ class MailsDataTable extends DataTable
         $page = "mails";
         return datatables()
             ->eloquent($query)
-            ->editColumn("receiver", function ($data) {
-                return implode(" | ", json_decode($data->receiver));
+            ->editColumn("receivers", function ($data) {
+                return implode(" | ", json_decode($data->receivers, true));
             })
             ->editColumn('scheduled',function ($data) use ($page) {
                 if ($data->scheduled){
