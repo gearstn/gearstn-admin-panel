@@ -29,8 +29,9 @@ class MarketingMail extends Mailable
      */
     public function build()
     {
-        $m = htmlspecialchars_decode($this->details['message'],ENT_HTML5);
+        $body_en = htmlspecialchars_decode($this->details['body_en'],ENT_HTML5);
+        $body_ar = htmlspecialchars_decode($this->details['body_ar'],ENT_HTML5);
         return $this->subject($this->details['subject'])
-            ->view('admin.components.email_template.template',compact('m'));
+            ->view('admin.components.email_template.template',compact('body_en','body_ar'));
     }
 }

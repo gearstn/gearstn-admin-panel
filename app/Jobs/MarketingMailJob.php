@@ -34,7 +34,7 @@ class MarketingMailJob implements ShouldQueue
      */
     public function handle()
     {
-        foreach ($this->details['receiver'] as $email)
+        foreach ($this->details['receivers'] as $email)
             Mail::to($email)->send(new MarketingMail($this->details));
     }
 }

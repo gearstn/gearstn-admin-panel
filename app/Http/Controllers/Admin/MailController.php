@@ -57,38 +57,38 @@ class MailController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->all();
-
-        if($input['datetime'] == null){
-            $input['sent_time'] = Carbon::now();
-            $input['scheduled'] = 0;
+        $inputs = $request->all();
+        if($inputs['datetime'] == null){
+            $inputs['sent_time'] = Carbon::now();
+            $inputs['scheduled'] = 0;
         }
         else{
-            $input['sent_time'] = Carbon::parse($input['datetime']);;
-            $input['scheduled'] = 1;
+            $inputs['sent_time'] = Carbon::parse($inputs['datetime']);;
+            $inputs['scheduled'] = 1;
         }
-        $validator = Validator::make($input, Mail::$cast);
+        $emails = $inputs['receivers'];
+        $inputs['receivers'] = json_encode($inputs['receivers']);
+        $validator = Validator::make($inputs, Mail::$cast);
         if ($validator->fails()) {
             return redirect()->route('mails.create')->withErrors($validator)->withInput();
         }
 
-        $input['receivers'] = json_encode($input['emails']);
-        Mail::create($input);
+        Mail::create($inputs);
 
         $details = [
-            'body_en' => $input['body_en'],
-            'body_ar' => $input['body_ar'],
-            'subject' => $input['subject'],
-            'receiver' => $input['emails']
+            'body_en' => $inputs['body_en'],
+            'body_ar' => $inputs['body_ar'],
+            'subject' => $inputs['subject'],
+            'receivers' => $emails
         ];
 
-//        if ($input['scheduled'] == 0) {
-//            $job = (new MarketingMailJob($details))->delay(0);
-//        } else {
-//            $date = strtotime($input['datetime']);
-//            $job = (new MarketingMailJob($details))->delay(Carbon::parse($date));
-//        }
-//        dispatch($job);
+        if ($inputs['scheduled'] == 0) {
+            $job = (new MarketingMailJob($details))->delay(0);
+        } else {
+            $date = strtotime($inputs['datetime']);
+            $job = (new MarketingMailJob($details))->delay(Carbon::parse($date));
+        }
+        dispatch($job);
         return redirect()->route('mails.index')->with(['success' => 'Mail ' . __("messages.add")]);    }
 
     /**
