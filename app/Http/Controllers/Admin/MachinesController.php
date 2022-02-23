@@ -83,7 +83,8 @@ class MachinesController extends Controller
         }
 
         $model_title = MachineModel::findorFail($inputs['model_id'])->title_en;
-        $inputs['slug'] = $inputs['year'].'-'.$inputs['manufacture_id'].'-'.$model_title.'-'.$inputs['sku'];
+        $manufacture_title = Manufacture::findorFail($inputs['manufacture_id'])->title_en;
+        $inputs['slug'] = $inputs['year'].'-'.$manufacture_title.'-'.$model_title.'-'.$inputs['sku'];
 
         $machine = Machine::create($inputs);
         return redirect()->route('machines.index')->with(['success' => 'Machine ' . __("messages.add")]);
@@ -144,7 +145,7 @@ class MachinesController extends Controller
     public function update(Request $request, $id)
     {
         $inputs = $request->all();
-        $inputs['images'] = $inputs['photos']; 
+        $inputs['images'] = $inputs['photos'];
         $machine = Machine::find($id);
         $machine->update($inputs);
         return redirect()->route('machines.index')->with(['success' => 'Machine ' . __("messages.update")]);
