@@ -18,14 +18,22 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card-header">
-                                    <h3 class="card-title">Create Mail</h3>
+                                    <div class="row">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-8">
+                                            <a href="{{ route('mails.importView') }}" type="button" class="btn btn-block btn-primary btn-md">Import</a>
+                                        </div>
+                                        <div class="col-md-2"></div>
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
                         <div class="card-body">
                             {!! form::open(['route'=>['mails.store',$mail],'id'=>'form-data'] ) !!}
                             @method('POST')
                             {{csrf_field()}}
+                            @include('admin.components.mail.emails&categories-fields')
                             @include('admin.components.mail.fields')
                             {!!form::close()!!}
                             <button type="submit" class="btn btn-block btn-success" onclick="$('#form-data').submit()">

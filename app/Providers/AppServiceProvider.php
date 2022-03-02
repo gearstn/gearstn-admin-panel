@@ -31,13 +31,13 @@ class AppServiceProvider extends ServiceProvider
         Blade::if("dev", function () {
             return app()->env == "local" || app()->env == "dev" || app()->env == "development";
         });
-        
-        if (App::environment('production') ||  env("APP_ENV", "production"))
-        { 
-            resolve(\Illuminate\Routing\UrlGenerator::class)->forceScheme('https');
-            $this->app['request']->server->set('HTTPS', true);
 
-        } 
+        if (App::environment('production') ||  env("APP_ENV", "production"))
+        {
+//            resolve(\Illuminate\Routing\UrlGenerator::class)->forceScheme('https');
+//            $this->app['request']->server->set('HTTPS', true);
+
+        }
 
     }
 }

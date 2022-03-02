@@ -76,5 +76,7 @@ Route::get('/', function () {
         Route::resource('/account-managers', AccountManagerController::class);
 
         Route::resource('mails', MailController::class);
+        Route::get('/send-by-import', [ MailController::class, 'importView'])->name('mails.importView');
+        Route::post('/import', [ MailController::class, 'import'])->name('mails.import');
         Route::get('/fetch-emails',[MailController::class , 'fetch_emails'])->name('fetch-emails');
     });
