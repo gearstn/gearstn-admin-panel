@@ -55,10 +55,14 @@ class UploadsController extends Controller
         }
         $images = [];
         foreach ($inputs['photos'] as $image) {
+
             $fileInfo = $image->getClientOriginalName();
             $newFileName = time() . '.' . $image->extension();
-            $path = Storage::disk('s3')->put('images', $image);
-            $url = Storage::disk('s3')->url($path);
+            $img = Image::make($image)->insert( storage_path('app/public/logo.png') , 'bottom-right' ,10 ,10 )->limitColors(256)->gamma(1.0)->encode($image->extension());
+
+            $path = Storage::disk('local')->put($inputs['seller_id'] .'/'. $newFileName,   (string)$img);
+            $url = Storage::disk('local')->url($path);
+
             $photo = [
                 'user_id' => isset($inputs['seller_id']) ? $inputs['seller_id'] : Auth::user()->id ,
                 'file_original_name' => pathinfo($fileInfo, PATHINFO_FILENAME),
@@ -126,26 +130,26 @@ public function local_upload(Request $request){
     if($request->hasFile('upload')) {
         //get filename with extension
         $filenamewithextension = $request->file('upload')->getClientOriginalName();
-   
+
         //get filename without extension
         $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
-   
+
         //get file extension
         $extension = $request->file('upload')->getClientOriginalExtension();
-   
+
         //filename to store
         $filenametostore = $filename.'_'.time().'.'.$extension;
-   
+
         //Upload File
         $request->file('upload')->storeAs('public/uploads', $filenametostore);
- 
+
         $CKEditorFuncNum = $request->input('CKEditorFuncNum');
-        $url = asset('storage/uploads/'.$filenametostore); 
-        $msg = 'Image successfully uploaded'; 
+        $url = asset('storage/uploads/'.$filenametostore);
+        $msg = 'Image successfully uploaded';
         $re = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, '$url', '$msg')</script>";
-          
-        // Render HTML output 
-        @header('Content-type: text/html; charset=utf-8'); 
+
+        // Render HTML output
+        @header('Content-type: text/html; charset=utf-8');
         echo $re;
     }
 }
