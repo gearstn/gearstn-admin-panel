@@ -55,16 +55,31 @@ class MailController extends Controller
      */
     public function store(Request $request)
     {
-        $inputs = $this->data_preparation_store_import($request);
+        $inputs = $request->all();
+        if ($inputs['datetime'] == null) {
+            $inputs['sent_time'] = Carbon::now();
+            $inputs['scheduled'] = 0;
+        } else {
+            $inputs['sent_time'] = Carbon::parse($inputs['datetime']);;
+            $inputs['scheduled'] = 1;
+        }
 
-        $emails = $inputs['receivers'];
-        $inputs['receivers'] = json_encode($inputs['receivers']);
+        isset($inputs['file']) ? $import_emails = $this->import(['file' => $inputs['file']]) : $import_emails = [] ;
+
+        $emails = isset($inputs['receivers']) ? array_merge($inputs['receivers'] , $import_emails) : $import_emails;
+        $inputs['receivers'] = $emails;
+
         $validator = Validator::make($inputs, Mail::$cast);
         if ($validator->fails()) {
             return redirect()->route('mails.create')->withErrors($validator)->withInput();
         }
 
+        $inputs['receivers'] = json_encode($emails);
+
+        Mail::create($inputs);
+
         $this->sendingEmail($inputs, $emails);
+
         return redirect()->route('mails.index')->with(['success' => 'Mail ' . __("messages.add")]);    }
 
     /**
@@ -77,27 +92,17 @@ class MailController extends Controller
         return view('admin.components.mail.show', compact('mail'));
     }
 
-    public function importView(){
-        $mail = new Mail();
-        return view('admin.components.mail.import',  compact('mail'));
-    }
-
     /**
-     * @param Request $request
-     * @return RedirectResponse
+     * @return array|false
      */
-    public function import(Request $request): RedirectResponse
+    public function import($inputs)
     {
-        $inputs = $this->data_preparation_store_import($request);
 
         $validator = Validator::make($inputs, [
             'file' => 'required',
-            'subject' => 'required',
-            'body_en' => 'required',
-            'body_ar' => 'required'
         ]);
         if ($validator->fails()) {
-            return redirect()->route('mails.importView')->withErrors($validator)->withInput();
+            return false;
         }
         $temp = Excel::toArray(new EmailsImport, $inputs['file']);
         $rows = $temp[0];
@@ -105,10 +110,7 @@ class MailController extends Controller
         foreach ($rows as $row) {
             $emails[] = $row['email'];
         }
-        $inputs['receivers'] = json_encode($emails);
-
-        $this->sendingEmail($inputs, $emails);
-        return redirect()->route('mails.index')->with(['success' => 'Email/s ' . __("messages.add")]);
+        return $emails;
     }
 
 
@@ -126,8 +128,6 @@ class MailController extends Controller
      */
     public function sendingEmail(array $inputs, array $emails): void
     {
-        Mail::create($inputs);
-
         $details = [
             'body_en' => $inputs['body_en'],
             'body_ar' => $inputs['body_ar'],
@@ -144,20 +144,4 @@ class MailController extends Controller
         dispatch($job);
     }
 
-    /**
-     * @param Request $request
-     * @return array
-     */
-    public function data_preparation_store_import(Request $request): array
-    {
-        $inputs = $request->all();
-        if ($inputs['datetime'] == null) {
-            $inputs['sent_time'] = Carbon::now();
-            $inputs['scheduled'] = 0;
-        } else {
-            $inputs['sent_time'] = Carbon::parse($inputs['datetime']);;
-            $inputs['scheduled'] = 1;
-        }
-        return $inputs;
-    }
 }
