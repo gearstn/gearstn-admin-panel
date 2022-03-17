@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\AccountManagerController;
+use App\Http\Controllers\Admin\MailController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Admin\AuctionsController;
 use App\Http\Controllers\Admin\CategoriesController;
@@ -69,9 +71,10 @@ Route::get('/', function () {
         Route::resource('/settings', SettingsController::class)->except(['update', 'destroy', 'edit', 'store', 'create']);
         Route::post('/settings', [SettingsController::class,'update'])->name("settings.update");
 
-        // Route::resource('/subscriptions', SubscriptionsController::class);
+        Route::resource('/subscriptions', SubscriptionsController::class);
+
+        Route::resource('/account-managers', AccountManagerController::class);
+
+        Route::resource('mails', MailController::class);
+        Route::get('/fetch-emails',[MailController::class , 'fetch_emails'])->name('fetch-emails');
     });
-
-
-
-// });

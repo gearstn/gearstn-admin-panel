@@ -321,7 +321,6 @@ $(function () {
     //     options: salesGraphChartOptions
     // })
 
-
     $.fn.datetimepicker.Constructor.Default = $.extend({},
         $.fn.datetimepicker.Constructor.Default,
         { icons:
@@ -341,21 +340,21 @@ $(function () {
         $('#end_date').datetimepicker({
             format: 'L'
         });
-        $('#reservationdate').datetimepicker({
-            format: 'YYYY-MM-DD'
-        });
+        // $('#reservationdate').datetimepicker({
+        //     format: 'YYYY-MM-DD'
+        // });
         // //Date and time picker
-        // $('#reservationdatetime').datetimepicker({icons: {time: 'fa fa-clock'}});
+        $('#reservationdatetime').datetimepicker({icons: {time: 'fa fa-clock'}});
 
         //Date range picker
-        $('#reservation').daterangepicker()
-        //Date range picker with time picker
-        $('#reservationtime').daterangepicker({
-            timePicker: true,
-            timePicker24Hour: true,
-            timePickerIncrement: 30,
-            locale: {
-                format: 'DD-MM-YYYY H:mm'
-            }
-        })
+        // $('#reservation').daterangepicker()
+        // //Date range picker with time picker
+        // $('#reservationtime').daterangepicker({
+        //     timePicker: true,
+        //     timePicker24Hour: true,
+        //     timePickerIncrement: 30,
+        //     locale: {
+        //         format: 'DD-MM-YYYY H:mm'
+        //     }
+        // })
 })

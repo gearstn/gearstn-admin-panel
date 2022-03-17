@@ -26,9 +26,9 @@ class ManufacturesDataTable extends DataTable
             ->addColumn('action', function ($data) use ($page) {
                 return view('admin/components/datatable/actions', compact("data", "page"));
             })
-            ->addColumn("sub_category", function ($data) {
-                $sub_category = $data->sub_category()->pluck("title_en")->toArray();
-                return ucfirst($sub_category[0]);
+            ->addColumn("category", function ($data) {
+                $category = $data->category()->pluck("title_en")->toArray();
+                return ucfirst($category[0]);
             })
             ->editColumn("created_at", function ($data) {
                 return Carbon::parse($data->created_at)->diffForHumans();
@@ -82,7 +82,7 @@ class ManufacturesDataTable extends DataTable
             Column::make('id')->title("ID"),
             Column::make('title_en'),
             Column::make('title_ar'),
-            Column::make('sub_category'),
+            Column::make('category'),
             Column::make('created_at'),
             Column::computed('action')
                 ->exportable(false)

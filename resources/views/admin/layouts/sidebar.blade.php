@@ -107,6 +107,27 @@
                             <p>Employees</p>
                         </a>
                     </li>
+                     <li class="nav-item">
+                        <a href="{{route('subscriptions.index')}}"
+                           class="nav-link" {{areActiveRoutes(['subscriptions.*'])}}>
+                            <i class="fas fa-users nav-icon"></i>
+                            <p>Subscriptions</p>
+                        </a>
+                    </li>
+                <li class="nav-item">
+                    <a href="{{route('account-managers.index')}}"
+                       class="nav-link" {{areActiveRoutes(['account-managers.*'])}}>
+                        <i class="fas fa-users nav-icon"></i>
+                        <p>Account Manager Requests</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('mails.index')}}"
+                       class="nav-link" {{areActiveRoutes(['mails.*'])}}>
+                        <i class="fas fa-users nav-icon"></i>
+                        <p>Mails</p>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>

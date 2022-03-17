@@ -27,7 +27,7 @@ class SubCategory extends Model
     }
     public function manufactures()
     {
-        return $this->hasMany(Manufacture::class);
+        return $this->belongsToMany(Manufacture::class, 'subcategory_manufacture');
     }
     public function machine_models()
     {
