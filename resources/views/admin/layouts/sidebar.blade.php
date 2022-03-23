@@ -96,7 +96,7 @@
                      <li class="nav-item">
                         <a href="{{route('settings.index')}}"
                            class="nav-link" {{areActiveRoutes(['settings.*'])}}>
-                            <i class="fas fa-users nav-icon"></i>
+                            <i class="fas fa-cogs nav-icon"></i>
                             <p>Settings</p>
                         </a>
                     </li>
@@ -110,22 +110,29 @@
                      <li class="nav-item">
                         <a href="{{route('subscriptions.index')}}"
                            class="nav-link" {{areActiveRoutes(['subscriptions.*'])}}>
-                            <i class="fas fa-users nav-icon"></i>
+                            <i class="fas fa-money-bill nav-icon"></i>
                             <p>Subscriptions</p>
                         </a>
                     </li>
                 <li class="nav-item">
                     <a href="{{route('account-managers.index')}}"
                        class="nav-link" {{areActiveRoutes(['account-managers.*'])}}>
-                        <i class="fas fa-users nav-icon"></i>
+                        <i class="fas fa-user nav-icon"></i>
                         <p>Account Manager Requests</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="{{route('mails.index')}}"
                        class="nav-link" {{areActiveRoutes(['mails.*'])}}>
-                        <i class="fas fa-users nav-icon"></i>
+                        <i class="fa fa-envelope nav-icon"></i>
                         <p>Mails</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('conversations.index')}}"
+                       class="nav-link" {{areActiveRoutes(['conversations.*'])}}>
+                       <i class="far fa-comment-alt nav-icon"></i>
+                        <p>Conversations</p>
                     </a>
                 </li>
             </ul>

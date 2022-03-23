@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Admin\AuctionsController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\CitiesController;
+use App\Http\Controllers\Admin\ConversationsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EmployeesController;
 use App\Http\Controllers\Admin\MachineModelsController;
@@ -77,4 +78,7 @@ Route::get('/', function () {
 
         Route::resource('mails', MailController::class);
         Route::get('/fetch-emails',[MailController::class , 'fetch_emails'])->name('fetch-emails');
+
+        Route::resource('/conversations',ConversationsController::class);
+
     });

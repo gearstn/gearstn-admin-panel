@@ -29,7 +29,6 @@
                             {!! form::open(['route'=>['mails.store',$mail],'id'=>'form-data' , 'enctype'=>"multipart/form-data"] ) !!}
                             @method('POST')
                             {{csrf_field()}}
-                            @include('admin.components.mail.emails&categories-fields')
                             @include('admin.components.mail.fields')
                             {!!form::close()!!}
                             <button type="submit" class="btn btn-block btn-success" onclick="$('#form-data').submit()">
