@@ -14,7 +14,7 @@ class EmailsImport implements ToCollection , WithHeadingRow
     public function collection(Collection $collection)
     {
         return [
-            'email' => $collection[0],
+            'emails' => $collection[0],
         ];
     }
 }

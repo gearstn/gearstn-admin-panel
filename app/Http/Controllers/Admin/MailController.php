@@ -108,7 +108,7 @@ class MailController extends Controller
         $rows = $temp[0];
         $emails = [];
         foreach ($rows as $row) {
-            $emails[] = $row['email'];
+            $emails[] = $row['emails'];
         }
         return $emails;
     }
