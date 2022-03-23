@@ -35,15 +35,15 @@ class ConversationsDataTable extends DataTable
                 return $data->owner_done ? 'Done' : 'Not Done';
             })
             ->editColumn("acquire_id", function ($data) {
-                $acquire = User::find($data->acquire_id)->first();
+                $acquire = User::find($data->acquire_id);
                 return $acquire->first_name . ' | ' . $acquire->last_name . ' | ' . $acquire->company_name;
             })
             ->editColumn("owner_id", function ($data) {
-                $owner = User::find($data->owner_id)->first();
+                $owner = User::find($data->owner_id);
                 return $owner->first_name . ' | ' . $owner->last_name . ' | ' . $owner->company_name;
             })
             ->editColumn("machine_id", function ($data) {
-                $machine = Machine::find($data->machine_id)->first();
+                $machine = Machine::find($data->machine_id);
                 $link = env('APP_URL') . '/machines' . '/' . $machine->slug;
                 return $link ;
             })
