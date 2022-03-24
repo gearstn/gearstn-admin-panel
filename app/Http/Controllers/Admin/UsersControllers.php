@@ -67,7 +67,6 @@ class UsersControllers extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        // $user = new FullUserResource($user);
         return view('admin.components.user.show', compact('user'));
     }
 
@@ -104,7 +103,7 @@ class UsersControllers extends Controller
     {
         $inputs = $request->all();
         $user = User::find($id);
-        
+
         $user->roles()->detach();
         $role = Role::find($inputs['role_id']);
         $user->assignRole($role);
@@ -117,7 +116,7 @@ class UsersControllers extends Controller
                 'commercial_license' => 'required',
                 'commercial_license_image' => 'required',
             ]);
-    
+
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
@@ -146,17 +145,17 @@ class UsersControllers extends Controller
             $inputs['national_id_image'] = null;
         }
 
-        //For contractor it is required to upload national_id_image 
+        //For contractor it is required to upload national_id_image
         if ($user->hasRole('contractor') && $user->national_id_image === null) {
             $validator = Validator::make($inputs, [
                 'national_id' => 'required',
                 'national_id_image' => 'required',
             ]);
-    
+
             if ($validator->fails()) {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
-        
+
             //Uploads route to upload images and get array of ids
             $uploads_controller = new UploadsController();
             $request = new Request([
@@ -190,5 +189,5 @@ class UsersControllers extends Controller
         $user->delete();
         return redirect()->back()->with(['success' => 'User ' . __("messages.delete")]);
     }
-    
+
 }
