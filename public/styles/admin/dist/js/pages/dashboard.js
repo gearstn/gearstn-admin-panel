@@ -340,9 +340,9 @@ $(function () {
         $('#end_date').datetimepicker({
             format: 'L'
         });
-        // $('#reservationdate').datetimepicker({
-        //     format: 'YYYY-MM-DD'
-        // });
+        $('#reservationdate').datetimepicker({
+            format: 'YYYY-MM-DD'
+        });
         // //Date and time picker
         $('#reservationdatetime').datetimepicker({icons: {time: 'fa fa-clock'}});
 

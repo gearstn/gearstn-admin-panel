@@ -27,7 +27,7 @@ class NewsDataTable extends DataTable
                 return view('admin/components/datatable/actions', compact("data", "page"));
             })
             ->editColumn('slug', function ($data) use ($page) {
-                return view("admin/components/datatable/link_news")->with("link", env('APP_URL'). "/news/" . $data->slug);
+                return view("admin/components/datatable/link")->with("link", env('APP_URL'). "/news/" . $data->slug);
             })
             ->editColumn("created_at", function ($data) {
                 return Carbon::parse($data->created_at)->diffForHumans();

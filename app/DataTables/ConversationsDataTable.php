@@ -45,7 +45,8 @@ class ConversationsDataTable extends DataTable
             ->editColumn("machine_id", function ($data) {
                 $machine = Machine::find($data->machine_id);
                 $link = env('APP_URL') . '/machines' . '/' . $machine->slug;
-                return $link ;
+                return view("admin/components/datatable/link")->with("link", $link);
+
             })
             ->editColumn("created_at", function ($data) {
                 return Carbon::parse($data->created_at)->diffForHumans();
