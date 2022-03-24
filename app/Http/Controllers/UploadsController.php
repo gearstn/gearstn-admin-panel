@@ -55,17 +55,22 @@ class UploadsController extends Controller
             return response()->json($validator->messages(), 400);
         }
         $images = [];
-        foreach ($inputs['photos'] as $image) {
-
+        foreach ($inputs['photos'] as $image)
+        {
             $fileInfo = $image->getClientOriginalName();
             $newFileName = time() . '.' . $image->extension();
-            $img = Image::make($image)->insert( storage_path('app/public/logo.png') , 'bottom-right' )->limitColors(256)->gamma(1.0)->encode($image->extension());
-
-            $path = Storage::disk('s3')->put(isset($inputs['seller_id']) ? $inputs['seller_id'] : Auth::user()->id .'/'. $newFileName,   (string)$img);
+            if ($image->getSize() /1024 > 250.0){
+                $img = Image::make($image)->insert( storage_path('app/public/logo.png') , 'bottom-right')->limitColors(256)->gamma(1.0)->encode($image->extension());
+            }
+            else{
+                $img = Image::make($image)->insert( storage_path('app/public/logo.png') , 'bottom-right')->encode($image->extension());
+            }
+            $id = isset($inputs['seller_id']) ? $inputs['seller_id'] : Auth::user()->id ;
+            Storage::disk('s3')->put($id .'/'. $newFileName,   (string)$img);
+            $path = $id .'/'. $newFileName;
             $url = Storage::disk('s3')->url($path);
-
             $photo = [
-                'user_id' => isset($inputs['seller_id']) ? $inputs['seller_id'] : Auth::user()->id ,
+                'user_id' => $id,
                 'file_original_name' => pathinfo($fileInfo, PATHINFO_FILENAME),
                 'extension' => pathinfo($fileInfo, PATHINFO_EXTENSION),
                 'file_name' => $newFileName,
@@ -74,6 +79,7 @@ class UploadsController extends Controller
                 'file_path' => $path,
             ];
             $images[] = Upload::create($photo)->id;
+
         }
         return response()->json($images,200);
     }
