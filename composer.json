@@ -27,7 +27,9 @@
         "yajra/laravel-datatables-buttons": "^4.13",
         "yajra/laravel-datatables-oracle": "^9.18",
         "zircote/swagger-php": "^3.3",
-        "ext-json": "*"
+        "ext-json": "*",
+        "spatie/image": "^2.0",
+        "spatie/image-optimizer": "^1.6"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

@@ -47,7 +47,9 @@
     <div class="col-sm-12">
         <div class="form-group">
             {{ form::label('body_ene','Body EN')}}
-            {{form::textarea('body_en',$mail->body_en,['class'=>'ckeditor form-control','style'=>'width: 100%'])}}
+            {{-- {{form::textarea('body_en',$mail->body_en,['class'=>'ckeditor form-control','style'=>'width: 100%'])}} --}}
+            {{form::textarea('body_en',$mail->body_en,['class'=>'summernote form-control','style'=>'width: 100%'])}}
+
         </div>
     </div>
 </div>
@@ -56,7 +58,9 @@
     <div class="col-sm-12">
         <div class="form-group">
             {{ form::label('body_are','Body AR')}}
-            {{form::textarea('body_ar',$mail->body_ar,['class'=>'ckeditor form-control','style'=>'width: 100%'])}}
+            {{-- {{form::textarea('body_ar',$mail->body_ar,['class'=>'ckeditor form-control','style'=>'width: 100%'])}} --}}
+            {{form::textarea('body_ar',$mail->body_ar,['class'=>'summernote form-control','style'=>'width: 100%'])}}
+
         </div>
     </div>
 </div>
@@ -86,20 +90,24 @@
     <p> Loading...</p>
 </div>
 
-<script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
+{{-- <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script> --}}
 
 <script>
-    CKEDITOR.replace( 'body_en', {
-        filebrowserUploadUrl: "{{route('uploads.local_storage', ['_token' => csrf_token() ])}}",
-        filebrowserUploadMethod: 'form'
-    });
-    CKEDITOR.replace( 'body_ar', {
-        filebrowserUploadUrl: "{{route('uploads.local_storage', ['_token' => csrf_token() ])}}",
-        filebrowserUploadMethod: 'form'
-    });
+    // CKEDITOR.replace( 'body_en', {
+    //     filebrowserUploadUrl: "{{route('uploads.local_storage', ['_token' => csrf_token() ])}}",
+    //     filebrowserUploadMethod: 'form'
+    // });
+    // CKEDITOR.replace( 'body_ar', {
+    //     filebrowserUploadUrl: "{{route('uploads.local_storage', ['_token' => csrf_token() ])}}",
+    //     filebrowserUploadMethod: 'form'
+    // });
+
+    $(function () {
+      // Summernote
+      $('.summernote').summernote()
+    })
 
     function download() {
-        // e.preventDefault();  //stop the browser from following
         window.location.href = '/templates/mails.xlsx';
         $('#modal-sm').modal('hide');
     }

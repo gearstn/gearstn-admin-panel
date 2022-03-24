@@ -73,18 +73,20 @@
     <div class="col-sm-6">
         <div class="form-group">
             {{ form::label('bodytext','Body Text EN')}}
-            {{form::textarea('bodytext_en',$news->bodytext_en,['class'=>'ckeditor form-control','style'=>'width: 100%'])}}
+            {{-- {{form::textarea('bodytext_en',$news->bodytext_en,['class'=>'ckeditor form-control','style'=>'width: 100%'])}} --}}
+            {{form::textarea('bodytext_en',$news->bodytext_en,['class'=>'summernote form-control','style'=>'width: 100%'])}}
         </div>
     </div>
     <div class="col-sm-6">
         <div class="form-group">
             {{ form::label('bodytext','Body Text AR')}}
-            {{form::textarea('bodytext_ar',$news->bodytext_ar,['class'=>'ckeditor form-control','style'=>'width: 100%'])}}
+            {{-- {{form::textarea('bodytext_ar',$news->bodytext_ar,['class'=>'ckeditor form-control','style'=>'width: 100%'])}} --}}
+            {{form::textarea('bodytext_ar',$news->bodytext_ar,['class'=>'summernote form-control','style'=>'width: 100%'])}}
         </div>
     </div>
 </div>
 
-<script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
+{{-- <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
 
 <script>
     CKEDITOR.replace( 'bodytext_en', {
@@ -95,4 +97,11 @@
         filebrowserUploadUrl: "{{route('uploads.local_storage', ['_token' => csrf_token() ])}}",
         filebrowserUploadMethod: 'form'
     });
+</script> --}}
+
+<script>
+    $(function () {
+      // Summernote
+      $('.summernote').summernote()
+    })
 </script>

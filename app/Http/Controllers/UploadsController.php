@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Upload;
 use App\Models\User;
+use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -60,7 +61,7 @@ class UploadsController extends Controller
             $newFileName = time() . '.' . $image->extension();
             $img = Image::make($image)->insert( storage_path('app/public/logo.png') , 'bottom-right' )->limitColors(256)->gamma(1.0)->encode($image->extension());
 
-            $path = Storage::disk('local')->put($inputs['seller_id'] .'/'. $newFileName,   (string)$img);
+            $path = Storage::disk('local')->put(isset($inputs['seller_id']) ? $inputs['seller_id'] : Auth::user()->id .'/'. $newFileName,   (string)$img);
             $url = Storage::disk('local')->url($path);
 
             $photo = [
