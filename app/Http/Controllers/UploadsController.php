@@ -61,8 +61,8 @@ class UploadsController extends Controller
             $newFileName = time() . '.' . $image->extension();
             $img = Image::make($image)->insert( storage_path('app/public/logo.png') , 'bottom-right' )->limitColors(256)->gamma(1.0)->encode($image->extension());
 
-            $path = Storage::disk('local')->put(isset($inputs['seller_id']) ? $inputs['seller_id'] : Auth::user()->id .'/'. $newFileName,   (string)$img);
-            $url = Storage::disk('local')->url($path);
+            $path = Storage::disk('s3')->put(isset($inputs['seller_id']) ? $inputs['seller_id'] : Auth::user()->id .'/'. $newFileName,   (string)$img);
+            $url = Storage::disk('s3')->url($path);
 
             $photo = [
                 'user_id' => isset($inputs['seller_id']) ? $inputs['seller_id'] : Auth::user()->id ,
