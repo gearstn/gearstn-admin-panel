@@ -6,6 +6,8 @@ use App\DataTables\UsersDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\UploadsController;
 use App\Http\Resources\FullUserResource;
+use App\Models\Conversation;
+use App\Models\Machine;
 use App\Models\Upload;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -67,7 +69,12 @@ class UsersControllers extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        return view('admin.components.user.show', compact('user'));
+        $machines = Machine::where('seller_id',$user->id)->get();
+        $conversations = Conversation::where('acquire_id', $user->id)->orWhere('owner_id', $user->id)->get();
+        $machines_count = $machines->count();
+        $conversations_count = $conversations->count();
+
+        return view('admin.components.user.show', compact('user','machines_count' ,'conversations_count'));
     }
 
     /**

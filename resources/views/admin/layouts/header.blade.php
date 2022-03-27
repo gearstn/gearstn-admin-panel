@@ -6,8 +6,11 @@
     <title>@yield("title", title())</title>
 
     <meta name="csrf-token" content="{{csrf_token()}}">
+    <script src="{{ asset('js/app.js') }}"></script>
+
     <link rel="icon" href="/styles/admin/dist/img/favicon.png"/>
 
+    <!-- Styles -->
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -40,6 +43,11 @@
 
     <!-- Custom style -->
     <link rel="stylesheet" href="/styles/admin/dist/css/custom.css">
+
+    <link rel="stylesheet" href="/styles/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/styles/admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="/styles/admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+
     @stack("styles")
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
