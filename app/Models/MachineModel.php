@@ -19,7 +19,7 @@ class MachineModel extends Model
     ];
 
     public static $cast = [
-        'title_en' => 'required|unique:models',
+        'title_en' => 'required|unique:machine_models',
         'title_ar' => 'required',
         'category_id' => 'required',
         'sub_category_id' => 'required',
