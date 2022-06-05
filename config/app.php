@@ -176,11 +176,6 @@ return [
         App\Providers\RouteServiceProvider::class,
         TeamTNT\Scout\TNTSearchScoutServiceProvider::class,
         Laravel\Scout\ScoutServiceProvider::class,
-
-        Yajra\DataTables\DataTablesServiceProvider::class,
-        Yajra\DataTables\EditorServiceProvider::class,
-        Yajra\DataTables\ButtonsServiceProvider::class,
-        Collective\Html\HtmlServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         CyrildeWit\EloquentViewable\EloquentViewableServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
@@ -235,8 +230,6 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Datatables' => Yajra\DataTables\Facades\DataTables::class,
-        'form' => Collective\Html\FormFacade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 ];

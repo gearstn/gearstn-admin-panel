@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use Illuminate\Http\Request;
 
 class VerificationController extends Controller
 {
@@ -39,4 +41,21 @@ class VerificationController extends Controller
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
     }
+
+    // public function verify_email(Request $request)
+    // {
+    //     dd($request);
+    //     $user = User::find($request->route('id'));
+
+    //     if ($user->hasVerifiedEmail()) {
+    //         return redirect(env('APP_URL') . '/email/verify/already-success');
+    //     }
+
+    //     if ($user->markEmailAsVerified()) {
+    //         event(new Verified($user));
+    //     }
+
+    //     return redirect(env('APP_URL') . '/email/verify/success');
+    // }
+
 }

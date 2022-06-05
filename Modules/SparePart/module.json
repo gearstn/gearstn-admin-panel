@@ -1,0 +1,13 @@
+{
+    "name": "SparePart",
+    "alias": "sparepart",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\SparePart\\Providers\\SparePartServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

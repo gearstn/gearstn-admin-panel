@@ -2,18 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Notifications\PasswordReset;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use LamaLama\Wishlist\HasWishlists;
+use Modules\Machine\Entities\Machine;
+use Modules\Service\Entities\Service;
+use Modules\Subscription\Entities\Subscription;
 use Spatie\Permission\Traits\HasRoles;
+use Rinvex\Subscriptions\Traits\HasSubscriptions;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable, HasApiTokens , SoftDeletes, HasWishlists , HasRoles;
+    use HasFactory, Notifiable, HasApiTokens , SoftDeletes, HasWishlists , HasRoles, HasSubscriptions;
 
     protected $dates = ['deleted_at'];
     /**
@@ -36,7 +41,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'panned',
         'phone',
         'national_id',
-        'national_id_image'
+        'national_id_image',
+        'country_id',
+        'city_id'
     ];
 
     /**
@@ -62,7 +69,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public static $cast = [
         'first_name' => 'required',
         'last_name' => 'required',
-        'company_name' => 'required',
+        // 'company_name' => 'required',
         'email' => 'required|unique:users',
         'tax_license' => 'required|unique:users',
         'commercial_license' => 'required|unique:users',
@@ -73,5 +80,31 @@ class User extends Authenticatable implements MustVerifyEmail
     public function machines()
     {
         return $this->hasMany(Machine::class);
+    }
+
+    public function services()
+    {
+        return $this->hasMany(Service::class);
+    }
+
+
+    public function subscription()
+    {
+        return $this->belongsTo(Subscription::class);
+    }
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new PasswordReset($token));
+    }
+
+    protected static function newFactory()
+    {
+        //return \Modules\User\Database\factories\UserFactory::new();
     }
 }

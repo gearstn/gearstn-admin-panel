@@ -17,7 +17,11 @@ class AddBodytextArInNewsTable extends Migration
             $table->renameColumn('bodytext', 'bodytext_en');
             $table->renameColumn('image_url', 'image_id');
             $table->longText('bodytext_ar');
-            $table->string('slug')->nullable()->change();        });
+            $table->string('slug')->nullable()->change();
+
+            // $table->unsignedBigInteger('image_id')->nullable()->change();
+            // $table->foreign("image_id")->references("id")->on("uploads")->onDelete("cascade");
+        });
     }
 
     /**
@@ -28,6 +32,8 @@ class AddBodytextArInNewsTable extends Migration
     public function down()
     {
         Schema::table('news', function (Blueprint $table) {
+            $table->renameColumn('image_id', 'image_url');
+            $table->renameColumn('bodytext_en', 'bodytext');
             $table->dropColumn('bodytext_ar');
         });
     }

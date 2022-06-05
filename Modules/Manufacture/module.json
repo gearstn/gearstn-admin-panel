@@ -1,0 +1,13 @@
+{
+    "name": "Manufacture",
+    "alias": "manufacture",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Manufacture\\Providers\\ManufactureServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

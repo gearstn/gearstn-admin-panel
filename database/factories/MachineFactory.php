@@ -2,13 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Models\Category;
-use App\Models\City;
-use App\Models\MachineModel;
-use App\Models\Manufacture;
-use App\Models\SubCategory;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\City\Entities\City;
+use Modules\MachineModel\Entities\MachineModel;
+use Modules\Manufacture\Entities\Manufacture;
 
 class MachineFactory extends Factory
 {

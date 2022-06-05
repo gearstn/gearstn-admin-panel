@@ -1,0 +1,22 @@
+{
+    "Category": true,
+    "Auction": true,
+    "City": true,
+    "Conversation": true,
+    "Country": true,
+    "Employee": true,
+    "Machine": true,
+    "MachineModel": true,
+    "Mail": true,
+    "Manufacture": true,
+    "News": true,
+    "Service": true,
+    "ServiceType": true,
+    "Setting": true,
+    "SparePart": true,
+    "SubCategory": true,
+    "Subscription": true,
+    "Transaction": true,
+    "Upload": true,
+    "User": true
+}
