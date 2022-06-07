@@ -20,10 +20,10 @@ class NewsController extends Controller
      */
     public function index()
     {
-        // $news = News::orderBy('created_at', 'desc')->paginate(number_in_page());
-        // return NewsResource::collection($news)->additional(['status' => 200, 'message' => 'News fetched successfully']);
-        $data = $this->test(Machine::class);
-        return new JsonResponse($data);
+        $news = News::orderBy('created_at', 'desc')->paginate(number_in_page());
+        return NewsResource::collection($news)->additional(['status' => 200, 'message' => 'News fetched successfully']);
+        // $data = $this->test(Machine::class);
+        // return new JsonResponse($data);
     }
 
 
