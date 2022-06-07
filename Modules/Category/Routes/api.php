@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'cors'], function () {
     //Auth routes
     Route::middleware('auth:sanctum')->group( function () {
-        Route::resource('conversations', 'ConversationController' ,['as' => 'frontend']);
+        Route::resource('categories', 'CategoryController' ,['as' => 'frontend']);
     });
 });
 
