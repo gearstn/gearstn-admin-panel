@@ -32,7 +32,7 @@ class TransactionResource extends JsonResource
             'statusCode' => $this->statusCode ,
             'statusDescription' => $this->statusDescription ,
             'basketPayment' => $this->basketPayment ,
-            'fawry_order_status_id' => OrderStatus::select('name_en','name_ar')->where('id',$this->fawry_order_status_id)->first(),
+            'fawry_order_status' => OrderStatus::select('name_en','name_ar')->where('id',$this->fawry_order_status_id)->first(),
             'user_id' => $this->user_id
         ];
         return $data;
