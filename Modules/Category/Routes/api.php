@@ -14,6 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => '/','middleware' => 'cors'], function () {
-    Route::resource('categories','CategoryController' ,['as' => 'frontend'])->only('index','show');
+// Route::group(['prefix' => '/','middleware' => 'cors'], function () {
+//     Route::resource('categories','CategoryController' ,['as' => 'frontend'])->only('index','show');
+// });
+
+Route::group(['middleware' => 'cors'], function () {
+    //Auth routes
+    Route::middleware('auth:sanctum')->group( function () {
+        Route::resource('conversations', 'ConversationController' ,['as' => 'frontend']);
+    });
 });
+
