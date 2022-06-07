@@ -26,7 +26,7 @@ class SubCategoryController extends Controller
         // }
         // $category_name = $inputs['category'];
         // $category = Category::where('title_en',$category_name)->orWhere('title_ar',$category_name)->first()->id;
-        $sub_categories = SubCategory::all()->paginate(number_in_page());
+        $sub_categories = SubCategory::paginate(number_in_page());
         return SubCategoryResource::collection($sub_categories)->additional(['status' => 200, 'message' => 'SubCategories fetched successfully']);
     }
 

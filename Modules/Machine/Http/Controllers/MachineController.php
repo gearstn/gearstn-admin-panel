@@ -35,7 +35,7 @@ class MachineController extends Controller
      */
     public function index()
     {
-        $machines = Machine::all()->paginate(number_in_page());
+        $machines = Machine::paginate(number_in_page());
         return MachineResource::collection($machines)->additional(['status' => 200, 'message' => 'Machines fetched successfully']);
     }
 

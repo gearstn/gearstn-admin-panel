@@ -24,7 +24,7 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = Service::all()->paginate(number_in_page());
+        $services = Service::paginate(number_in_page());
         return ServiceResource::collection($services)->additional(['status' => 200, 'message' => 'Services fetched successfully']);
     }
 
