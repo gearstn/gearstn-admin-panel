@@ -25,8 +25,8 @@ Route::group(['middleware' => 'cors'], function () {
         Route::get('/user-machines', [MachineController::class, 'user_machines']);
     });
 
-    Route::resource('machines', 'MachineController' ,['as' => 'frontend'])->except('create', 'edit');
     //Search for all Entities
+    Route::resource('machines', 'MachineController' ,['as' => 'frontend'])->except('create', 'edit');
     Route::get('/machines-search', [MachineController::class, 'search_filter']);
     Route::get('/machines-filter-data', [MachineController::class, 'getMinMaxOfField']);
     Route::get('/related-machines', [MachineController::class, 'getRelatedMachines']);

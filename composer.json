@@ -2,7 +2,10 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "require": {
         "php": "^7.3|^7.4.0|^8.0",
@@ -10,9 +13,9 @@
         "amrshawky/laravel-currency": "^4.0",
         "cyrildewit/eloquent-viewable": "^6.0",
         "darkaonline/l5-swagger": "^8.0",
+        "doctrine/dbal": "3.2",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
-        "doctrine/dbal": "^3.2",
         "guzzlehttp/guzzle": "^7.0.1",
         "lamalama/laravel-wishlist": "^0.2.1",
         "laravel/framework": "^8.12",
