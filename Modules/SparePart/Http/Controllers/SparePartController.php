@@ -34,7 +34,7 @@ class SparePartController extends Controller
      */
     public function index()
     {
-        $spare_parts = SparePart::where('approved', '=', 1)->paginate(number_in_page());
+        $spare_parts = SparePart::all()->paginate(number_in_page());
         return SparePartResource::collection($spare_parts)->additional(['status' => 200, 'message' => 'Spare Parts fetched successfully']);
     }
 
