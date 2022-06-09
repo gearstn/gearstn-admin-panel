@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use Modules\MachineModel\Entities\MachineModel;
 use Modules\MachineModel\Http\Requests\FilterMachineModelRequest;
+use Modules\MachineModel\Http\Requests\UpdateMachineModelRequest;
 use Modules\MachineModel\Http\Resources\MachineModelResource;
 
 
@@ -60,6 +61,36 @@ class MachineModelController extends Controller
         $models = MachineModel::findOrFail($id);
         return response()->json(new MachineModelResource($models),200);
     }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdateMachineModelRequest $request, $id)
+    {
+        $inputs = $request->validated();
+        $model = MachineModel::find($id);
+        $model->update($inputs);
+        return response()->json(new MachineModelResource($model), 200);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $model = MachineModel::findOrFail($id);
+        $model->delete();
+        return response()->json(new MachineModelResource($model), 200);
+    }
+
 
     //Get models based on sub_category_id && manufacture_id
     public function filter_models(FilterMachineModelRequest $request)

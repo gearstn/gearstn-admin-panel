@@ -15,13 +15,12 @@ use Modules\MachineModel\Http\Controllers\MachineModelController;
 */
 
 //Routes for frontend
-Route::group(['prefix' => '/','middleware' => 'cors'], function () {
+Route::group(['middleware' => 'cors'], function () {
 
     //Auth routes
     Route::middleware('auth:sanctum')->group( function () {
         //Store Update Destroy routes for Machines and Models
-        Route::resource('machine-models', 'MachineModelController' ,['as' => 'frontend'])->only('store','update','destroy');
+        Route::resource('machine-models', 'MachineModelController' ,['as' => 'frontend']);
+        Route::get('/filter_models', [ MachineModelController::class , 'filter_models' ])->name('machine-models.filter_models');
     });
-    Route::resource('machine-models', 'MachineModelController' ,['as' => 'frontend'])->only('index','show');
-    Route::get('/filter_models', [ MachineModelController::class , 'filter_models' ])->name('machine-models.filter_models');
 });
