@@ -17,6 +17,7 @@ use Modules\MachineModel\Http\Controllers\MachineModelController;
 use Modules\MachineModel\Http\Requests\StoreMachineModelRequest;
 use Modules\Machine\Entities\Machine;
 use Modules\Machine\Http\Requests\StoreMachineRequest;
+use Modules\Machine\Http\Requests\UpdateMachineRequest;
 use Modules\Machine\Http\Resources\MachineResource;
 use Modules\Machine\Jobs\SetMachineHideDataJob;
 use Modules\Mail\Http\Controllers\MailController;
@@ -274,7 +275,7 @@ class MachineController extends Controller
      * @param int $id
      * @return JsonResponse
      */
-    public function update(Request $request, int $id): JsonResponse
+    public function update(UpdateMachineRequest $request, int $id): JsonResponse
     {
         $inputs = $request->all();
         $machine = Machine::find($id);
