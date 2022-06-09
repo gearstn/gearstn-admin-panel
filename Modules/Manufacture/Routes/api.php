@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-
-//Routes for frontend
-Route::group(['prefix' => '/','middleware' => 'cors'], function () {
-    Route::resource('manufactures','ManufactureController' ,['as' => 'frontend'])->only('index','show','store');
+Route::group(['middleware' => 'cors'], function () {
+    //Auth routes
+    Route::middleware('auth:sanctum')->group( function () {
+        Route::resource('manufactures', 'ManufactureController' ,['as' => 'frontend']);
+    });
 });
