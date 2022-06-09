@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use Modules\Conversation\Entities\Conversation;
 use Modules\Conversation\Http\Requests\StoreConversationRequest;
 use Modules\Conversation\Http\Requests\CheckForConversationRequest;
+use Modules\Conversation\Http\Requests\UpdateConversationRequest;
 use Modules\Conversation\Http\Resources\ConversationResource;
 use Modules\Mail\Http\Controllers\MailController;
 use Modules\Mail\Http\Requests\OpenConversationMailRequest;
@@ -22,6 +23,12 @@ use Modules\SparePart\Entities\SparePart;
 
 class ConversationController extends Controller
 {
+
+    public function index()
+    {
+        $conversations = Conversation::all();
+        return ConversationResource::collection($conversations)->additional(['status' => 200, 'message' => 'Conversations fetched successfully']);
+    }
     /**
      * Store a newly created resource in storage.
      * @param StoreConversationRequest $request
@@ -45,6 +52,34 @@ class ConversationController extends Controller
         // $response = redirect()->route('open-conversation-with-seller' , $mail_parameters );
         // if($response->status() != 200) { return $response; }
 
+        return response()->json(new ConversationResource($conversation), 200);
+    }
+
+        /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        $conversation = Conversation::findOrFail($id);
+        return response()->json(new ConversationResource($conversation), 200);
+    }
+
+
+        /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdateConversationRequest $request, $id)
+    {
+        $inputs = $request->validated();
+        $conversation = Conversation::find($id);
+        $conversation->update($inputs);
         return response()->json(new ConversationResource($conversation), 200);
     }
 
