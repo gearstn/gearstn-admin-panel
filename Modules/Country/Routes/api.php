@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => '/','middleware' => 'cors'], function () {
-    Route::resource('countries', 'CountryController' ,['as' => 'frontend'])->only('index');
+Route::group(['middleware' => 'cors'], function () {
+    //Auth routes
+    Route::middleware('auth:sanctum')->group( function () {
+        Route::resource('countries', 'CountryController' ,['as' => 'frontend']);
+    });
 });
