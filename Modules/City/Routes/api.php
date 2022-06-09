@@ -13,7 +13,10 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::group(['prefix' => '/','middleware' => 'cors'], function () {
-    Route::resource('cities', 'CityController' ,['as' => 'frontend'])->only('index','show');
+Route::group(['middleware' => 'cors'], function () {
+    //Auth routes
+    Route::middleware('auth:sanctum')->group( function () {
+        Route::resource('cities', 'CityController' ,['as' => 'frontend']);
+    });
 });
+
