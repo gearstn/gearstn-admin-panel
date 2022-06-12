@@ -14,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => '/','middleware' => 'cors'], function () {
-    Route::resource('sub-categories','SubCategoryController' ,['as' => 'frontend'])->only('index','show');
+Route::group(['middleware' => 'cors'], function () {
+    Route::resource('sub-categories','SubCategoryController' ,['as' => 'frontend']);
 });

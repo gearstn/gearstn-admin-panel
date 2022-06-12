@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
 use Modules\Category\Entities\Category;
 use Modules\SubCategory\Entities\SubCategory;
+use Modules\SubCategory\Http\Requests\SubCategoryRequest;
 use Modules\SubCategory\Http\Resources\SubCategoryResource;
 
 class SubCategoryController extends Controller
@@ -19,16 +20,23 @@ class SubCategoryController extends Controller
      */
     public function index()
     {
-        // $inputs = $request->all();
-        // $validator = Validator::make($inputs, ['category' => 'required'] );
-        // if ($validator->fails()) {
-        //     return response()->json($validator->messages(), 400);
-        // }
-        // $category_name = $inputs['category'];
-        // $category = Category::where('title_en',$category_name)->orWhere('title_ar',$category_name)->first()->id;
         $sub_categories = SubCategory::paginate(number_in_page());
         return SubCategoryResource::collection($sub_categories)->additional(['status' => 200, 'message' => 'SubCategories fetched successfully']);
     }
+
+      /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(SubCategoryRequest $request)
+    {
+        $inputs = $request->validated();
+        $sub_category = SubCategory::create($inputs);
+        return response()->json(new SubCategoryResource($sub_category), 200)->additional(['status' => 200, 'message' => 'Category created successfully']);
+    }
+
 
     /**
      * Display the specified resource.
@@ -41,4 +49,33 @@ class SubCategoryController extends Controller
         $sub_category = SubCategory::findOrFail($id);
         return response()->json(new SubCategoryResource($sub_category),200);
     }
+
+       /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(SubCategoryRequest $request, $id)
+    {
+        $inputs = $request->validated();
+        $sub_category = SubCategory::find($id);
+        $sub_category->update($inputs);
+        return response()->json(new SubCategoryResource($sub_category), 200);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $sub_category = SubCategory::findOrFail($id);
+        $sub_category->delete();
+        return response()->json(new SubCategoryResource($sub_category), 200);
+    }
+
 }
