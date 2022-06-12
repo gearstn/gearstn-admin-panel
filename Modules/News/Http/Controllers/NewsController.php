@@ -10,6 +10,8 @@ use Modules\Machine\Entities\Machine;
 use Modules\News\Entities\News;
 use Modules\News\Http\Requests\LatestNewsRequest;
 use Modules\News\Http\Resources\NewsResource;
+use Illuminate\Support\Str;
+use Modules\News\Http\Requests\NewsRequest;
 
 class NewsController extends Controller
 {
@@ -34,6 +36,21 @@ class NewsController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(NewsRequest $request)
+    {
+        $inputs = $request->validated();
+        $news = News::create($inputs);
+        $news->slug = Str::slug($inputs['title_en'], '-') .'-'. $news->created_at->timestamp;
+        $news->save();
+        return response()->json(new NewsResource($news), 200);
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param $slug
@@ -42,6 +59,34 @@ class NewsController extends Controller
     public function show($slug): JsonResponse
     {
         $news = News::where('slug', '=', $slug)->firstOrFail();
+        return response()->json(new NewsResource($news), 200);
+    }
+
+        /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(News $request, $id)
+    {
+        $inputs = $request->validated();
+        $news = News::find($id);
+        $news->update($inputs);
+        return response()->json(new NewsResource($news), 200);
+    }
+
+        /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $news = News::findOrFail($id);
+        $news->delete();
         return response()->json(new NewsResource($news), 200);
     }
 
