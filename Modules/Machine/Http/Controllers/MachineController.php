@@ -277,7 +277,7 @@ class MachineController extends Controller
      */
     public function update(UpdateMachineRequest $request, int $id): JsonResponse
     {
-        $inputs = $request->all();
+        $inputs = $request->validated();
         $machine = Machine::find($id);
         $machine->update($inputs);
         return response()->json(new MachineResource($machine), 200);
