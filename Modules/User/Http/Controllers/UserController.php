@@ -58,6 +58,22 @@ class UserController extends Controller
     }
 
         /**
+     * Display the specified resource.
+     *
+     * @return JsonResponse
+     */
+    public function get_machines_distributors()
+    {
+        $users = User::whereHas(
+            'roles', function($q){
+                $q->where('name', 'distributor');
+            }
+        )->get();
+        return NormalUserResource::collection($users)->additional(['status' => 200, 'message' => 'Categories fetched successfully']);
+    }
+
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -161,7 +177,6 @@ class UserController extends Controller
         $user->delete();
         return response()->json(['message' => 'Profile Deleted Successfully'], 200);
     }
-
 
     /**
      * @param ChangePasswordRequest $request
