@@ -24,6 +24,7 @@ use Modules\Upload\Http\Controllers\UploadController;
 use Modules\Upload\Http\Requests\StoreUploadRequest;
 use Modules\SubCategory\Entities\SubCategory;
 use Modules\Manufacture\Entities\Manufacture;
+use Modules\SparePart\Http\Requests\SparePartUpdateRequest;
 
 class SparePartController extends Controller
 {
@@ -147,9 +148,9 @@ class SparePartController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(SparePartUpdateRequest $request, $id)
     {
-        $inputs = $request->all();
+        $inputs = $request->validated();
         $spare_part = SparePart::find($id);
         $spare_part->update($inputs);
         return response()->json(new SparePartResource($spare_part), 200);    }
