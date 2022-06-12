@@ -20,9 +20,19 @@ use Modules\Machine\Entities\Machine;
 use Modules\User\Entities\AcountManagerRequest;
 use Modules\User\Http\Requests\StoreAccountManagerRequest;
 use Modules\User\Http\Requests\User\ChangePasswordRequest;
+use Modules\User\Http\Requests\UserRequest;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+
+
+    public function index()
+    {
+        $users = User::all();
+        return NormalUserResource::collection($users)->additional(['status' => 200, 'message' => 'Categories fetched successfully']);
+    }
+
     /**
      * Display the specified resource.
      *
@@ -44,6 +54,21 @@ class UserController extends Controller
     {
         $id  = Auth::user()->id;
         $user = User::findOrFail($id);
+        return response()->json(new FullUserResource($user), 200);
+    }
+
+        /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(UserRequest $request)
+    {
+        $inputs = $request->validated();
+        $role = Role::find($inputs['role_id'])->first();
+        $user = User::create($inputs);
+        $user->assignRole($role);
         return response()->json(new FullUserResource($user), 200);
     }
 
