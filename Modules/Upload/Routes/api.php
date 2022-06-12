@@ -21,7 +21,7 @@ Route::group(['prefix' => '/','middleware' => 'cors'], function () {
     //Auth routes
     Route::middleware('auth:sanctum')->group( function () {
 
-        Route::resource('uploads', 'UploadController' )->only('store');
+        Route::resource('uploads', 'UploadController' );
         Route::delete('uploads', [UploadController::class , 'destroy']);
         Route::post('/upload-video', [ UploadController::class , 'upload_video' ] ,['as' => 'frontend']);
     });

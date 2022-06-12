@@ -14,7 +14,7 @@ class DestroyUploadRequest extends FormRequest
     public function rules()
     {
         return [
-            'ids' => 'required'
+            'id' => 'required'
         ];
     }
 

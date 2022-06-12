@@ -14,6 +14,7 @@ use Modules\Upload\Entities\Upload;
 use Modules\Upload\Http\Requests\StoreUploadRequest;
 use Modules\Upload\Http\Requests\DestroyUploadRequest;
 use Modules\Upload\Http\Requests\StoreFileRequest;
+use Modules\Upload\Http\Resources\UploadResource;
 
 class UploadController extends Controller
 {
@@ -21,6 +22,13 @@ class UploadController extends Controller
     {
         $this->middleware('auth:sanctum');
     }
+
+    public function index()
+    {
+        $uploads = Upload::all();
+        return UploadResource::collection($uploads)->additional(['status' => 200, 'message' => 'Uploads fetched successfully']);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -52,9 +60,9 @@ class UploadController extends Controller
                 $img = Image::make($image)->insert( storage_path('app/public/logo.png') , 'bottom-right')->encode($image->extension());
             }
 
-            Storage::disk('s3')->put($inputs['seller_id'] .'/'. $newFileName,   (string)$img);
+            Storage::disk('local')->put($inputs['seller_id'] .'/'. $newFileName,   (string)$img);
             $path = $inputs['seller_id'] .'/'. $newFileName;
-            $url = Storage::disk('s3')->url($path);
+            $url = Storage::disk('local')->url($path);
             $photo = [
                 'user_id' => $inputs['seller_id'] ?? Auth::user()->id,
                 'file_original_name' => pathinfo($fileInfo, PATHINFO_FILENAME),
@@ -70,18 +78,29 @@ class UploadController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        $upload = Upload::findOrFail($id);
+        return response()->json(new UploadResource($upload), 200);
+    }
+
+
+    /**
      * Remove the specified resource from storage.
      *
      */
-    public function destroy(DestroyUploadRequest $request): \Illuminate\Http\RedirectResponse
+    public function destroy(DestroyUploadRequest $request)
     {
         $inputs = $request->validated();
-        // foreach($inputs['ids'] as $id){
-            $image = Upload::find($inputs['ids']);
-            Storage::disk('s3')->delete($image->file_path);
-            $image->delete();
-        // }
-        return redirect()->back();
+        $image = Upload::find($inputs['ids']);
+        Storage::disk('local')->delete($image->file_path);
+        $image->delete();
+        return response('Uploads deleted successfully', 200);
     }
 
 
