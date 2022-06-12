@@ -17,7 +17,7 @@ use Modules\Transaction\Http\Controllers\TransactionController;
 
 Route::group(['prefix' => '/','middleware' => 'cors'], function () {
     Route::middleware('auth:sanctum')->group( function () {
-        Route::resource('transactions','TransactionController')->only('store');
+        Route::resource('transactions','TransactionController');
         Route::get('user-transactions', [TransactionController::class , 'user_transactions' ] ,['as' => 'frontend']);
         Route::post('extra-plan', [TransactionController::class , 'extra_plan_store' ] ,['as' => 'frontend']);
     });

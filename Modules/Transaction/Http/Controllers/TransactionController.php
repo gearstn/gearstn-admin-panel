@@ -21,6 +21,13 @@ use Modules\Transaction\Jobs\DelayedSubsctiptionJob;
 
 class TransactionController extends Controller
 {
+
+    public function index()
+    {
+        $transactions = Transaction::all();
+        return TransactionResource::collection($transactions)->additional(['status' => 200, 'message' => 'Transactions fetched successfully']);
+    }
+
     /**
      * Store a newly created resource in storage.
      * @return Renderable
@@ -123,6 +130,33 @@ class TransactionController extends Controller
             ], 420);
         }
     }
+
+        /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        $transaction = Transaction::findOrFail($id);
+        return response()->json(new TransactionResource($transaction), 200);
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $transaction = Transaction::findOrFail($id);
+        $transaction->delete();
+        return response()->json(new TransactionResource($transaction), 200);
+    }
+
 
     /**
      * Store a newly created resource in storage.
