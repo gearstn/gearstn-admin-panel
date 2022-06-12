@@ -40,6 +40,19 @@ class SubscriptionController extends Controller
         return response()->json(new SubscriptionResource($subscription), 200);
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $subscription = app('rinvex.subscriptions.plan')->where($id)->get();
+        $subscription->delete();
+        return response()->json(new SubscriptionResource($subscription), 200);
+    }
+
     public function subscribe(Request $request)
     {
         $inputs = $request->all();
