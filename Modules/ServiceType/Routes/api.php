@@ -14,12 +14,11 @@ use Modules\ServiceType\Http\Controllers\ServiceTypeController;
 |
 */
 
-Route::group(['prefix' => '/','middleware' => 'cors'], function () {
+Route::group(['middleware' => 'cors'], function () {
 
     //Auth routes
     Route::middleware('auth:sanctum')->group( function () {
         //Store Update Destroy routes for Machines and Models
-        Route::resource('service-types', 'ServiceTypeController' ,['as' => 'frontend'])->only('store','update','destroy');
+        Route::resource('service-types', 'ServiceTypeController' ,['as' => 'frontend']);
     });
-    Route::resource('service-models', 'ServiceTypeController' ,['as' => 'frontend'])->only('index','show');
 });

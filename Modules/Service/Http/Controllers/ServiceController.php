@@ -14,6 +14,7 @@ use Modules\Service\Http\Resources\ServiceResource;
 use Modules\Upload\Http\Controllers\UploadController;
 use Modules\Upload\Http\Requests\StoreUploadRequest;
 use App\Classes\POST_Caller;
+use Modules\Service\Http\Requests\UpdateServiceRequest;
 
 class ServiceController extends Controller
 {
@@ -69,6 +70,30 @@ class ServiceController extends Controller
     {
         $service = Service::find($id)->firstOrFail();
         return response()->json(new ServiceResource($service), 200);
+    }
+
+        /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdateServiceRequest $request, $id)
+    {
+        $inputs = $request->validated();
+        $user = User::find($inputs['user_id']);
+        if ($user->hasRole('services-provider')) {
+
+            $service = Service::find($id);
+            $service->update($inputs);
+
+            return response()->json(new ServiceResource($service), 200);
+        }
+        return response()->json([
+            'message_en' => "You don't have Service Provider Role",
+            'message_ar' => 'ليس لديك دور مقدم الخدمة',
+        ], 422);
     }
 
     /**

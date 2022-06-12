@@ -53,4 +53,33 @@ class ServiceTypeController extends Controller
         $service_type = ServiceType::findOrFail($id);
         return response()->json(new ServiceTypeResource($service_type),200);
     }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $inputs = $request->validated();
+        $service_type = ServiceType::find($id);
+        $service_type->update($inputs);
+        return response()->json(new ServiceTypeResource($service_type), 200);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $service_type = ServiceType::findOrFail($id);
+        $service_type->delete();
+        return response()->json(new ServiceTypeResource($service_type), 200);
+    }
 }
