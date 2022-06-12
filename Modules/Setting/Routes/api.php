@@ -14,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => '/','middleware' => 'cors'], function () {
-    Route::resource('settings', 'SettingController' ,['as' => 'frontend'])->only('index');
+Route::group(['middleware' => 'cors'], function () {
+    Route::resource('settings', 'SettingController' ,['as' => 'frontend']);
 });
