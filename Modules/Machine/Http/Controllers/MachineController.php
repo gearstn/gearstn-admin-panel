@@ -259,12 +259,11 @@ class MachineController extends Controller
      * Display the specified resource.
      *
      * @param $slug
-     * @return JsonResponse
      */
-    public function show($slug): JsonResponse
+    public function show($id)
     {
-        $machine = Machine::where('slug', '=', $slug)->firstOrFail();
-        views($machine)->record();
+        $machine = Machine::find($id);
+        // views($machine)->record();
         return response()->json(new MachineResource($machine), 200);
     }
 
