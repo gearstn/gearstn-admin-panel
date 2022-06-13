@@ -29,7 +29,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::all();
+        $users = User::paginate(number_in_page());
         return NormalUserResource::collection($users)->additional(['status' => 200, 'message' => 'Categories fetched successfully']);
     }
 

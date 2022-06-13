@@ -26,7 +26,7 @@ class ConversationController extends Controller
 
     public function index()
     {
-        $conversations = Conversation::all();
+        $conversations = Conversation::paginate(number_in_page());
         return ConversationResource::collection($conversations)->additional(['status' => 200, 'message' => 'Conversations fetched successfully']);
     }
     /**

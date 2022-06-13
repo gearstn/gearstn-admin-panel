@@ -20,7 +20,7 @@ class ManufactureController extends Controller
      */
     public function index()
     {
-        $manufacture =  Manufacture::all();
+        $manufacture =  Manufacture::paginate(number_in_page());
         return ManufactureResource::collection($manufacture)->additional(['status' => 200, 'message' => 'Manufactures fetched successfully']);
     }
 

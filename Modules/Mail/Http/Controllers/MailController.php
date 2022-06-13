@@ -27,7 +27,7 @@ class MailController extends Controller
 
     public function index()
     {
-        $mails = Mail::all();
+        $mails = Mail::paginate(number_in_page());
         return MailResource::collection($mails)->additional(['status' => 200, 'message' => 'Categories fetched successfully']);
     }
 

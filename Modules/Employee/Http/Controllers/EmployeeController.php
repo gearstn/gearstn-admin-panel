@@ -17,7 +17,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::all();
+        $employees = Employee::paginate(number_in_page());
         return EmployeeResource::collection($employees)->additional(['status' => 200, 'message' => 'Employees fetched successfully']);
     }
 }

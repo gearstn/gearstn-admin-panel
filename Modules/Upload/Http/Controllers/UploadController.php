@@ -25,7 +25,7 @@ class UploadController extends Controller
 
     public function index()
     {
-        $uploads = Upload::all();
+        $uploads = Upload::paginate(number_in_page());
         return UploadResource::collection($uploads)->additional(['status' => 200, 'message' => 'Uploads fetched successfully']);
     }
 

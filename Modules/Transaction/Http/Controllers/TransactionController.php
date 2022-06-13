@@ -24,7 +24,7 @@ class TransactionController extends Controller
 
     public function index()
     {
-        $transactions = Transaction::all();
+        $transactions = Transaction::paginate(number_in_page());
         return TransactionResource::collection($transactions)->additional(['status' => 200, 'message' => 'Transactions fetched successfully']);
     }
 
