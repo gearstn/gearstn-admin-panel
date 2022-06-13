@@ -13,7 +13,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::paginate(number_in_page());;
         return CategoryResource::collection($categories)->additional(['status' => 200, 'message' => 'Categories fetched successfully']);
     }
 

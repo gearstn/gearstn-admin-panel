@@ -18,7 +18,7 @@ class CityController extends Controller
      */
     public function index()
     {
-        $cities = City::all();
+        $cities = City::paginate(number_in_page());;
         return CityResource::collection($cities)->additional(['status' => 200, 'message' => 'Cities fetched successfully']);
     }
 
