@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Validator;
+use Modules\Category\Entities\Category;
 use Modules\Manufacture\Entities\Manufacture;
 use Modules\Manufacture\Http\Requests\ManufactureRequest;
 use Modules\Manufacture\Http\Requests\StoreManufactureRequest;
@@ -22,6 +23,26 @@ class ManufactureController extends Controller
     {
         $manufacture =  Manufacture::paginate(number_in_page());
         return ManufactureResource::collection($manufacture)->additional(['status' => 200, 'message' => 'Manufactures fetched successfully']);
+    }
+
+    /**
+     * Display a listing of the resource without pagination.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function get_all(){
+        $manufacture =  Manufacture::all();
+        return ManufactureResource::collection($manufacture)->additional(['status' => 200, 'message' => 'Manufactures fetched successfully']);
+    }
+
+    /**
+     * Display a listing of the manufactures for select.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function get_manufacture_filtered(){
+        $manufactures =  Manufacture::all()->pluck('title_en', 'id');
+        return response()->json(['manufactures' => $manufactures], 200);
     }
 
     /**
@@ -50,6 +71,22 @@ class ManufactureController extends Controller
         return response()->json(new ManufactureResource($manufacture),200);
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $manufacture = Manufacture::findOrFail($id);
+        $manufacture_category = Category::find($manufacture->category_id)->pluck('title_en','id');
+        $manufacture_subcategories = $manufacture->sub_categories()->pluck('id','title_en');
+        return response()->json([ 'manufacture' => new ManufactureResource($manufacture),
+                                  'manufacture_subcategories' => $manufacture_subcategories,
+                                  'manufacture_category' => $manufacture_category,
+                                ],200);
+    }
 
     /**
      * Update the specified resource in storage.
