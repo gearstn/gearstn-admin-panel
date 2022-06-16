@@ -18,8 +18,10 @@ use Modules\Manufacture\Http\Controllers\ManufactureController;
 Route::group(['middleware' => 'cors'], function () {
     //Auth routes
     Route::middleware('auth:sanctum')->group( function () {
+        Route::prefix('manufactures')->group(function () {
+            Route::get('all', [ManufactureController::class, 'get_all'])->name('frontend.manufactures.all');
+            Route::get('filtered', [ManufactureController::class, 'get_manufactures_filtered'])->name('frontend.manufactures.filtered');
+        });
         Route::resource('manufactures', 'ManufactureController' ,['as' => 'frontend']);
-        Route::get('/manufactures/all', [ManufactureController::class, 'get_all'])->name('frontend.manufactures.all');
-        Route::get('/manufactures/filtered', [ManufactureController::class, 'get_manufactures_filtered'])->name('frontend.manufactures.filtered');
     });
 });
