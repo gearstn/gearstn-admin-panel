@@ -23,7 +23,7 @@ Route::group(['prefix' => '/','middleware' => 'cors'], function () {
         //Mails Routes
         Route::get('/contact-seller', [MailController::class, 'contact_seller'])->name('contact-seller');
         Route::get('/store-machine', [MailController::class, 'store_machine'])->name('store-machine');
-        Route::get('/store-سحشقث-حشقف', [MailController::class, 'store_spare_part'])->name('store-machine');
+        Route::get('/store-spare-part', [MailController::class, 'store_spare_part'])->name('store-spare-part');
         Route::get('/open-conversation-with-seller', [MailController::class, 'open_conversation_with_seller'])->name('open-conversation-with-seller');
     });
 });
