@@ -17,10 +17,10 @@ use Modules\SubCategory\Http\Controllers\SubCategoryController;
 
 Route::group(['middleware' => 'cors'], function () {
     Route::middleware('auth:sanctum')->group(function () {
-        Route::resource('sub-categories', 'SubCategoryController', ['as' => 'frontend']);
         Route::prefix('sub-categories')->group(function () {
             Route::get('all', [SubCategoryController::class, 'get_all'])->name('frontend.sub-categories.all');
             Route::get('filtered', [SubCategoryController::class, 'get_subcategories_filtered'])->name('frontend.sub-categories.filtered');
         });
+        Route::resource('sub-categories', 'SubCategoryController', ['as' => 'frontend']);
     });
 });
