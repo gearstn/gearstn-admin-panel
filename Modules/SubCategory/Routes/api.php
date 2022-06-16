@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Modules\SubCategory\Http\Controllers\SubCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,5 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => 'cors'], function () {
-    Route::resource('sub-categories','SubCategoryController' ,['as' => 'frontend']);
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::resource('sub-categories', 'SubCategoryController', ['as' => 'frontend']);
+        Route::get('/sub-categories/all', [SubCategoryController::class, 'get_all'])->name('frontend.sub-categories.all');
+        Route::get('/sub-categories/filtered', [SubCategoryController::class, 'get_subcategories_filtered'])->name('frontend.sub-categories.filtered');
+    });
 });

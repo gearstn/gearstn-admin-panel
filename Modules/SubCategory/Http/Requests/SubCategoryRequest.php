@@ -17,6 +17,7 @@ class SubCategoryRequest extends FormRequest
             'title_en' => 'required|unique:subcategories',
             'title_ar' => 'required',
             'category_id' => 'required',
+            'manufactures' => 'sometimes',
         ];
     }
 
