@@ -57,16 +57,15 @@ class SubCategoryController extends Controller
     {
         $inputs = $request->validated();
         $sub_category = SubCategory::create($inputs);
-
         //Attaching MAnufactures to SubCategory if Selected
+
         if (isset($inputs['manufactures'])) {
             foreach ($inputs['manufactures'] as $manufacture_id) {
                 $sub_category->manufactures()->attach($manufacture_id);
                 $sub_category->save();
             }
         }
-
-        return response()->json(new SubCategoryResource($sub_category), 200)->additional(['status' => 200, 'message' => 'Category created successfully']);
+        return response()->json(new SubCategoryResource($sub_category), 200);
     }
 
 
