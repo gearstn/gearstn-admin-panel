@@ -3,6 +3,8 @@
 namespace Modules\Category\Http\Controllers;
 
 use App\Classes\CollectionPaginate;
+use App\Classes\SortModel;
+use App\Http\Requests\SearchRequest;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -87,9 +89,8 @@ class CategoryController extends Controller
         return response()->json(new CategoryResource($category), 200);
     }
 
-    public function search(Request $request){
-        $inputs = $request->all();
-
+    public function search(SearchRequest $request){
+        $inputs = $request->validated();
         if (isset($inputs['search_query']) && $inputs['search_query'] != null) {
             $q = (new Search())
                     ->registerModel(Category::class, ['title_en', 'title_ar'])
@@ -98,19 +99,9 @@ class CategoryController extends Controller
         } else {
             $q = Category::all();
         }
-
-        // Sort the collection of categories if requested
-        $q = $q->when(isset($inputs['sort_by']) && $inputs['sort_by'] != null, function ($q) use ($inputs) {
-            $sort = explode(',', $inputs['sort_by']);
-            if ($sort[1] == 'asc') {
-                return $q->sortBy($sort[0]);
-            } else {
-                return $q->SortByDesc($sort[0]);
-            }
-        });
-
+        //Sort the collection of categories if requested
+        $q = SortModel::sort($q, $inputs['sort_by']);
         $paginatedResult = CollectionPaginate::paginate($q, 10);
         return CategoryResource::collection($paginatedResult)->additional(['status' => 200, 'message' => 'Categories fetched successfully']);
     }
-
 }

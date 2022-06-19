@@ -2,6 +2,9 @@
 
 namespace Modules\Conversation\Http\Controllers;
 
+use App\Classes\CollectionPaginate;
+use App\Classes\SortModel;
+use App\Http\Requests\SearchRequest;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -20,6 +23,7 @@ use Modules\Conversation\Http\Resources\ConversationResource;
 use Modules\Mail\Http\Controllers\MailController;
 use Modules\Mail\Http\Requests\OpenConversationMailRequest;
 use Modules\SparePart\Entities\SparePart;
+use Spatie\Searchable\Search;
 
 class ConversationController extends Controller
 {
@@ -114,6 +118,22 @@ class ConversationController extends Controller
         $conversation = Conversation::findOrFail($id);
         $conversation->delete();
         return response()->json(new ConversationResource($conversation), 200);
+    }
+
+    public function search(SearchRequest $request){
+        $inputs = $request->validated();
+        if (isset($inputs['search_query']) && $inputs['search_query'] != null) {
+            $q = (new Search())
+                    ->registerModel(Category::class, ['model_type'])
+                    ->search($inputs['search_query']);
+            $q = ConversationResource::collection( array_column($q->toArray(), 'searchable') );
+        } else {
+            $q = Conversation::all();
+        }
+        //Sort the collection of categories if requested
+        $q = SortModel::sort($q, $inputs['sort_by']);
+        $paginatedResult = CollectionPaginate::paginate($q, 10);
+        return ConversationResource::collection($paginatedResult)->additional(['status' => 200, 'message' => 'Conversations fetched successfully']);
     }
 
 }

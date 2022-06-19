@@ -2,12 +2,16 @@
 
 namespace Modules\City\Http\Controllers;
 
+use App\Classes\CollectionPaginate;
+use App\Classes\SortModel;
+use App\Http\Requests\SearchRequest;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\City\Entities\City;
 use Modules\City\Http\Requests\CityRequest;
 use Modules\City\Http\Resources\CityResource;
+use Spatie\Searchable\Search;
 
 class CityController extends Controller
 {
@@ -73,5 +77,21 @@ class CityController extends Controller
         $city = City::findOrFail($id);
         $city->delete();
         return response()->json(new CityResource($city), 200);
+    }
+
+    public function search(SearchRequest $request){
+        $inputs = $request->validated();
+        if (isset($inputs['search_query']) && $inputs['search_query'] != null) {
+            $q = (new Search())
+                    ->registerModel(Category::class, ['title_en', 'title_ar'])
+                    ->search($inputs['search_query']);
+            $q = CityResource::collection( array_column($q->toArray(), 'searchable') );
+        } else {
+            $q = City::all();
+        }
+        //Sort the collection of categories if requested
+        $q = SortModel::sort($q, $inputs['sort_by']);
+        $paginatedResult = CollectionPaginate::paginate($q, 10);
+        return CityResource::collection($paginatedResult)->additional(['status' => 200, 'message' => 'Cities fetched successfully']);
     }
 }
