@@ -55,6 +55,16 @@ class ManufactureController extends Controller
     {
         $inputs = $request->validated();
         $manufacture = Manufacture::create($inputs);
+
+        //Attaching SubCategories to Manufacture if Selected
+
+        if (isset($inputs['sub-categories'])) {
+            foreach ($inputs['sub-categories'] as $sub_category_id) {
+                $manufacture->sub_categories()->attach($sub_category_id);
+                $manufacture->save();
+            }
+        }
+
         return response()->json(new ManufactureResource($manufacture),200);
     }
 
@@ -100,6 +110,15 @@ class ManufactureController extends Controller
         $inputs = $request->validated();
         $manufacture = Manufacture::find($id);
         $manufacture->update($inputs);
+        //Attaching SubCategories to Manufacture if Selected
+
+        if (isset($inputs['sub-categories'])) {
+            foreach ($inputs['sub-categories'] as $sub_category_id) {
+                $manufacture->sub_categories()->attach($sub_category_id);
+                $manufacture->save();
+            }
+        }
+
         return response()->json(new ManufactureResource($manufacture), 200);
     }
 

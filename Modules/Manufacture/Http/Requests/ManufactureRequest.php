@@ -17,6 +17,7 @@ class ManufactureRequest extends FormRequest
             'title_en' => 'required|unique:manufactures',
             'title_ar' => 'required',
             'category_id' => 'required',
+            'sub-categories' => 'sometimes',
         ];
     }
 
