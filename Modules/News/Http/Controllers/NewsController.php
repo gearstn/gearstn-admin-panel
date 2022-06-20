@@ -58,7 +58,7 @@ class NewsController extends Controller
      */
     public function show($id): JsonResponse
     {
-        $news = News::find($id)->firstOrFail();
+        $news = News::findOrFail($id);
         return response()->json(new NewsResource($news), 200);
     }
 
