@@ -11,6 +11,7 @@ use Modules\Manufacture\Entities\Manufacture;
 use Modules\Manufacture\Http\Resources\ManufactureResource;
 use Modules\SubCategory\Entities\SubCategory;
 use Modules\SubCategory\Http\Requests\SubCategoryRequest;
+use Modules\SubCategory\Http\Requests\UpdateRequestSubcategory;
 use Modules\SubCategory\Http\Resources\SubCategoryResource;
 
 class SubCategoryController extends Controller
@@ -105,7 +106,7 @@ class SubCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(SubCategoryRequest $request, $id)
+    public function update(UpdateRequestSubcategory $request, $id)
     {
         $inputs = $request->validated();
         $sub_category = SubCategory::find($id);
