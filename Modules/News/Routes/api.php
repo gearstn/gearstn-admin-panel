@@ -16,6 +16,6 @@ use Modules\News\Http\Controllers\NewsController;
 */
 
 Route::group(['middleware' => 'cors'], function () {
-    Route::resource('news', 'NewsController' ,['as' => 'frontend']);
     Route::get('/latest-news', [NewsController::class, 'latest_news'] ,['as' => 'frontend']);
+    Route::resource('news', 'NewsController' ,['as' => 'frontend']);
 });
