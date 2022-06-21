@@ -18,17 +18,18 @@ class CountryController extends Controller
      */
     public function index(Request $request)
     {
+        $countries = Country::paginate(number_in_page());
+        return CountryResource::collection($countries);
+    }
 
-        if($request->header('X-localization') == 'ar'){
-            $countries = Country::all()->sortBy('title_ar');;
-        }
-        elseif ($request->header('X-localization') == 'en') {
-            $countries = Country::all()->sortBy('title_en');;
-        }
-        else{
-            $countries = Country::all()->sortBy('title_ar');;
-        }
-        return CountryResource::collection($countries)->additional(['status' => 200, 'message' => 'Countries fetched successfully']);
+    /**
+     * Display a listing of the resource without pagination.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function get_all(){
+        $countries = Country::all();
+        return CountryResource::collection($countries);
     }
 
         /**

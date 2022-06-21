@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Modules\Country\Http\Controllers\CountryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'cors'], function () {
     //Auth routes
     Route::middleware('auth:sanctum')->group( function () {
+        Route::prefix('countries')->group(function () {
+            Route::get('all', [CountryController::class, 'get_all'])->name('frontend.countries.all');
+        });
         Route::resource('countries', 'CountryController' ,['as' => 'frontend']);
     });
 });
