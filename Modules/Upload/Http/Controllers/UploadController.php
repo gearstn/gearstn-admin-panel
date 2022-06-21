@@ -97,7 +97,7 @@ class UploadController extends Controller
     public function destroy(DestroyUploadRequest $request)
     {
         $inputs = $request->validated();
-        $image = Upload::find($inputs['ids']);
+        $image = Upload::find($inputs['id']);
         Storage::disk('local')->delete($image->file_path);
         $image->delete();
         return response('Uploads deleted successfully', 200);

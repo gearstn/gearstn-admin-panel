@@ -30,5 +30,6 @@ Route::group(['middleware' => 'cors'], function () {
         Route::get('/machine-price', [MachineController::class, 'get_machine_price']);
         Route::get('/latest-machines', [MachineController::class, 'latest_machines'], ['as' => 'frontend']);
         Route::get('/machine-view', [MachineController::class, 'add_machine_view']);
+        Route::delete('/machine-delete-image', [MachineController::class, 'delete_machine_image']);
     });
 });

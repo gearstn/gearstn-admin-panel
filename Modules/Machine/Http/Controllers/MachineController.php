@@ -395,4 +395,33 @@ class MachineController extends Controller
         $machine = Machine::find($inputs['machine_id']);
         views($machine)->record();
     }
+
+    public function delete_machine_image(Request $request)
+    {
+        $inputs = $request->all();
+        $validator = Validator::make($inputs, [
+            "machine_id" => 'required',
+            "image_id" => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 400);
+        }
+        $machine = Machine::find($inputs['machine_id']);
+        $images = json_decode($machine->images);
+
+        foreach (array_keys($images, $inputs['image_id']) as $key) {
+            unset($images[$key]);
+        }
+        $machine->images = json_encode($images);
+        $machine->save();
+
+        $data = [
+            'id' => $inputs['image_id'],
+        ];
+        $post = new Post_Caller(UploadController::class, 'destroy', Request::class , $data);
+        $response = $post->call();
+        if ($response->status() != 200) {return $response;}
+
+        return response()->json(new MachineResource($machine), 200);
+    }
 }
