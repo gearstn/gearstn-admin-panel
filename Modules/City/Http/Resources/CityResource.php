@@ -3,6 +3,7 @@
 namespace Modules\City\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Modules\Country\Entities\Country;
 
 class CityResource extends JsonResource
 {
@@ -18,6 +19,7 @@ class CityResource extends JsonResource
             "id" => $this->id,
             "title_en" => $this->title_en,
             "title_ar" => $this->title_ar,
+            "country_id" => Country::find($this->country_id,['id','title_en'])
         ];
         return $data;
     }
