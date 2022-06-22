@@ -43,7 +43,6 @@ class NewsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(NewsRequest $request)
     {
@@ -54,10 +53,10 @@ class NewsController extends Controller
             'path' => 'news'
         ];
         //Uploading News Image
-        $post = new POST_Caller(UploadController::class, 'store', StoreUploadRequest::class, $data);
+        $post = new POST_Caller(UploadController::class, 'store', Request::class, $data);
         $response = $post->call();
         if ($response->status() != 200) {return $response;}
-        $inputs['image_id'] = $response->getContent();
+        $inputs['image_id'] = json_decode($response->getContent())[0];
         unset($inputs['image']);
 
         $news = News::create($inputs);

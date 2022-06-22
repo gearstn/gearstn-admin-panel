@@ -41,7 +41,7 @@ class UploadController extends Controller
 
         $validator = Validator::make($inputs, [
             "photos" => ["required","array"],
-            "photos.*" => ["required","mimes:jpg,png,jpeg,gif,svg","max:1000"],
+            // "photos.*" => ["required","mimes:jpg,png,jpeg,gif,svg","max:1000"],
             'seller_id' => 'sometimes',
             'path' => 'sometimes'
         ] );
@@ -51,7 +51,6 @@ class UploadController extends Controller
         }
         $images = [];
         foreach ($inputs['photos'] as $image) {
-
             $fileInfo = $image->getClientOriginalName();
             $newFileName = time() . '.' . $image->extension();
             if ($image->getSize() /1024 > 250.0){
