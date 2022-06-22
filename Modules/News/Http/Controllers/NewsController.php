@@ -71,9 +71,10 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(News $request, $id)
+    public function update(NewsRequest $request, $id)
     {
         $inputs = $request->validated();
+        $inputs['post_date'] = Carbon::parse($inputs['post_date']);
         $news = News::find($id);
         $news->update($inputs);
         return response()->json(new NewsResource($news), 200);
