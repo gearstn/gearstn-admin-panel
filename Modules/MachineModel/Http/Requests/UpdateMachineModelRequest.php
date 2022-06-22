@@ -14,7 +14,7 @@ class UpdateMachineModelRequest extends FormRequest
     public function rules()
     {
         return [
-            'title_en' => 'required|unique:models',
+            'title_en' => 'required',
             'title_ar' => 'required',
             'category_id' => 'required',
             'sub_category_id' => 'required',
