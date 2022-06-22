@@ -32,11 +32,9 @@ class CountryController extends Controller
         return CountryResource::collection($countries);
     }
 
-        /**
+    /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(CountryRequest $request)
     {
