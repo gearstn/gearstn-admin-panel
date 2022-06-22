@@ -2,6 +2,7 @@
 
 namespace Modules\News\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -44,6 +45,7 @@ class NewsController extends Controller
     public function store(NewsRequest $request)
     {
         $inputs = $request->validated();
+        $inputs['post_date'] = Carbon::parse($inputs['post_date']);
         $news = News::create($inputs);
         $news->slug = Str::slug($inputs['title_en'], '-') .'-'. $news->created_at->timestamp;
         $news->save();
