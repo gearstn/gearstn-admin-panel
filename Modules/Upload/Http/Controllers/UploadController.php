@@ -40,9 +40,10 @@ class UploadController extends Controller
 
 
         $validator = Validator::make($inputs, [
-            // "photos" => ["required","array","min:1","max:5"],
-            // "photos.*" => ["required","mimes:jpg,png,jpeg,gif,svg","max:1000"],
-            'seller_id' => 'sometimes'
+            "photos" => ["required","array"],
+            "photos.*" => ["required","mimes:jpg,png,jpeg,gif,svg","max:1000"],
+            'seller_id' => 'sometimes',
+            'path' => 'sometimes'
         ] );
 
         if ($validator->fails()) {
@@ -59,9 +60,9 @@ class UploadController extends Controller
             else{
                 $img = Image::make($image)->insert( storage_path('app/public/logo.png') , 'bottom-right')->encode($image->extension());
             }
-
-            Storage::disk('local')->put($inputs['seller_id'] .'/'. $newFileName,   (string)$img);
-            $path = $inputs['seller_id'] .'/'. $newFileName;
+            $target_folder = isset($inputs['path']) ? $inputs['path'] : $inputs['seller_id'];
+            Storage::disk('local')->put($target_folder .'/'. $newFileName,   (string)$img);
+            $path = $target_folder .'/'. $newFileName;
             $url = Storage::disk('local')->url($path);
             $photo = [
                 'user_id' => $inputs['seller_id'] ?? Auth::user()->id,

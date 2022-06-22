@@ -2,17 +2,20 @@
 
 namespace Modules\News\Http\Controllers;
 
+use App\Classes\POST_Caller;
 use Carbon\Carbon;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Modules\Machine\Entities\Machine;
 use Modules\News\Entities\News;
 use Modules\News\Http\Requests\LatestNewsRequest;
 use Modules\News\Http\Resources\NewsResource;
 use Illuminate\Support\Str;
 use Modules\News\Http\Requests\NewsRequest;
+use Modules\Upload\Http\Controllers\UploadController;
 
 class NewsController extends Controller
 {
@@ -45,7 +48,18 @@ class NewsController extends Controller
     public function store(NewsRequest $request)
     {
         $inputs = $request->validated();
-        // $inputs['post_date'] = Carbon::parse($inputs['post_date']);
+        $data = [
+            'photos' => $inputs['image'],
+            'seller_id' => Auth::user()->id,
+            'path' => 'news'
+        ];
+        //Uploading News Image
+        $post = new POST_Caller(UploadController::class, 'store', StoreUploadRequest::class, $data);
+        $response = $post->call();
+        if ($response->status() != 200) {return $response;}
+        $inputs['image_id'] = $response->getContent();
+        unset($inputs['image']);
+
         $news = News::create($inputs);
         $news->slug = Str::slug($inputs['title_en'], '-') .'-'. $news->created_at->timestamp;
         $news->save();
