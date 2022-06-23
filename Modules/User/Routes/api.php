@@ -24,7 +24,6 @@ Route::group(['prefix' => '/','middleware' => 'cors'], function () {
         Route::get('/users/profile',[UserController::class, 'getNormalUser']);
         Route::get('/users/full-profile',[UserController::class, 'getFullUser']);
         Route::post('/users',[UserController::class, 'update'])->name('users.update');
-        Route::resource('users','UserController')->only('destroy');
         Route::get('/users/phone',[UserController::class, 'get_phone']);
         Route::post('/users/request_account_manager',[UserController::class, 'request_account_manager'])->name('users.request_account_manager');
         Route::get('/users/get-machines-distributors',[UserController::class, 'get_machines_distributors'])->name('users.get_machines_distributors');
@@ -33,6 +32,7 @@ Route::group(['prefix' => '/','middleware' => 'cors'], function () {
         Route::post('/list/add', [SavedListController::class,'addToList'])->name('list.add');
         Route::post('/list/remove', [SavedListController::class,'removeItem'])->name('list.remove');
         Route::get('/list/clear', [SavedListController::class,'clearList'])->name('list.clear');
-
+        Route::resource('users','UserController');
+        Route::resource('roles','RoleController');
     });
 });

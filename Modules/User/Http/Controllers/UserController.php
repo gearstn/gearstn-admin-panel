@@ -30,7 +30,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::paginate(number_in_page());
-        return NormalUserResource::collection($users)->additional(['status' => 200, 'message' => 'Categories fetched successfully']);
+        return FullUserResource::collection($users)->additional(['status' => 200, 'message' => 'Categories fetched successfully']);
     }
 
     /**
@@ -85,6 +85,18 @@ class UserController extends Controller
         $role = Role::find($inputs['role_id'])->first();
         $user = User::create($inputs);
         $user->assignRole($role);
+        return response()->json(new FullUserResource($user), 200);
+    }
+
+        /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($id)
+    {
+        $user = User::findOrFail($id);
         return response()->json(new FullUserResource($user), 200);
     }
 
