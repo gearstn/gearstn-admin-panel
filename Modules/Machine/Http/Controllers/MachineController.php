@@ -263,7 +263,6 @@ class MachineController extends Controller
     public function show($id)
     {
         $machine = Machine::find($id);
-        // views($machine)->record();
         return response()->json(new MachineResource($machine), 200);
     }
 

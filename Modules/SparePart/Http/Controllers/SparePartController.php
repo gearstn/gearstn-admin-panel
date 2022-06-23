@@ -135,10 +135,9 @@ class SparePartController extends Controller
      * @param $slug
      * @return JsonResponse
      */
-    public function show($slug): JsonResponse
+    public function show($id): JsonResponse
     {
-        $spare_part = SparePart::where('slug', '=', $slug)->firstOrFail();
-        views($spare_part)->record();
+        $spare_part = SparePart::find($id);
         return response()->json(new SparePartResource($spare_part), 200);
     }
 
