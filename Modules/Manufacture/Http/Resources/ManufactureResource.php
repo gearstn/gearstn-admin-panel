@@ -20,7 +20,7 @@ class ManufactureResource extends JsonResource
             "title_en" => $this->title_en,
             "title_ar" => $this->title_ar,
             "category_id" => Category::find($this->category_id,['id','title_en']),
-            'sub-categories' => $this->sub_categories()->get(['id', 'title_en']),
+            'sub_categories' => $this->sub_categories()->get(['id', 'title_en']),
         ];
         return $data;
     }

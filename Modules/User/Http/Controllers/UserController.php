@@ -70,8 +70,21 @@ class UserController extends Controller
                 $q->where('name', 'distributor');
             }
         )->get();
-        return NormalUserResource::collection($users)->additional(['status' => 200, 'message' => 'Categories fetched successfully']);
+        return NormalUserResource::collection($users);
     }
+
+
+    public function get_services_providers()
+    {
+        $users = User::whereHas(
+            'roles',
+            function ($q) {
+                $q->where('name', 'services-provider');
+            }
+        )->get();
+        return NormalUserResource::collection($users);
+    }
+
 
 
     /**

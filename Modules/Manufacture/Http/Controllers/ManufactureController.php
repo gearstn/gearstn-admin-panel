@@ -10,6 +10,7 @@ use Modules\Category\Entities\Category;
 use Modules\Manufacture\Entities\Manufacture;
 use Modules\Manufacture\Http\Requests\ManufactureRequest;
 use Modules\Manufacture\Http\Requests\StoreManufactureRequest;
+use Modules\Manufacture\Http\Requests\UpdateManufactureRequest;
 use Modules\Manufacture\Http\Resources\ManufactureResource;
 
 class ManufactureController extends Controller
@@ -58,8 +59,8 @@ class ManufactureController extends Controller
 
         //Attaching SubCategories to Manufacture if Selected
 
-        if (isset($inputs['sub-categories'])) {
-            foreach ($inputs['sub-categories'] as $sub_category_id) {
+        if (isset($inputs['sub_categories'])) {
+            foreach ($inputs['sub_categories'] as $sub_category_id) {
                 $manufacture->sub_categories()->attach($sub_category_id);
                 $manufacture->save();
             }
@@ -105,15 +106,16 @@ class ManufactureController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ManufactureRequest $request, $id)
+    public function update(UpdateManufactureRequest $request, $id)
     {
         $inputs = $request->validated();
         $manufacture = Manufacture::find($id);
         $manufacture->update($inputs);
         //Attaching SubCategories to Manufacture if Selected
 
-        if (isset($inputs['sub-categories'])) {
-            foreach ($inputs['sub-categories'] as $sub_category_id) {
+        if (isset($inputs['sub_categories'])) {
+            $manufacture->sub_categories()->detach();
+            foreach ($inputs['sub_categories'] as $sub_category_id) {
                 $manufacture->sub_categories()->attach($sub_category_id);
                 $manufacture->save();
             }

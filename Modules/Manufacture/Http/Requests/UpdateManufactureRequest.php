@@ -4,7 +4,7 @@ namespace Modules\Manufacture\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ManufactureRequest extends FormRequest
+class UpdateManufactureRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,7 +14,7 @@ class ManufactureRequest extends FormRequest
     public function rules()
     {
         return [
-            'title_en' => 'required|unique:manufactures',
+            'title_en' => 'required',
             'title_ar' => 'required',
             'category_id' => 'required',
             'sub_categories' => 'sometimes',
