@@ -5,6 +5,7 @@ namespace Modules\User\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Validator;
 use Modules\User\Http\Resources\RoleResource;
 use Spatie\Permission\Models\Role;
 
@@ -26,7 +27,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('user::create');
+        // return view('user::create');
     }
 
     /**
@@ -36,7 +37,16 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $inputs = $request->all();
+        $validator = Validator::make($inputs, [
+            'name' => 'required|unique:roles',
+            'guard_name' => 'required',
+        ] );
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 400);
+        }
+        $role = Role::create($inputs);
+        return response()->json(new RoleResource($role), 200);
     }
 
     /**
@@ -46,7 +56,8 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        return view('user::show');
+        $role = Role::find($id);
+        return response()->json(new RoleResource($role),200);
     }
 
     /**
@@ -56,7 +67,7 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        return view('user::edit');
+        // return view('user::edit');
     }
 
     /**
@@ -67,7 +78,18 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $inputs = $request->all();
+        $validator = Validator::make($inputs, [
+            'name' => 'required|unique:roles',
+            'guard_name' => 'required',
+            ] );
+            if ($validator->fails()) {
+                return response()->json($validator->messages(), 400);
+            }
+        $role = Role::findById($id);
+        $role->update($inputs);
+        $role->save();
+        return response()->json(new RoleResource($role), 200);
     }
 
     /**
@@ -77,6 +99,8 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $role = Role::findById($id);
+        $role->delete();
+        return response()->json(new RoleResource($role), 200);
     }
 }

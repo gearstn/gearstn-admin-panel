@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\User\Http\Controllers\RoleController;
 use Modules\User\Http\Controllers\SavedListController;
 use Modules\User\Http\Controllers\UserController;
 
@@ -34,7 +35,10 @@ Route::group(['prefix' => '/','middleware' => 'cors'], function () {
         Route::post('/list/add', [SavedListController::class,'addToList'])->name('list.add');
         Route::post('/list/remove', [SavedListController::class,'removeItem'])->name('list.remove');
         Route::get('/list/clear', [SavedListController::class,'clearList'])->name('list.clear');
+
+        Route::post('roles/{role}', [RoleController::class, 'update']);
+
         Route::resource('users','UserController')->except('update');
-        Route::resource('roles','RoleController');
+        Route::resource('roles','RoleController')->except('update');
     });
 });
