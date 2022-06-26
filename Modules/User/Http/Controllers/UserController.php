@@ -107,10 +107,10 @@ class UserController extends Controller
      * @param Request $request
      * @return JsonResponse|RedirectResponse
      */
-    public function update(Request $request)
+    public function update(Request $request,$id)
     {
         $inputs = $request->all();
-        $user = Auth::user();
+        $user = User::find($id);
 
         //For distributor it is required to upload tax_license_image & commercial_license_image
         if ($user->hasRole('distributor') && $user->tax_license_image === null && $user->commercial_license_image === null) {
@@ -125,7 +125,7 @@ class UserController extends Controller
                 return response()->json($validator->messages(), 400);
             }
             //Adding Tax License Image
-            if (isset($inputs['tax_license_image']) && $inputs['tax_license_image'] !=null ) {
+            if (isset($inputs['tax_license_image']) && $inputs['tax_license_image'] != null ) {
                 $data = [
                     'photos' => [$inputs['tax_license_image']],
                     'seller_id' => $user->id,
