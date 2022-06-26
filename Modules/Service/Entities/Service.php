@@ -17,7 +17,7 @@ class Service extends Model
         'company_name',
         'address',
         'description',
-        'approve',
+        'approved',
         'user_id',
         'service_type_id',
         'country_id',
