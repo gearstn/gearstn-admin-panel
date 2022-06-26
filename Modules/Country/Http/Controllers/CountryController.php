@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Country\Entities\Country;
 use Modules\Country\Http\Requests\CountryRequest;
+use Modules\Country\Http\Requests\UpdateCountryRequest;
 use Modules\Country\Http\Resources\CountryResource;
 
 class CountryController extends Controller
@@ -62,7 +63,7 @@ class CountryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CountryRequest $request, $id)
+    public function update(UpdateCountryRequest $request, $id)
     {
         $inputs = $request->validated();
         $country = Country::find($id);

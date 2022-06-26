@@ -4,7 +4,7 @@ namespace Modules\Country\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CountryRequest extends FormRequest
+class UpdateCountryRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,7 +14,7 @@ class CountryRequest extends FormRequest
     public function rules()
     {
         return [
-            'title_en' => 'required|unique:countries',
+            'title_en' => 'required',
             'title_ar' => 'required',
             'flag' => 'required',
             'code' => 'required'
