@@ -27,12 +27,13 @@ Route::group(['prefix' => '/','middleware' => 'cors'], function () {
         Route::get('/users/phone',[UserController::class, 'get_phone']);
         Route::post('/users/request_account_manager',[UserController::class, 'request_account_manager'])->name('users.request_account_manager');
         Route::get('/users/get-machines-distributors',[UserController::class, 'get_machines_distributors'])->name('users.get_machines_distributors');
+        Route::post('users/{user}', [UserController::class, 'update']);
 
         Route::get('/list', [SavedListController::class,'getList'])->name('list');
         Route::post('/list/add', [SavedListController::class,'addToList'])->name('list.add');
         Route::post('/list/remove', [SavedListController::class,'removeItem'])->name('list.remove');
         Route::get('/list/clear', [SavedListController::class,'clearList'])->name('list.clear');
-        Route::resource('users','UserController');
+        Route::resource('users','UserController')->except('update');
         Route::resource('roles','RoleController');
     });
 });

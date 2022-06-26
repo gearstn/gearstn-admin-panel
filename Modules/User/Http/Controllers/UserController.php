@@ -183,7 +183,7 @@ class UserController extends Controller
 
         $user->update($inputs);
         $user->save();
-        return response()->json(['message' => 'Profile Updated Successfully'], 200);
+        return response()->json(new FullUserResource($user), 200);
     }
 
     /**
