@@ -23,6 +23,7 @@ class StoreServiceRequest extends FormRequest
                 })
             ],
              'address' => 'required',
+             'approved' => 'required',
             'description' => 'required',
             'user_id' => 'required',
             'service_type_id' => 'required',

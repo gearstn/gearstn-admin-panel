@@ -68,7 +68,7 @@ class ServiceController extends Controller
      */
     public function show($id)
     {
-        $service = Service::find($id)->firstOrFail();
+        $service = Service::findOrFail($id);
         return response()->json(new ServiceResource($service), 200);
     }
 
