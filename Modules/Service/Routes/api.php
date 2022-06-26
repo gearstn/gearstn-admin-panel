@@ -21,10 +21,11 @@ Route::group(['middleware' => 'cors'], function () {
     //Auth routes
     Route::middleware('auth:sanctum')->group( function () {
         //Store Update Destroy routes for Machines and Models
-        Route::resource('services', 'ServiceController' ,['as' => 'frontend']);
         Route::get('/user-services', [ServiceController::class, 'user_services']);
         //Search for all Entities
         Route::get('/services-search', [ServiceController::class, 'search_filter']);
+        Route::post('services/{services}', [ServiceController::class, 'update']);
+        Route::resource('services', 'ServiceController' ,['as' => 'frontend'])->except('update');
     });
 
 
