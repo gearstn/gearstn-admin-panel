@@ -125,7 +125,7 @@ class UserController extends Controller
                 return response()->json($validator->messages(), 400);
             }
             //Adding Tax License Image
-            if (isset($inputs['tax_license_image'])) {
+            if (isset($inputs['tax_license_image']) && $inputs['tax_license_image'] !=null ) {
                 $data = [
                     'photos' => [$inputs['tax_license_image']],
                     'seller_id' => $user->id,
@@ -141,7 +141,7 @@ class UserController extends Controller
 
 
             //Adding Commercial License Image
-            if (isset($inputs['commercial_license_image'])) {
+            if (isset($inputs['commercial_license_image']) && $inputs['commercial_license_image'] !=null) {
                 $data = [
                     'photos' => [$inputs['commercial_license_image']],
                     'seller_id' => $user->id,
@@ -167,7 +167,7 @@ class UserController extends Controller
             }
 
             //Adding National License Image
-            if (isset($inputs['commercial_license_image'])) {
+            if (isset($inputs['national_id_image']) && $inputs['national_id_image'] !=null) {
                 $data = [
                     'photos' => [$inputs['national_id_image']],
                     'seller_id' => $user->id,
