@@ -15,21 +15,15 @@ class UpdateServiceRequest extends FormRequest
     public function rules()
     {
         return [
-            'company_name' =>  [
-                'required',
-                Rule::unique('services')->where(function ($query) {
-                    return $query->where('company_name', $this->company_name)
-                    ->where('service_type_id', $this->service_type_id);
-                })
-            ],
-             'address' => 'required',
+            'company_name' =>  'required',
+            'address' => 'required',
             'description' => 'required',
             'user_id' => 'required',
             'service_type_id' => 'required',
             'city_id' => 'sometimes',
             'country_id' => 'sometimes',
-            "photos" => ["required","array","min:1","max:1"],
-            "photos.*" => ["required","mimes:jpeg,jpg,png,gif,webp","max:1000"],
+            "photos" => ["sometimes", "array", "min:1", "max:1"],
+            "photos.*" => ["sometimes", "mimes:jpeg,jpg,png,gif,webp", "max:1000"],
         ];
     }
 

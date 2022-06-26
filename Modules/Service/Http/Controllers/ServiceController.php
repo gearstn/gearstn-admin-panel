@@ -47,7 +47,9 @@ class ServiceController extends Controller
             ];
             $post = new Post_Caller(UploadController::class, 'store', StoreUploadRequest::class, $data);
             $response = $post->call();
-            if ($response->status() != 200) {return $response;}
+            if ($response->status() != 200) {
+                return $response;
+            }
             $inputs['images'] = $response->getContent();
             unset($inputs['photos']);
 
@@ -72,7 +74,7 @@ class ServiceController extends Controller
         return response()->json(new ServiceResource($service), 200);
     }
 
-        /**
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -87,6 +89,19 @@ class ServiceController extends Controller
 
             $service = Service::find($id);
             $service->update($inputs);
+            if (isset($inputs['photos']) && $inputs['photos'] != null) {
+                $data = [
+                    'photos' => [$inputs['photos']],
+                    'seller_id' => $user->id,
+                ];
+                $post = new Post_Caller(UploadController::class, 'store', Request::class, $data);
+                $response = $post->call();
+                if ($response->status() != 200) {
+                    return $response;
+                }
+                $inputs['images'] = json_decode($response->getContent())[0];
+                unset($inputs['photos']);
+            }
 
             return response()->json(new ServiceResource($service), 200);
         }
@@ -135,7 +150,6 @@ class ServiceController extends Controller
             } else {
                 return $q->SortByDesc($sort[0]);
             }
-
         });
 
         //Adding Pagination to a collection
@@ -155,5 +169,4 @@ class ServiceController extends Controller
             'message_ar' => 'ليس لديك دور مقدم الخدمة',
         ], 422);
     }
-
 }
