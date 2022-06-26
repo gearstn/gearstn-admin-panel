@@ -17,19 +17,19 @@ use Modules\Machine\Http\Controllers\MachineController;
 
 //Routes for frontend
 Route::group(['middleware' => 'cors'], function () {
-
     //Auth routes
     Route::middleware('auth:sanctum')->group(function () {
-        //Store Update Destroy routes for Machines and Models
-        Route::resource('machines', 'MachineController', ['as' => 'frontend']);
-        Route::get('/user-machines', [MachineController::class, 'user_machines']);
-        //Search for all Entities
-        Route::get('/machines-search', [MachineController::class, 'search_filter']);
-        Route::get('/machines-filter-data', [MachineController::class, 'getMinMaxOfField']);
-        Route::get('/related-machines', [MachineController::class, 'getRelatedMachines']);
-        Route::get('/machine-price', [MachineController::class, 'get_machine_price']);
-        Route::get('/latest-machines', [MachineController::class, 'latest_machines'], ['as' => 'frontend']);
-        Route::get('/machine-view', [MachineController::class, 'add_machine_view']);
-        Route::delete('/machine-delete-image', [MachineController::class, 'delete_machine_image']);
+        Route::prefix('/machines')->group(function () {
+            Route::get('/user-machines', [MachineController::class, 'user_machines']);
+            Route::get('/machines-search', [MachineController::class, 'search_filter']);
+            Route::get('/machines-filter-data', [MachineController::class, 'getMinMaxOfField']);
+            Route::get('/related-machines', [MachineController::class, 'getRelatedMachines']);
+            Route::get('/machine-price', [MachineController::class, 'get_machine_price']);
+            Route::get('/latest-machines', [MachineController::class, 'latest_machines'], ['as' => 'frontend']);
+            Route::get('/machine-view', [MachineController::class, 'add_machine_view']);
+            Route::delete('/machine-delete-image', [MachineController::class, 'delete_machine_image']);
+            Route::post('/{machine}', [MachineController::class, 'update']);
+        });
+        Route::resource('machines', 'MachineController', ['as' => 'frontend'])->except('update');
     });
 });

@@ -66,13 +66,12 @@ class SparePartController extends Controller
                         if (str_contains($feature->slug, 'photos-per-spare-parts')) {
                             $feature_slug_photos = $feature->slug;
                         }
-
                     }
-                    if ( $plan->getFeatureValue($feature_slug_photos) >= $photos_count ) {
+                    if ($plan->getFeatureValue($feature_slug_photos) >= $photos_count) {
                         $plan_ends_at = $plan->ends_at;
                         $plan->recordFeatureUsage($feature_slug_spare_parts, 1);
                         // $plan->recordFeatureUsage($feature_slug_photos, $photos_count);
-                    }    else {
+                    } else {
                         return response()->json([
                             'message_en' => 'You Have acrossed limit of your subscription, you have to upgrade your account',
                             'message_ar' => 'لقد وصلت للحد الاقصى لتسجيل الماكينات , يجب ترقية حسابك',
@@ -80,8 +79,7 @@ class SparePartController extends Controller
                     }
                 }
             }
-        }
-        else{
+        } else {
             return response()->json([
                 'message_en' => "You don't have any subscription",
                 'message_ar' => 'ليس لديك أي اشتراك',
@@ -95,13 +93,15 @@ class SparePartController extends Controller
         ];
         $post = new POST_Caller(UploadController::class, 'store', StoreUploadRequest::class, $data);
         $response = $post->call();
-        if ($response->status() != 200) {return $response;}
+        if ($response->status() != 200) {
+            return $response;
+        }
         $inputs['images'] = $response->getContent();
         unset($inputs['photos']);
 
 
         $manufacture = Manufacture::find($inputs['manufacture_id']);
-        if($manufacture == null)
+        if ($manufacture == null)
             unset($inputs['manufacture_id']);
 
         $spare_part = SparePart::create($inputs);
@@ -124,7 +124,9 @@ class SparePartController extends Controller
         ];
         $post = new Post_Caller(MailController::class, 'store_spare_part', Request::class, $data);
         $response = $post->call();
-        if ($response->status() != 200) {return $response;}
+        if ($response->status() != 200) {
+            return $response;
+        }
 
         return response()->json(new SparePartResource($spare_part), 200);
     }
@@ -143,16 +145,28 @@ class SparePartController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
      */
     public function update(SparePartUpdateRequest $request, $id)
     {
         $inputs = $request->validated();
         $spare_part = SparePart::find($id);
+        if (isset($inputs['photos'])) {
+            $data = [
+                'photos' => [$inputs['photos']],
+                'seller_id' => $spare_part->seller_id,
+            ];
+            $post = new Post_Caller(UploadController::class, 'store', Request::class, $data);
+            $response = $post->call();
+            if ($response->status() != 200) {
+                return $response;
+            }
+            $inputs['images'] = $response->getContent();
+            unset($inputs['photos']);
+        }
+
         $spare_part->update($inputs);
-        return response()->json(new SparePartResource($spare_part), 200);    }
+        return response()->json(new SparePartResource($spare_part), 200);
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -197,7 +211,6 @@ class SparePartController extends Controller
             } else {
                 return $q->SortByDesc($sort[0]);
             }
-
         });
 
         //Adding Pagination to a collection

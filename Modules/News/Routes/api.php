@@ -18,6 +18,7 @@ use Modules\News\Http\Controllers\NewsController;
 Route::group(['middleware' => 'cors'], function () {
     Route::middleware('auth:sanctum')->group( function () {
         Route::get('news/latest-news', [NewsController::class, 'latest_news'] ,['as' => 'frontend']);
-        Route::resource('news', 'NewsController' ,['as' => 'frontend']);
+        Route::post('news/{news}', [NewsController::class, 'update']);
+        Route::resource('news', 'NewsController' ,['as' => 'frontend'])->except('update');
     });
 });

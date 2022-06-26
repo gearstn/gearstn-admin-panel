@@ -24,8 +24,8 @@ class SparePartUpdateRequest extends FormRequest
             'city_id' => 'sometimes',
             'sku' => 'sometimes',
             'price' => 'sometimes',
-            "photos" => ["required","array","min:1","max:5"],
-            "photos.*" => ["required","mimes:jpeg,jpg,png,gif,webp","max:1000"],
+            "photos" => ["sometimes","array","min:1","max:5"],
+            "photos.*" => ["sometimes","mimes:jpeg,jpg,png,gif,webp","max:1000"],
             'country_id' => 'required',
             'is_original' => 'required'
         ];
