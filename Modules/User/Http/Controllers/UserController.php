@@ -57,7 +57,7 @@ class UserController extends Controller
         return response()->json(new FullUserResource($user), 200);
     }
 
-        /**
+    /**
      * Display the specified resource.
      *
      * @return JsonResponse
@@ -65,7 +65,8 @@ class UserController extends Controller
     public function get_machines_distributors()
     {
         $users = User::whereHas(
-            'roles', function($q){
+            'roles',
+            function ($q) {
                 $q->where('name', 'distributor');
             }
         )->get();
@@ -88,7 +89,7 @@ class UserController extends Controller
         return response()->json(new FullUserResource($user), 200);
     }
 
-        /**
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -114,46 +115,51 @@ class UserController extends Controller
         //For distributor it is required to upload tax_license_image & commercial_license_image
         if ($user->hasRole('distributor') && $user->tax_license_image === null && $user->commercial_license_image === null) {
             $validator = Validator::make($inputs, [
-                'tax_license' => 'required',
-                'tax_license_image' => 'required',
-                'commercial_license' => 'required',
-                'commercial_license_image' => 'required',
+                'tax_license' => 'sometimes',
+                'tax_license_image' => 'sometimes',
+                'commercial_license' => 'sometimes',
+                'commercial_license_image' => 'sometimes',
             ]);
 
             if ($validator->fails()) {
                 return response()->json($validator->messages(), 400);
             }
-
             //Adding Tax License Image
-            $data = [
-                'photos' => [$inputs['tax_license_image']],
-                'seller_id' => $user->id,
-            ];
-            $post = new Post_Caller(UploadController::class,'store',StoreUploadRequest::class,$data);
-            $response = $post->call();
+            if (isset($inputs['tax_license_image'])) {
+                $data = [
+                    'photos' => [$inputs['tax_license_image']],
+                    'seller_id' => $user->id,
+                ];
+                $post = new Post_Caller(UploadController::class, 'store', StoreUploadRequest::class, $data);
+                $response = $post->call();
 
-            if($response->status() != 200) { return $response; }
-            $inputs['tax_license_image'] = json_decode($response->getContent())[0];
-
+                if ($response->status() != 200) {
+                    return $response;
+                }
+                $inputs['tax_license_image'] = json_decode($response->getContent())[0];
+            }
 
 
             //Adding Commercial License Image
-            $data = [
-                'photos' => [$inputs['commercial_license_image']],
-                'seller_id' => $user->id,
-            ];
-            $post = new Post_Caller(UploadController::class,'store',StoreUploadRequest::class,$data);
-            $response = $post->call();
-            if($response->status() != 200) { return $response; }
-            $inputs['commercial_license_image'] = json_decode($response->getContent())[0];
-
+            if (isset($inputs['commercial_license_image'])) {
+                $data = [
+                    'photos' => [$inputs['commercial_license_image']],
+                    'seller_id' => $user->id,
+                ];
+                $post = new Post_Caller(UploadController::class, 'store', StoreUploadRequest::class, $data);
+                $response = $post->call();
+                if ($response->status() != 200) {
+                    return $response;
+                }
+                $inputs['commercial_license_image'] = json_decode($response->getContent())[0];
+            }
         }
 
         //For contractor it is required to upload national_id_image
         if ($user->hasRole('contractor') && $user->national_id_image === null) {
             $validator = Validator::make($inputs, [
-                'national_id' => 'required',
-                'national_id_image' => 'required',
+                'national_id' => 'sometimes',
+                'national_id_image' => 'sometimes',
             ]);
 
             if ($validator->fails()) {
@@ -161,15 +167,18 @@ class UserController extends Controller
             }
 
             //Adding National License Image
-            $data = [
-                'photos' => [$inputs['national_id_image']],
-                'seller_id' => $user->id,
-            ];
-            $post = new Post_Caller(UploadController::class,'store',StoreUploadRequest::class,$data);
-            $response = $post->call();
-            if($response->status() != 200) { return $response; }
-            $inputs['national_id_image'] = json_decode($response->getContent())[0];
-
+            if (isset($inputs['commercial_license_image'])) {
+                $data = [
+                    'photos' => [$inputs['national_id_image']],
+                    'seller_id' => $user->id,
+                ];
+                $post = new Post_Caller(UploadController::class, 'store', StoreUploadRequest::class, $data);
+                $response = $post->call();
+                if ($response->status() != 200) {
+                    return $response;
+                }
+                $inputs['national_id_image'] = json_decode($response->getContent())[0];
+            }
         }
 
         $user->update($inputs);
@@ -226,22 +235,23 @@ class UserController extends Controller
         $inputs['user_id'] = $user_id;
 
         AcountManagerRequest::create($inputs);
-        return response()->json(['message_en' => 'your request has been created successfully, We will contact you soon',
-                                 'message_ar' => 'تم إنشاء طلبك بنجاح ، وسنتصل بك قريبًا'
-                                ], 200);
+        return response()->json([
+            'message_en' => 'your request has been created successfully, We will contact you soon',
+            'message_ar' => 'تم إنشاء طلبك بنجاح ، وسنتصل بك قريبًا'
+        ], 200);
     }
 
     public function get_phone(Request $request): JsonResponse
     {
         $inputs = $request->all();
-        $validator = Validator::make($inputs,  ['seller_id' => 'required','product_id' => 'required','product_type' => 'required']);
+        $validator = Validator::make($inputs,  ['seller_id' => 'required', 'product_id' => 'required', 'product_type' => 'required']);
         if ($validator->fails()) {
             return response()->json($validator->messages(), 400);
         }
 
         $user = User::findOrFail($inputs['seller_id']);
 
-        if($inputs['product_type'] == 'machine'){
+        if ($inputs['product_type'] == 'machine') {
             $machine = Machine::where('id', '=', $inputs['product_id'])->firstOrFail();
             $machine->phone_clicks = $machine->phone_clicks + 1;
             $machine->save();
