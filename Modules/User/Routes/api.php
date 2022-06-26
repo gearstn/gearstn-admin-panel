@@ -27,6 +27,7 @@ Route::group(['prefix' => '/','middleware' => 'cors'], function () {
         Route::get('/users/phone',[UserController::class, 'get_phone']);
         Route::post('/users/request_account_manager',[UserController::class, 'request_account_manager'])->name('users.request_account_manager');
         Route::get('/users/get-machines-distributors',[UserController::class, 'get_machines_distributors'])->name('users.get_machines_distributors');
+        Route::get('/users/get-services-providers',[UserController::class, 'get_services_providers'])->name('users.get_services_providers');
         Route::post('users/{user}', [UserController::class, 'update']);
 
         Route::get('/list', [SavedListController::class,'getList'])->name('list');

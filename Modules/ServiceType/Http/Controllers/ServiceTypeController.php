@@ -64,7 +64,11 @@ class ServiceTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $inputs = $request->validated();
+        $inputs = $request->all();
+        $validator = Validator::make($inputs, [
+            'title_en' => 'required',
+            'title_ar' => 'required'
+        ] );
         $service_type = ServiceType::find($id);
         $service_type->update($inputs);
         return response()->json(new ServiceTypeResource($service_type), 200);
