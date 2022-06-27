@@ -47,6 +47,6 @@ Route::group(['prefix' => '/','middleware' => 'cors'], function () {
         Route::get('/email/verify', [VerificationController::class, 'show'])->name('verification.notice');
         Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify')->middleware(['signed']);
         Route::post('/email/resend',[VerificationController::class, 'resend'])->name('verification.resend');
-        Route::get('/dashboard', [DashboardController::class,'index'])
+        Route::get('/dashboard', [DashboardController::class,'index']);
     });
 });
