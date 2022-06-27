@@ -25,14 +25,14 @@ class DashboardController extends Controller
         $today_contractor = User::query()->whereHas("roles", function($q){ $q->where("name", ["contractor"]); })->whereDate('created_at', Carbon::today())->count();
 
         $response = [
-            ['title' => 'all_users', 'count' => $all_users],
-            ['title' => 'today_users', 'count' => $today_users],
-            ['title' => 'all_machines', 'count' => $all_machines],
-            ['title' => 'today_machines', 'count' => $today_machines],
-            ['title' => 'total_distributor', 'count' => $total_distributor],
-            ['title' => 'today_distributor', 'count' => $today_distributor],
-            ['title' => 'total_contractor', 'count' => $total_contractor],
-            ['title' => 'today_contractor', 'count' => $today_contractor],
+            'users' => [['title' => 'all_users', 'count' => $all_users],
+            ['title' => 'today_users', 'count' => $today_users]],
+            'machines' => [['title' => 'all_machines', 'count' => $all_machines],
+            ['title' => 'today_machines', 'count' => $today_machines]],
+            'distributor' => [['title' => 'total_distributor', 'count' => $total_distributor],
+            ['title' => 'today_distributor', 'count' => $today_distributor]],
+            'contractor' => [['title' => 'total_contractor', 'count' => $total_contractor],
+            ['title' => 'today_contractor', 'count' => $today_contractor]],
         ];
         return response()->json($response,200);
     }
