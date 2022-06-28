@@ -43,8 +43,11 @@ class SubCategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function get_subcategories_filtered(){
-        $sub_categories = SubCategory::all()->pluck('title_en', 'id');
+    public function get_subcategories_filtered(Request $request){
+        $inputs = $request->all();
+        $validator = Validator::make($inputs, ["category_id" => 'required',]);
+        if ($validator->fails()) { return response()->json($validator->messages(), 400);}
+        $sub_categories = SubCategory::select('id','title_en')->where('category_id',$inputs['category_id'])->get();
         return response()->json(['sub_categories' => $sub_categories], 200);
     }
 
