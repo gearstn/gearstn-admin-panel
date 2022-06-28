@@ -18,8 +18,8 @@ class SubscriptionResource extends JsonResource
         $data = [
             "id" => $this->id,
             'slug' => $this->slug,
-            'name' => $this->name,
-            'description' => $this->description,
+            'name' => $this->getTranslations('name'),
+            'description' => $this->getTranslations('description'),
             'is_active' => $this->is_active,
             'price' => currency_converter('EGP', $this->price == null ? 0 : $this->price),
             'currency' => $this->currency,

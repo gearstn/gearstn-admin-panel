@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Modules\Subscription\Entities\ExtraPlan;
 use Modules\Subscription\Http\Resources\ExtraPlanResource;
 use Modules\Subscription\Http\Resources\SubscriptionResource;
+use Modules\Subscription\Http\Resources\UsersSubscriptionsResource;
 
 class SubscriptionController extends Controller
 {
@@ -19,15 +20,25 @@ class SubscriptionController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index(Request $request)
+    public function index()
     {
-        $inputs = $request->all();
-        $validator = Validator::make($inputs, ['plan_type' => 'required'] );
-        if ($validator->fails()) {
-            return response()->json($validator->messages(), 400);
-        }
-        $subscriptions = app('rinvex.subscriptions.plan')->where('slug', 'LIKE', '%'.$inputs['plan_type'].'%')->get();
-        return SubscriptionResource::collection($subscriptions)->additional(['status' => 200, 'message' => 'Subscriptions fetched successfully']);
+        $subscriptions = app('rinvex.subscriptions.plan')->all();
+        return SubscriptionResource::collection($subscriptions);
+    }
+
+     /**
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function get_plans_filtered(){
+        $subscriptions =  app('rinvex.subscriptions.plan')->select('id','slug','name')->get();
+        return response()->json(['data' => $subscriptions], 200);
+    }
+
+    public function all_users_subscriptions()
+    {
+        $subscriptions = app('rinvex.subscriptions.plan_subscription')->all();
+        return UsersSubscriptionsResource::collection($subscriptions);
     }
     /**
      * Show the specified resource.
@@ -57,13 +68,13 @@ class SubscriptionController extends Controller
     {
         $inputs = $request->all();
 
-        $validator = Validator::make($inputs, ["subscription_id" => "required"]);
+        $validator = Validator::make($inputs, ["plan_id" => "required", 'subscriber_id' => 'required']);
         if ($validator->fails()) {
             return response()->json($validator->messages(), 400);
         }
 
-        $subscription = app('rinvex.subscriptions.plan')->find($inputs['subscription_id']);
-        $user = User::find(auth()->user()->id);
+        $subscription = app('rinvex.subscriptions.plan')->find($inputs['plan_id']);
+        $user = User::find($inputs['subscriber_id']);
         $user_subscriptions = $user->activeSubscriptions()->toArray();
 
         $user_machine_distributor = false;
