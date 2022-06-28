@@ -17,7 +17,7 @@ class NewsRequest extends FormRequest
             'title_en' => 'required',
             'title_ar' => 'required',
             'post_date' => 'required',
-            'image' => 'required',
+            'image' => 'sometimes',
             'bodytext_en' => 'required',
             'bodytext_ar' => 'required',
             'slug' => 'string',
