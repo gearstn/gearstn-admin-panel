@@ -48,7 +48,7 @@ class SubCategoryController extends Controller
         $validator = Validator::make($inputs, ["category_id" => 'required',]);
         if ($validator->fails()) { return response()->json($validator->messages(), 400);}
         $sub_categories = SubCategory::select('id','title_en')->where('category_id',$inputs['category_id'])->get();
-        return response()->json(['sub_categories' => $sub_categories], 200);
+        return response()->json(['data' => $sub_categories], 200);
     }
 
     /**
