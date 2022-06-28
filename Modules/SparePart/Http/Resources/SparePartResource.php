@@ -27,7 +27,7 @@ class SparePartResource extends JsonResource
         $data = [
             "id" => $this->id,
             'description' => $this->description,
-            'country' => Country::find($this->country_id,$selected_columns),
+            'country_id' => Country::find($this->country_id,$selected_columns),
             'slug' => $this->slug,
             'images' => Upload::findMany(json_decode($this->images),['id', 'url']),
             'sku' => $this->sku,
@@ -37,11 +37,11 @@ class SparePartResource extends JsonResource
             'approved' => $this->approved,
             'featured' => $this->featured,
             'verified' => $this->verified,
-            'seller' => User::find($this->seller_id,['id','first_name', 'last_name', 'company_name', 'country', 'email' , 'phone']),
-            'city' => City::find($this->city_id,$selected_columns),
-            'category' => Category::find($this->category_id,$selected_columns),
-            'sub_category' => SubCategory::find($this->sub_category_id,$selected_columns),
-            'manufacture' => Manufacture::find($this->manufacture_id,$selected_columns),
+            'seller_id' => User::find($this->seller_id,['id','first_name', 'last_name', 'company_name', 'country', 'email' , 'phone']),
+            'city_id' => City::find($this->city_id,$selected_columns),
+            'category_id' => Category::find($this->category_id,$selected_columns),
+            'sub_category_id' => SubCategory::find($this->sub_category_id,$selected_columns),
+            'manufacture_id' => Manufacture::find($this->manufacture_id,$selected_columns),
             'views' => views(SparePart::find($this->id))->count()
         ];
         return $data;

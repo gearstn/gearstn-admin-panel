@@ -52,96 +52,96 @@ class MachineController extends Controller
         $user_extra_subscriptions = ExtraPlan::where('user_id', $user->id)->get();
         $using_extra_plan_id = null;
         $plan_ends_at = null;
-        if ($user_subscriptions->count() > 0) {
-            foreach ($user_subscriptions as $plan) {
-                if (str_contains($plan->slug, 'mozaa')) {
-                    $subscription = app('rinvex.subscriptions.plan')->find($plan->plan_id);
-                    $subscription->features();
-                    $feature_slug_machines = null;
-                    $feature_slug_photos = null;
-                    $feature_slug_videos = null;
-                    $photos_count = isset($inputs['photos']) ? count($inputs['photos']) : 0;
-                    $videos_count = isset($inputs['videos']) ? count($inputs['videos']) : 0;
-                    foreach ($subscription->features as $feature) {
-                        if (str_contains($feature->slug, 'number-of-listing')) {
-                            $feature_slug_machines = $feature->slug;
-                        }
+        // if ($user_subscriptions->count() > 0) {
+        //     foreach ($user_subscriptions as $plan) {
+        //         if (str_contains($plan->slug, 'mozaa')) {
+        //             $subscription = app('rinvex.subscriptions.plan')->find($plan->plan_id);
+        //             $subscription->features();
+        //             $feature_slug_machines = null;
+        //             $feature_slug_photos = null;
+        //             $feature_slug_videos = null;
+        //             $photos_count = isset($inputs['photos']) ? count($inputs['photos']) : 0;
+        //             $videos_count = isset($inputs['videos']) ? count($inputs['videos']) : 0;
+        //             foreach ($subscription->features as $feature) {
+        //                 if (str_contains($feature->slug, 'number-of-listing')) {
+        //                     $feature_slug_machines = $feature->slug;
+        //                 }
 
-                        if (str_contains($feature->slug, 'total-photos')) {
-                            $feature_slug_photos = $feature->slug;
-                        }
+        //                 if (str_contains($feature->slug, 'total-photos')) {
+        //                     $feature_slug_photos = $feature->slug;
+        //                 }
 
-                        if (str_contains($feature->slug, 'total-videos')) {
-                            $feature_slug_videos = $feature->slug;
-                        }
+        //                 if (str_contains($feature->slug, 'total-videos')) {
+        //                     $feature_slug_videos = $feature->slug;
+        //                 }
 
-                    }
-                    $video_feature = null;
-                    $plan->getFeatureValue($feature_slug_videos) == 'false' ? $video_feature == 0 : $video_feature = 1;
+        //             }
+        //             $video_feature = null;
+        //             $plan->getFeatureValue($feature_slug_videos) == 'false' ? $video_feature == 0 : $video_feature = 1;
 
-                    if ($plan->getFeatureRemainings($feature_slug_machines) > 0 && $plan->getFeatureRemainings($feature_slug_photos) > $photos_count ) {
-                        $plan_ends_at = $plan->ends_at;
-                        $plan->recordFeatureUsage($feature_slug_machines, 1);
-                        $plan->recordFeatureUsage($feature_slug_photos, $photos_count);
-                        if($video_feature){
-                            if($plan->getFeatureRemainings($feature_slug_videos) > $videos_count){
-                                $plan->recordFeatureUsage($feature_slug_videos, $videos_count);
-                            }
-                        }
+        //             if ($plan->getFeatureRemainings($feature_slug_machines) > 0 && $plan->getFeatureRemainings($feature_slug_photos) > $photos_count ) {
+        //                 $plan_ends_at = $plan->ends_at;
+        //                 $plan->recordFeatureUsage($feature_slug_machines, 1);
+        //                 $plan->recordFeatureUsage($feature_slug_photos, $photos_count);
+        //                 if($video_feature){
+        //                     if($plan->getFeatureRemainings($feature_slug_videos) > $videos_count){
+        //                         $plan->recordFeatureUsage($feature_slug_videos, $videos_count);
+        //                     }
+        //                 }
 
-                    } elseif ($user_extra_subscriptions->count() > 0) {
-                        foreach ($user_extra_subscriptions as $subscription) {
-                            $number_of_listing = $subscription->number_of_listing;
-                            $listed_machine = $subscription->machines == null ? [] : json_decode($subscription->machines);
+        //             } elseif ($user_extra_subscriptions->count() > 0) {
+        //                 foreach ($user_extra_subscriptions as $subscription) {
+        //                     $number_of_listing = $subscription->number_of_listing;
+        //                     $listed_machine = $subscription->machines == null ? [] : json_decode($subscription->machines);
 
-                            if ($number_of_listing > count($listed_machine)) {
-                                $using_extra_plan_id = $subscription->id;
-                                break;
-                            }
-                        }
-                        if ($using_extra_plan_id == null) {
-                            return response()->json([
-                                'message_en' => 'You Have acrossed limit of your subscription, you have to upgrade your account',
-                                'message_ar' => 'لقد وصلت للحد الاقصى لتسجيل الماكينات , يجب ترقية حسابك',
-                            ], 422);
-                        }
+        //                     if ($number_of_listing > count($listed_machine)) {
+        //                         $using_extra_plan_id = $subscription->id;
+        //                         break;
+        //                     }
+        //                 }
+        //                 if ($using_extra_plan_id == null) {
+        //                     return response()->json([
+        //                         'message_en' => 'You Have acrossed limit of your subscription, you have to upgrade your account',
+        //                         'message_ar' => 'لقد وصلت للحد الاقصى لتسجيل الماكينات , يجب ترقية حسابك',
+        //                     ], 422);
+        //                 }
 
-                    } else {
-                        return response()->json([
-                            'message_en' => 'You Have acrossed limit of your subscription, you have to upgrade your account',
-                            'message_ar' => 'لقد وصلت للحد الاقصى لتسجيل الماكينات , يجب ترقية حسابك',
-                        ], 422);
-                    }
-                }
-                else {
-                    return response()->json([
-                        'message_en' => "You don't have any subscription",
-                        'message_ar' => 'ليس لديك أي اشتراك',
-                    ], 422);
-                }
-            }
-        } elseif ($user_extra_subscriptions->count() > 0) {
-            foreach ($user_extra_subscriptions as $subscription) {
-                $number_of_listing = $subscription->number_of_listing;
-                $listed_machine = json_decode($subscription->number_of_listing);
-                if ($number_of_listing > count($listed_machine)) {
-                    $using_extra_plan_id = $subscription->id;
-                    break;
-                }
-            }
-            if ($using_extra_plan_id == null) {
-                return response()->json([
-                    'message_en' => 'You Have acrossed limit of your subscription, you have to upgrade your account',
-                    'message_ar' => 'لقد وصلت للحد الاقصى لتسجيل الماكينات , يجب ترقية حسابك',
-                ], 422);
-            }
-        }
-        else{
-            return response()->json([
-                'message_en' => "You don't have any subscription",
-                'message_ar' => 'ليس لديك أي اشتراك',
-            ], 422);
-        }
+        //             } else {
+        //                 return response()->json([
+        //                     'message_en' => 'You Have acrossed limit of your subscription, you have to upgrade your account',
+        //                     'message_ar' => 'لقد وصلت للحد الاقصى لتسجيل الماكينات , يجب ترقية حسابك',
+        //                 ], 422);
+        //             }
+        //         }
+        //         else {
+        //             return response()->json([
+        //                 'message_en' => "You don't have any subscription",
+        //                 'message_ar' => 'ليس لديك أي اشتراك',
+        //             ], 422);
+        //         }
+        //     }
+        // } elseif ($user_extra_subscriptions->count() > 0) {
+        //     foreach ($user_extra_subscriptions as $subscription) {
+        //         $number_of_listing = $subscription->number_of_listing;
+        //         $listed_machine = json_decode($subscription->number_of_listing);
+        //         if ($number_of_listing > count($listed_machine)) {
+        //             $using_extra_plan_id = $subscription->id;
+        //             break;
+        //         }
+        //     }
+        //     if ($using_extra_plan_id == null) {
+        //         return response()->json([
+        //             'message_en' => 'You Have acrossed limit of your subscription, you have to upgrade your account',
+        //             'message_ar' => 'لقد وصلت للحد الاقصى لتسجيل الماكينات , يجب ترقية حسابك',
+        //         ], 422);
+        //     }
+        // }
+        // else{
+        //     return response()->json([
+        //         'message_en' => "You don't have any subscription",
+        //         'message_ar' => 'ليس لديك أي اشتراك',
+        //     ], 422);
+        // }
 
         //Uploads route to upload images and get array of ids
 
@@ -247,8 +247,8 @@ class MachineController extends Controller
             'machine_id' => $machine->id,
             'seller_id' => $inputs['seller_id'],
         ];
-        $post = new Post_Caller(MailController::class, 'store_machine', StoreMachineMailRequest::class, $data);
-        $response = $post->call();
+        // $post = new Post_Caller(MailController::class, 'store_machine', StoreMachineMailRequest::class, $data);
+        // $response = $post->call();
         //$response = redirect()->route('store-machine' , $mail_parameters );
         if ($response->status() != 200) {return $response;}
 
@@ -285,13 +285,12 @@ class MachineController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return JsonResponse
      */
-    public function destroy($id): JsonResponse
+    public function destroy($id)
     {
-        $machine = Machine::findOrFail($id);
+        $machine = Machine::find($id);
         $machine->delete();
-        return response()->json(new MachineResource($machine), 200);
+        return response('deleted successfully',200);
     }
 
     public function search_filter(Request $request): AnonymousResourceCollection

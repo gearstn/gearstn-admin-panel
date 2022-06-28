@@ -30,13 +30,17 @@ class UpdateMachineRequest extends FormRequest
             'slug' => 'sometimes',
             'sku' => 'sometimes',
             'report_file' => 'required_if:manufacturing_place,forign',
-            "photos" => ["required","array","min:1","max:5"],
-            "photos.*" => ["required","mimes:jpeg,jpg,png,gif,webp","max:1000"],
+            "photos" => ["array","min:1","max:5"],
+            "photos.*" => ["mimes:jpeg,jpg,png,gif,webp","max:1000"],
             "videos" => ["array","min:0","max:3"],
             "serial_photo" => ["mimes:jpeg,jpg,png,gif,webp","max:1000"],
             "hour_meter_photo" => ["mimes:jpeg,jpg,png,gif,webp","max:1000"],
             "videos" => ["array","min:1","max:5"],
-            "country_id" => 'required'
+            "country_id" => 'required',
+            "hours"=> 'sometimes',
+            "verified"=> 'required',
+            "featured"=> 'required',
+            "approved"=> 'required',
         ];
     }
 

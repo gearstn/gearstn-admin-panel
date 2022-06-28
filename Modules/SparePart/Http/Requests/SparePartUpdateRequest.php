@@ -27,7 +27,10 @@ class SparePartUpdateRequest extends FormRequest
             "photos" => ["sometimes","array","min:1","max:5"],
             "photos.*" => ["sometimes","mimes:jpeg,jpg,png,gif,webp","max:1000"],
             'country_id' => 'required',
-            'is_original' => 'required'
+            'is_original' => 'required',
+            'approved' => 'required',
+            'featured' => 'required',
+            'verified' => 'required',
         ];
     }
 
