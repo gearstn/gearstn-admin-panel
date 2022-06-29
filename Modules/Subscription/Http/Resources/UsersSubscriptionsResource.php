@@ -26,10 +26,6 @@ class UsersSubscriptionsResource extends JsonResource
                 'feature_id' => SubscriptionFeatureResource::make($feature),
                 'used' => $subscription_usage->used,
                 'valid_until' => $subscription_usage->valid_until,
-                'timezone' => $subscription_usage->timezone,
-                'created_at' => $subscription_usage->created_at,
-                'updated_at' => $subscription_usage->updated_at,
-                'deleted_at' => $subscription_usage->deleted_at,
             ];
         }
 
@@ -37,8 +33,8 @@ class UsersSubscriptionsResource extends JsonResource
         $data = [
             'id' => $this->id,
             'subscriber_type' => $this->subscriber_type,
-            'subscriber_id' => User::find($this->subscriber_id,['id','first_name', 'last_name', 'company_name', 'country', 'email' , 'phone']),
-            'plan_id' => app('rinvex.subscriptions.plan')->find($this->plan_id),
+            'subscriber_id' => User::find($this->subscriber_id,['id','first_name', 'last_name', 'company_name']),
+            'plan_id' => app('rinvex.subscriptions.plan')->select('id','slug','name')->find($this->plan_id),
             'slug' => $this->slug,
             'name' => $this->getTranslations('name'),
             'description' => $this->getTranslations('description'),
@@ -50,7 +46,6 @@ class UsersSubscriptionsResource extends JsonResource
             'timezone' => $this->timezone,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'deleted_at' => $this->deleted_at,
             'usages' => $usages,
         ];
         return $data;

@@ -25,13 +25,15 @@ Route::group(['middleware' => 'cors'], function () {
             Route::get('/user-all-subscriptions', [SubscriptionController::class, 'user_all_subscriptions']);
             Route::post('/extra-plan-subscribe', [SubscriptionController::class, 'extra_plan_subscribe']);
             Route::get('/user-extra-subscriptions', [SubscriptionController::class, 'user_extra_subscriptions']);
-            Route::post('/{subscriptions}', [SubscriptionController::class, 'update']);
+            Route::post('/{plan}', [SubscriptionController::class, 'update']);
             Route::get('/all-plan-filtered', [SubscriptionController::class, 'get_plans_filtered']);
         });
         Route::prefix('subscriptions')->group(function () {
             Route::get('/', [SubscriptionController::class, 'all_users_subscriptions']);
             Route::post('/subscribe', [SubscriptionController::class, 'subscribe']);
             Route::post('/unsubscribe', [SubscriptionController::class, 'unsubscribe']);
+            Route::get('/{id}', [SubscriptionController::class, 'get_subscription']);
+            Route::post('/{subscription}', [SubscriptionController::class, 'update_subscription']);
         });
         Route::resource('plans', 'SubscriptionController')->except('update');
     });

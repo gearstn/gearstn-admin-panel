@@ -40,6 +40,19 @@ class SubscriptionController extends Controller
         $subscriptions = app('rinvex.subscriptions.plan_subscription')->all();
         return UsersSubscriptionsResource::collection($subscriptions);
     }
+
+    public function get_subscription($id)
+    {
+        $subscription = app('rinvex.subscriptions.plan_subscription')->find($id);
+        return response()->json(new UsersSubscriptionsResource($subscription), 200);
+    }
+
+    public function store(Request $request)
+    {
+        $inputs = $request->all();
+        return response('Working on Storing', 200);
+    }
+
     /**
      * Show the specified resource.
      * @param int $id
@@ -50,6 +63,42 @@ class SubscriptionController extends Controller
         $subscription = app('rinvex.subscriptions.plan')->find($id);
         return response()->json(new SubscriptionResource($subscription), 200);
     }
+
+    public function update(Request $request)
+    {
+        $inputs = $request->all();
+        return response('Working on Updating', 200);
+    }
+
+    public function update_subscription(Request $request)
+    {
+        $inputs = $request->all();
+        $validator = Validator::make($inputs, [
+            'slug' => 'required',
+            'name' => 'required',
+            'description' => 'required',
+            'subscriber_id' => 'required',
+            'plan_id' => 'required',
+            'usages' => 'required',
+
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 401);
+        }
+        $subscription_usages = app('rinvex.subscriptions.plan_subscription_usage')->where('subscription_id', $inputs['plan_id'])->get();
+        foreach ($subscription_usages as $subscription_usage) {
+            $feature = app('rinvex.subscriptions.plan_feature')->find($subscription_usage->feature_id);
+            foreach($inputs['usages'] as $usage){
+                if($usage['feature_id']['id'] == $subscription_usage->id){
+                    $subscription_usage->used = $usage['used'];
+                    $subscription_usage->save();
+                }
+            }
+        }
+        $subscription = app('rinvex.subscriptions.plan_subscription')->find($inputs['plan_id']);
+        return response()->json(new UsersSubscriptionsResource($subscription), 200);
+    }
+
 
     /**
      * Remove the specified resource from storage.
