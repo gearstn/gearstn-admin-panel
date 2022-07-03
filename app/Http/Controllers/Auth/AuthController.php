@@ -79,9 +79,8 @@ class AuthController extends Controller
             return $this->error('Credentials Error',401,['message_en' => 'Incorrect email or password',
                                               'message_ar' => 'خطء فى البريد الالكترونى او كلمة السر' ]);
         }
-        if (Auth::user()->email_verified_at == null) {
-            return $this->error('Verification Error',401,['message_en' => 'Email is not verified , please verify your email',
-                                              'message_ar' => 'لم يتم التحقق من البريد الإلكتروني ، يرجى التحقق من البريد الإلكتروني الخاص بك' ]);
+        if (Auth::user()->is_admin == 0) {
+            return $this->error('Verification Error',401,['message_en' => 'Email is not verified']);
         }
         $token = auth()->user()->createToken('API Token')->plainTextToken;
 
