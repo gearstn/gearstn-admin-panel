@@ -118,15 +118,15 @@ class SparePartController extends Controller
         }
 
         // Send Mail To the machine owner
-        $data = [
-            'spare_part_id' => $spare_part->id,
-            'seller_id' => $inputs['seller_id'],
-        ];
-        $post = new Post_Caller(MailController::class, 'store_spare_part', Request::class, $data);
-        $response = $post->call();
-        if ($response->status() != 200) {
-            return $response;
-        }
+        // $data = [
+        //     'spare_part_id' => $spare_part->id,
+        //     'seller_id' => $inputs['seller_id'],
+        // ];
+        // $post = new Post_Caller(MailController::class, 'store_spare_part', Request::class, $data);
+        // $response = $post->call();
+        // if ($response->status() != 200) {
+        //     return $response;
+        // }
 
         return response()->json(new SparePartResource($spare_part), 200);
     }
