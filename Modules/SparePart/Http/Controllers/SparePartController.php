@@ -50,41 +50,41 @@ class SparePartController extends Controller
         $user = User::find($inputs['seller_id']);
         $user_subscriptions = $user->subscriptions()->get();
         $plan_ends_at = null;
-        if ($user_subscriptions->count() > 0) {
-            foreach ($user_subscriptions as $plan) {
-                if (str_contains($plan->slug, 'spare-parts')) {
-                    $subscription = app('rinvex.subscriptions.plan')->find($plan->plan_id);
-                    $subscription->features();
-                    $feature_slug_spare_parts = null;
-                    $feature_slug_photos = null;
-                    $photos_count = isset($inputs['photos']) ? count($inputs['photos']) : 0;
-                    foreach ($subscription->features as $feature) {
-                        if (str_contains($feature->slug, 'number-of-spare-parts')) {
-                            $feature_slug_spare_parts = $feature->slug;
-                        }
+        // if ($user_subscriptions->count() > 0) {
+        //     foreach ($user_subscriptions as $plan) {
+        //         if (str_contains($plan->slug, 'spare-parts')) {
+        //             $subscription = app('rinvex.subscriptions.plan')->find($plan->plan_id);
+        //             $subscription->features();
+        //             $feature_slug_spare_parts = null;
+        //             $feature_slug_photos = null;
+        //             $photos_count = isset($inputs['photos']) ? count($inputs['photos']) : 0;
+        //             foreach ($subscription->features as $feature) {
+        //                 if (str_contains($feature->slug, 'number-of-spare-parts')) {
+        //                     $feature_slug_spare_parts = $feature->slug;
+        //                 }
 
-                        if (str_contains($feature->slug, 'photos-per-spare-parts')) {
-                            $feature_slug_photos = $feature->slug;
-                        }
-                    }
-                    if ($plan->getFeatureValue($feature_slug_photos) >= $photos_count) {
-                        $plan_ends_at = $plan->ends_at;
-                        $plan->recordFeatureUsage($feature_slug_spare_parts, 1);
-                        // $plan->recordFeatureUsage($feature_slug_photos, $photos_count);
-                    } else {
-                        return response()->json([
-                            'message_en' => 'You Have acrossed limit of your subscription, you have to upgrade your account',
-                            'message_ar' => 'لقد وصلت للحد الاقصى لتسجيل الماكينات , يجب ترقية حسابك',
-                        ], 422);
-                    }
-                }
-            }
-        } else {
-            return response()->json([
-                'message_en' => "You don't have any subscription",
-                'message_ar' => 'ليس لديك أي اشتراك',
-            ], 422);
-        }
+        //                 if (str_contains($feature->slug, 'photos-per-spare-parts')) {
+        //                     $feature_slug_photos = $feature->slug;
+        //                 }
+        //             }
+        //             if ($plan->getFeatureValue($feature_slug_photos) >= $photos_count) {
+        //                 $plan_ends_at = $plan->ends_at;
+        //                 $plan->recordFeatureUsage($feature_slug_spare_parts, 1);
+        //                 // $plan->recordFeatureUsage($feature_slug_photos, $photos_count);
+        //             } else {
+        //                 return response()->json([
+        //                     'message_en' => 'You Have acrossed limit of your subscription, you have to upgrade your account',
+        //                     'message_ar' => 'لقد وصلت للحد الاقصى لتسجيل الماكينات , يجب ترقية حسابك',
+        //                 ], 422);
+        //             }
+        //         }
+        //     }
+        // } else {
+        //     return response()->json([
+        //         'message_en' => "You don't have any subscription",
+        //         'message_ar' => 'ليس لديك أي اشتراك',
+        //     ], 422);
+        // }
 
         //Uploads route to upload images and get array of ids
         $data = [
