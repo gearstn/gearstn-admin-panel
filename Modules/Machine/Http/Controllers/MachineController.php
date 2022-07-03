@@ -422,4 +422,34 @@ class MachineController extends Controller
 
         return response()->json(new MachineResource($machine), 200);
     }
+
+
+    public function approveMachine(Request $request)
+    {
+        $inputs = $request->all();
+        unset($inputs['token']);
+        $machine = Machine::find($inputs['id']);
+        $machine->approved = !$machine->approved;
+        $machine->save();
+        return true;
+    }
+    public function featureMachine(Request $request)
+    {
+        $inputs = $request->all();
+        unset($inputs['token']);
+        $machine = Machine::find($inputs['id']);
+        $machine->featured = !$machine->featured;
+        $machine->save();
+        return true;
+    }
+    public function verifyMachine(Request $request)
+    {
+        $inputs = $request->all();
+        unset($inputs['token']);
+        $machine = Machine::find($inputs['id']);
+        $machine->verified = !$machine->verified;
+        $machine->save();
+        return true;
+    }
+
 }

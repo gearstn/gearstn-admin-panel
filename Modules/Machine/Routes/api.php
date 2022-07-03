@@ -29,6 +29,9 @@ Route::group(['middleware' => 'cors'], function () {
             Route::get('/machine-view', [MachineController::class, 'add_machine_view']);
             Route::delete('/machine-delete-image', [MachineController::class, 'delete_machine_image']);
             Route::post('/{machine}', [MachineController::class, 'update']);
+            Route::post('/approve',  [ MachinesController::class,'approveMachine' ])->name('machines.approve');
+            Route::post('/feature',  [ MachinesController::class,'featureMachine' ])->name('machines.feature');
+            Route::post('/verify',  [ MachinesController::class,'verifyMachine' ])->name('machines.verify');
         });
         Route::resource('machines', 'MachineController', ['as' => 'frontend'])->except('update');
     });
